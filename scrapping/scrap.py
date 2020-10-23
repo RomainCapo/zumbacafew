@@ -1,5 +1,4 @@
 from bs4 import BeautifulSoup
-import csv
 import requests
 
 def save_csv(artists, output='artists.csv'):
