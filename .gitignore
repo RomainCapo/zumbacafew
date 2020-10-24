@@ -1,1 +1,2 @@
 *.csv
+server/node_modules/*

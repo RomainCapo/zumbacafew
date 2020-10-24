@@ -1,0 +1,14 @@
+{
+  "name": "zumba_cafew_server",
+  "version": "1.0.0",
+  "description": "Zumba Cafew Server",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "\u0016Romain Capocasale, Vincent Moulin, Jonas Freiburghaus",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
