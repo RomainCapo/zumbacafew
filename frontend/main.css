@@ -1,0 +1,21 @@
+body {
+    width:100%
+}
+
+div.tooltip {
+    position: absolute;
+    text-align: left;
+    color: white;
+    white-space: normal;
+    padding: 6px;
+    font-size: 14px;
+    background: rgb(105,105,105);
+    border: 1px solid rgb(105,105,105);
+    border-radius: 3px;
+    pointer-events: none;
+    cursor: none;
+}
+
+.radio-button-beeswarm {
+    margin-top: 50px;
+}

@@ -1,7 +1,9 @@
 var express = require('express')
 var fs = require('fs')
+var cors = require('cors') // for local dev only
 
 var app = express()
+app.use(cors())// for local dev only
 
 app.get('/artist/:artist_name', function(req, res) {
     try {
@@ -21,11 +23,21 @@ app.get('/all_artists', function(req, res) {
     let response = [];
 
     while ((dirent = dir.readSync()) !== null) {
-        response.push(JSON.parse(fs.readFileSync('..\\artists\\' + dirent.name, 'utf8')))
+        let artist = JSON.parse(fs.readFileSync('..\\artists\\' + dirent.name, 'utf8'))
+        response.push({"name" : artist.name, 
+                        "image_url" : artist.image_url,
+                        "vocab_length" : artist.vocab_length})
     }
     dir.closeSync()
     
+    res.setHeader('Content-Type', 'application/json')
     res.json(response)
+});
+
+app.get("/json", function(req, res){
+    //res.setHeader('Content-disposition', 'attachment; filename=test.json');
+    res.setHeader('Content-Type', 'application/json')
+    res.send({"test":2000, "test1":3000, "fes":2300})
 });
 
 
