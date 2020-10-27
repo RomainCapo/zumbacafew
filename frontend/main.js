@@ -1,5 +1,5 @@
 let height = 400;
-let width = 1000;
+let width = 1100;
 let margin = ({top: 0, right: 40, bottom: 34, left: 40});
 
 let svg = d3.select("#svganchor")
@@ -24,8 +24,19 @@ let tooltip = d3.select("#svganchor").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
 
+    let dataSet
+
+let paramSexe = {men:"Men", woman:"Woman", all:"All"}
+let paramArtistType = {individual:"Individual", group:"Group", all:"All"}
+let paramYear = {y1980:"1980", y1990:"1990", y2000:"2000", y2010:"2010", all:"All"}
+
+let beeswarmParams = {}
+beeswarmParams.sexe = paramSexe.all
+beeswarmParams.artistType = paramArtistType.all
+beeswarmParams.year = paramYear.all
+
 d3.json("http://127.0.0.1:8080/all_artists").then( data => {
-    let dataSet = data;
+    dataSet = data;
 
     redraw();
 
@@ -101,7 +112,7 @@ d3.json("http://127.0.0.1:8080/all_artists").then( data => {
 
         // Show tooltip when hovering over circle (data for respective country)
         d3.selectAll(".artists").on("mousemove", function(d) {
-            tooltip.html('<strong>Nom: '+d.name+'</strong><br>Vocabulaire: ' + d.vocab_length)
+            tooltip.html('<strong>Nom: '+d.name+'</strong><br>Vocabulaire: ' + d.vocab_length + '<br>Sexe: ' + d.sexe)
                 .style('top', d3.event.pageY - 12 + 'px')
                 .style('left', d3.event.pageX + 25 + 'px')
                 .style("opacity", 0.9);
@@ -118,15 +129,38 @@ d3.json("http://127.0.0.1:8080/all_artists").then( data => {
         });
 
     }
+
 })
 
 function replace_string_space(str, symbol="_"){
     return str.replace(/\s+/g, symbol)
 }
 
+function updateChart(){
+    dataSet.forEach((x)=>{
 
-function test(){
-   d3.select("#circle_Wejdene")
+        if((x.sexe == beeswarmParams.sexe || beeswarmParams.sexe == paramSexe.all) && 
+        (x.artist_type == beeswarmParams.artistType || beeswarmParams.artistType == paramArtistType.all) && 
+        (x.year == beeswarmParams.year || beeswarmParams.year == paramYear.all)){
+            focusArtist(x.name)
+        }else{
+            hideArtist(x.name)
+        }
+    })
+}
+
+function focusArtist(name){
+    d3.select("#circle_" + replace_string_space(name))
+    .transition()
+    .duration(50)
+    .style("fill", "url(#artist_" + replace_string_space(name) + ")")
+    .transition()
+    .duration(1000)
+    .attr("r", 30)
+}
+
+function hideArtist(name){
+    d3.select("#circle_" + replace_string_space(name))
     .transition()
     .duration(1000)
     .attr("r", 5)
@@ -134,3 +168,22 @@ function test(){
     .duration(1000)
     .style("fill", null)
 }
+
+let elementsArray = document.querySelectorAll(".radio-beeswarm");
+
+elementsArray.forEach(function(elem) {
+    elem.addEventListener("input", function(e) {
+        switch(e.target.name){
+            case "radio-sex":
+                beeswarmParams.sexe = e.target.value
+                break
+            case "radio-artist-type":
+                beeswarmParams.artistType = e.target.value
+                break
+            case "radio-year":
+                beeswarmParams.year = e.target.value
+                break
+        }
+        updateChart();
+    });
+});

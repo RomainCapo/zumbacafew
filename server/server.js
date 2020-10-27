@@ -26,7 +26,9 @@ app.get('/all_artists', function(req, res) {
         let artist = JSON.parse(fs.readFileSync('..\\artists\\' + dirent.name, 'utf8'))
         response.push({"name" : artist.name, 
                         "image_url" : artist.image_url,
-                        "vocab_length" : artist.vocab_length})
+                        "vocab_length" : artist.vocab_length,
+                        "sexe" : artist.sexe,
+                        "artist_type":artist.type})
     }
     dir.closeSync()
     
