@@ -1,6 +1,9 @@
-let height = 400;
-let width = 1100;
+let height = 500;
+let width = 1200;
 let margin = ({top: 0, right: 40, bottom: 34, left: 40});
+
+let CIRCLE_RADIUS = 35;
+let EXPLODE_FORCE = 40;
 
 let svg = d3.select("#svganchor")
     .append("svg")
@@ -68,7 +71,7 @@ d3.json("http://127.0.0.1:8080/all_artists").then( data => {
                 return xScale(+d["vocab_length"]);  // This is the desired position
             }).strength(2))  // Increase velocity
             .force("y", d3.forceY((height / 2) - margin.bottom / 2))  // // Apply positioning force to push nodes towards center along Y axis
-            .force("collide", d3.forceCollide(35)) // Apply collision force with radius of 9 - keeps nodes centers 9 pixels apart
+            .force("collide", d3.forceCollide(EXPLODE_FORCE)) // Apply collision force with radius of 9 - keeps nodes centers 9 pixels apart
             .stop();  // Stop simulation from starting automatically
 
         // Manually run simulation
@@ -88,8 +91,8 @@ d3.json("http://127.0.0.1:8080/all_artists").then( data => {
                     .append("svg:image")
                     .attr("stroke-width", 0)
                     .attr("xlink:href", d.image_url)
-                    .attr("width", 60)
-                    .attr("height", 60)
+                    .attr("width", CIRCLE_RADIUS*2)
+                    .attr("height", CIRCLE_RADIUS*2)
                     .attr("x", 0)
                     .attr("y", 0)
                     .attr("preserveAspectRatio", "none")
@@ -100,7 +103,7 @@ d3.json("http://127.0.0.1:8080/all_artists").then( data => {
             .attr("class", "artists")
             .attr("cx", 0)
             .attr("cy", (height / 2) - margin.bottom / 2)
-            .attr("r", 30)
+            .attr("r", CIRCLE_RADIUS)
             .attr("id", function(d) { return "circle_" + replace_string_space(d.name); })
             .merge(circles)
                 .transition()
@@ -112,7 +115,7 @@ d3.json("http://127.0.0.1:8080/all_artists").then( data => {
 
         // Show tooltip when hovering over circle (data for respective country)
         d3.selectAll(".artists").on("mousemove", function(d) {
-            tooltip.html('<strong>Nom: '+d.name+'</strong><br>Vocabulaire: ' + d.vocab_length + '<br>Sexe: ' + d.sexe)
+            tooltip.html('<strong>Nom: '+d.name+'</strong><br>Vocabulaire: ' + d.vocab_length + '<br>Sexe: ' + d.sexe + '<br>Type: ' + d.artist_type)
                 .style('top', d3.event.pageY - 12 + 'px')
                 .style('left', d3.event.pageX + 25 + 'px')
                 .style("opacity", 0.9);
@@ -156,7 +159,7 @@ function focusArtist(name){
     .style("fill", "url(#artist_" + replace_string_space(name) + ")")
     .transition()
     .duration(1000)
-    .attr("r", 30)
+    .attr("r", CIRCLE_RADIUS)
 }
 
 function hideArtist(name){
@@ -165,7 +168,6 @@ function hideArtist(name){
     .duration(1000)
     .attr("r", 5)
     .transition()
-    .duration(1000)
     .style("fill", null)
 }
 
@@ -187,3 +189,30 @@ elementsArray.forEach(function(elem) {
         updateChart();
     });
 });
+
+let inputSearch = document.getElementById("input-artist-search")
+let proposedArtistsDiv = document.getElementById("proposed-artists-container")
+
+inputSearch.addEventListener("input", (e)=>{
+    let input = e.target.value
+
+    proposedArtistsDiv.innerHTML = ""
+
+    dataSet.forEach((x) => {
+        let name = x.name.toLowerCase()
+
+        if(name.includes(input.toLowerCase())){
+            if(input != ""){
+                proposedArtistsDiv.innerHTML += "<div class='proposed-artist' onclick='artistClick(this)'>" + x.name + "</div>" 
+            }
+            focusArtist(x.name)
+        }else{
+            hideArtist(x.name)
+        }
+    })
+})
+
+function artistClick(e){
+    inputSearch.value = e.innerHTML
+    proposedArtistsDiv.innerHTML = "";
+}
