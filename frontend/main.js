@@ -63,21 +63,7 @@ d3.json("http://127.0.0.1:8080/all_artists").then( data => {
             .style("text-anchor", "middle")
             .text("Nombre de mot");
 
-        // Create simulation with specified dataset
-        let simulation = d3.forceSimulation(dataSet)
-            // Apply positioning force to push nodes towards desired position along X axis
-            .force("x", d3.forceX(function(d) {
-                // Mapping of values from total/perCapita column of dataset to range of SVG chart (<margin.left, margin.right>)
-                return xScale(+d["vocab_length"]);  // This is the desired position
-            }).strength(2))  // Increase velocity
-            .force("y", d3.forceY((height / 2) - margin.bottom / 2))  // // Apply positioning force to push nodes towards center along Y axis
-            .force("collide", d3.forceCollide(EXPLODE_FORCE)) // Apply collision force with radius of 9 - keeps nodes centers 9 pixels apart
-            .stop();  // Stop simulation from starting automatically
-
-        // Manually run simulation
-        for (let i = 0; i < dataSet.length; ++i) {
-            simulation.tick(10);
-        }
+        computeBeeswarmSimulation(dataSet)
 
         // Create country circles
         let circles = svg.selectAll(".artists")
@@ -134,6 +120,24 @@ d3.json("http://127.0.0.1:8080/all_artists").then( data => {
     }
 
 })
+
+function computeBeeswarmSimulation(dataSet){
+    // Create simulation with specified dataset
+    let simulation = d3.forceSimulation(dataSet)
+    // Apply positioning force to push nodes towards desired position along X axis
+    .force("x", d3.forceX(function(d) {
+        // Mapping of values from total/perCapita column of dataset to range of SVG chart (<margin.left, margin.right>)
+        return xScale(+d["vocab_length"]);  // This is the desired position
+    }).strength(2))  // Increase velocity
+    .force("y", d3.forceY((height / 2) - margin.bottom / 2))  // // Apply positioning force to push nodes towards center along Y axis
+    .force("collide", d3.forceCollide(EXPLODE_FORCE)) // Apply collision force with radius of 9 - keeps nodes centers 9 pixels apart
+    .stop();  // Stop simulation from starting automatically
+
+    // Manually run simulation
+    for (let i = 0; i < dataSet.length; ++i) {
+        simulation.tick(10);
+    }
+}
 
 function replace_string_space(str, symbol="_"){
     return str.replace(/\s+/g, symbol)
@@ -192,11 +196,25 @@ elementsArray.forEach(function(elem) {
 
 let inputSearch = document.getElementById("input-artist-search")
 let proposedArtistsDiv = document.getElementById("proposed-artists-container")
+let radioButtons = document.querySelectorAll(".radio-button-beeswarm input[type='radio']")
 
 inputSearch.addEventListener("input", (e)=>{
     let input = e.target.value
 
     proposedArtistsDiv.innerHTML = ""
+
+    if(input.length == 1){
+        radioButtons.forEach((x) =>{
+            resetFilter();
+            x.disabled = true;
+        })
+    }
+    
+    if(input.length == 0){
+        radioButtons.forEach((x) =>{
+            x.disabled = false;
+        })
+    }
 
     dataSet.forEach((x) => {
         let name = x.name.toLowerCase()
@@ -215,4 +233,16 @@ inputSearch.addEventListener("input", (e)=>{
 function artistClick(e){
     inputSearch.value = e.innerHTML
     proposedArtistsDiv.innerHTML = "";
+}
+
+function resetFilter(){
+    document.getElementById("radio-sex-all").checked = true
+    document.getElementById("radio-artist-type-all").checked = true
+    document.getElementById("radio-year-all").checked = true
+
+    beeswarmParams.sexe = "All"
+    beeswarmParams.artistType = "All"
+    beeswarmParams.year = "All"
+
+    updateChart()
 }
