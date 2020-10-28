@@ -201,6 +201,8 @@ let radioButtons = document.querySelectorAll(".radio-button-beeswarm input[type=
 inputSearch.addEventListener("input", (e)=>{
     let input = e.target.value
 
+    console.log('test');
+
     proposedArtistsDiv.innerHTML = ""
 
     if(input.length == 1){
@@ -218,6 +220,7 @@ inputSearch.addEventListener("input", (e)=>{
 
     dataSet.forEach((x) => {
         let name = x.name.toLowerCase()
+        console.log(input);
 
         if(name.includes(input.toLowerCase())){
             if(input != ""){
@@ -232,6 +235,7 @@ inputSearch.addEventListener("input", (e)=>{
 
 function artistClick(e){
     inputSearch.value = e.innerHTML
+    inputSearch.dispatchEvent(new Event('input'));
     proposedArtistsDiv.innerHTML = "";
 }
 
