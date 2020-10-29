@@ -38,6 +38,21 @@ beeswarmParams.sexe = paramSexe.all
 beeswarmParams.artistType = paramArtistType.all
 beeswarmParams.year = paramYear.all
 
+// Display x axis label
+svg.append("text")
+.attr("x", width/2)
+.attr("y",  height)
+.style("text-anchor", "middle")
+.text("Nombre de mot");
+
+// Display x axis label
+svg.append("text")
+.attr("x", 40)
+.attr("y",  height)
+.style("font-size", "10px")
+.style("text-anchor", "left")
+.html("Source: <a href='https://genius.com'>Genius</a>");
+
 d3.json("http://127.0.0.1:8080/all_artists").then( data => {
     dataSet = data;
 
@@ -56,12 +71,7 @@ d3.json("http://127.0.0.1:8080/all_artists").then( data => {
 
         d3.select(".x.axis").call(xAxis);
 
-        // Display x axis label
-        svg.append("text")
-            .attr("x", width/2)
-            .attr("y",  height)
-            .style("text-anchor", "middle")
-            .text("Nombre de mot");
+        
 
         computeBeeswarmSimulation(dataSet)
 
@@ -71,7 +81,7 @@ d3.json("http://127.0.0.1:8080/all_artists").then( data => {
             
         dataSet.forEach((d) => {
             svg.append("svg:pattern")
-                .attr("id", "artist_" + replace_string_space(d.name))
+                .attr("id", "artist_" + Helper.replaceStringSpace(d.name))
                 .attr("width", 1) 
                 .attr("height", 1)
                     .append("svg:image")
@@ -90,18 +100,17 @@ d3.json("http://127.0.0.1:8080/all_artists").then( data => {
             .attr("cx", 0)
             .attr("cy", (height / 2) - margin.bottom / 2)
             .attr("r", CIRCLE_RADIUS)
-            .attr("id", function(d) { return "circle_" + replace_string_space(d.name); })
+            .attr("id", function(d) { return "circle_" + Helper.replaceStringSpace(d.name); })
             .merge(circles)
                 .transition()
                 .duration(2000)
                 .attr("cx", function(d) { return d.x; })
                 .attr("cy", function(d) { return d.y; })
-                .style("fill", function(d) { return "url(#artist_" + replace_string_space(d.name) + ")"; })
-
+                .style("fill", function(d) { return "url(#artist_" + Helper.replaceStringSpace(d.name) + ")"; })
 
         // Show tooltip when hovering over circle (data for respective country)
         d3.selectAll(".artists").on("mousemove", function(d) {
-            tooltip.html('<strong>Nom: '+d.name+'</strong><br>Vocabulaire: ' + d.vocab_length + '<br>Sexe: ' + d.sexe + '<br>Type: ' + d.artist_type)
+            tooltip.html('<strong>Nom: '+d.name+'</strong><br>Vocabulaire: ' + d.vocab_length + '<br>Sexe: ' + Helper.sexToFrench(d.sexe) + '<br>Type d\'artiste: ' + Helper.artistTypeToFrench(d.artist_type))
                 .style('top', d3.event.pageY - 12 + 'px')
                 .style('left', d3.event.pageX + 25 + 'px')
                 .style("opacity", 0.9);
@@ -116,9 +125,7 @@ d3.json("http://127.0.0.1:8080/all_artists").then( data => {
             tooltip.style("opacity", 0);
             xLine.attr("opacity", 0);
         });
-
     }
-
 })
 
 function computeBeeswarmSimulation(dataSet){
@@ -139,10 +146,6 @@ function computeBeeswarmSimulation(dataSet){
     }
 }
 
-function replace_string_space(str, symbol="_"){
-    return str.replace(/\s+/g, symbol)
-}
-
 function updateChart(){
     dataSet.forEach((x)=>{
 
@@ -157,17 +160,17 @@ function updateChart(){
 }
 
 function focusArtist(name){
-    d3.select("#circle_" + replace_string_space(name))
+    d3.select("#circle_" + Helper.replaceStringSpace(name))
     .transition()
     .duration(50)
-    .style("fill", "url(#artist_" + replace_string_space(name) + ")")
+    .style("fill", "url(#artist_" + Helper.replaceStringSpace(name) + ")")
     .transition()
     .duration(1000)
     .attr("r", CIRCLE_RADIUS)
 }
 
 function hideArtist(name){
-    d3.select("#circle_" + replace_string_space(name))
+    d3.select("#circle_" + Helper.replaceStringSpace(name))
     .transition()
     .duration(1000)
     .attr("r", 5)
