@@ -33,4 +33,11 @@ class Helper{
         }
         return french
     }
+
+    static ceilYear(year){
+        let yearStr = year.toString()
+        yearStr = yearStr.slice(0, -1) + "0"
+        return parseInt(yearStr)
+    }
 }
+
