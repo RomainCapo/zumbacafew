@@ -1,9 +1,9 @@
-let height = 500;
+let height = 600;
 let width = 1200;
 let margin = ({top: 0, right: 40, bottom: 34, left: 40});
 
-let CIRCLE_RADIUS = 35;
-let EXPLODE_FORCE = 40;
+let CIRCLE_RADIUS = 40;
+let EXPLODE_FORCE = 45;
 
 let svg = d3.select("#svganchor")
     .append("svg")
@@ -29,12 +29,12 @@ let tooltip = d3.select("#svganchor").append("div")
 
     let dataSet
 
-let paramSexe = {men:"Men", woman:"Woman", all:"All"}
+let paramGender = {men:"Men", woman:"Woman", all:"All"}
 let paramArtistType = {individual:"Individual", group:"Group", all:"All"}
-let paramYear = {y1980:"1980", y1990:"1990", y2000:"2000", y2010:"2010", all:"All"}
+let paramYear = {y1990:"1990", y2000:"2000", y2010:"2010", y2020:"2020", all:"All"}
 
 let beeswarmParams = {}
-beeswarmParams.sexe = paramSexe.all
+beeswarmParams.gender = paramGender.all
 beeswarmParams.artistType = paramArtistType.all
 beeswarmParams.year = paramYear.all
 
@@ -64,14 +64,12 @@ d3.json("http://127.0.0.1:8080/all_artists").then( data => {
         xScale = d3.scaleLinear().range([ margin.left, width - margin.right ])
 
         xScale.domain(d3.extent(dataSet, function(d) {
-            return +d["vocab_length"];
+            return +d["vocab_ratio"];
         }));
 
-        let xAxis = d3.axisBottom(xScale).ticks(10).tickSizeOuter(0);
+        let xAxis = d3.axisBottom(xScale).ticks(15).tickSizeOuter(0);
 
         d3.select(".x.axis").call(xAxis);
-
-        
 
         computeBeeswarmSimulation(dataSet)
 
@@ -110,7 +108,7 @@ d3.json("http://127.0.0.1:8080/all_artists").then( data => {
 
         // Show tooltip when hovering over circle (data for respective country)
         d3.selectAll(".artists").on("mousemove", function(d) {
-            tooltip.html('<strong>Nom: '+d.name+'</strong><br>Vocabulaire: ' + d.vocab_length + '<br>Sexe: ' + Helper.sexToFrench(d.sexe) + '<br>Type d\'artiste: ' + Helper.artistTypeToFrench(d.artist_type))
+            tooltip.html('<strong>Nom: '+d.name+'</strong><br>Mot unique par musique: ' + Math.round(d.vocab_ratio) + '<br>Genre: ' + Helper.sexToFrench(d.gender) + '<br>Type d\'artiste: ' + Helper.artistTypeToFrench(d.artist_type) + '<br>Année: ' + d.year + '<br>Nombre de musique: ' + d.number_songs)
                 .style('top', d3.event.pageY - 12 + 'px')
                 .style('left', d3.event.pageX + 25 + 'px')
                 .style("opacity", 0.9);
@@ -134,7 +132,7 @@ function computeBeeswarmSimulation(dataSet){
     // Apply positioning force to push nodes towards desired position along X axis
     .force("x", d3.forceX(function(d) {
         // Mapping of values from total/perCapita column of dataset to range of SVG chart (<margin.left, margin.right>)
-        return xScale(+d["vocab_length"]);  // This is the desired position
+        return xScale(+d["vocab_ratio"]);  // This is the desired position
     }).strength(2))  // Increase velocity
     .force("y", d3.forceY((height / 2) - margin.bottom / 2))  // // Apply positioning force to push nodes towards center along Y axis
     .force("collide", d3.forceCollide(EXPLODE_FORCE)) // Apply collision force with radius of 9 - keeps nodes centers 9 pixels apart
@@ -149,7 +147,7 @@ function computeBeeswarmSimulation(dataSet){
 function applyFilter(){
     dataSet.forEach((x)=>{
 
-        if((x.sexe == beeswarmParams.sexe || beeswarmParams.sexe == paramSexe.all) && 
+        if((x.gender == beeswarmParams.gender || beeswarmParams.gender == paramGender.all) && 
         (x.artist_type == beeswarmParams.artistType || beeswarmParams.artistType == paramArtistType.all) && 
         (x.year == beeswarmParams.year || beeswarmParams.year == paramYear.all)){
             focusArtist(x.name)
@@ -184,7 +182,7 @@ elementsArray.forEach(function(elem) {
     elem.addEventListener("input", function(e) {
         switch(e.target.name){
             case "radio-sex":
-                beeswarmParams.sexe = e.target.value
+                beeswarmParams.gender = e.target.value
                 break
             case "radio-artist-type":
                 beeswarmParams.artistType = e.target.value
@@ -245,7 +243,7 @@ function resetFilter(){
     document.getElementById("radio-artist-type-all").checked = true
     document.getElementById("radio-year-all").checked = true
 
-    beeswarmParams.sexe = "All"
+    beeswarmParams.gender = "All"
     beeswarmParams.artistType = "All"
     beeswarmParams.year = "All"
 

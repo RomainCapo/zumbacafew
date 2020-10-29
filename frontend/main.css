@@ -53,14 +53,15 @@ div.tooltip {
 }
 
 .proposed-artist{
-    margin: auto;
+   margin: auto;
     width: 80%;
-    border: solid 1px black;
+    border-bottom: solid 1px rgb(108, 117, 125);
     padding: 3px;
 }
 
+
 .proposed-artist:hover{
-    background:rgb(108, 117, 125);
+    background:rgb(237, 239, 238);
     cursor: pointer;
 
 }
