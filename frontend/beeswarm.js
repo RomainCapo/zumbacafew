@@ -53,7 +53,7 @@ svg.append("text")
     .style("text-anchor", "left")
     .html("Source: <a href='https://genius.com'>Genius</a>");
 
-d3.json("http://127.0.0.1:8080/all_artists").then( data => {
+d3.json("http://127.0.0.1:8080/t").then( data => {
     dataSet = data;
 
     redraw();
@@ -149,7 +149,7 @@ function applyFilter(){
 
         if((x.gender == beeswarmParams.gender || beeswarmParams.gender == paramGender.all) && 
         (x.artist_type == beeswarmParams.artistType || beeswarmParams.artistType == paramArtistType.all) && 
-        (x.year == beeswarmParams.year || beeswarmParams.year == paramYear.all)){
+        (Helper.ceilYear(x.year) == beeswarmParams.year || beeswarmParams.year == paramYear.all)){
             focusArtist(x.name)
         }else{
             hideArtist(x.name)
@@ -249,3 +249,4 @@ function resetFilter(){
 
     applyFilter()
 }
+
