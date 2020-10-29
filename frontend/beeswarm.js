@@ -40,18 +40,18 @@ beeswarmParams.year = paramYear.all
 
 // Display x axis label
 svg.append("text")
-.attr("x", width/2)
-.attr("y",  height)
-.style("text-anchor", "middle")
-.text("Nombre de mot");
+    .attr("x", width/2)
+    .attr("y",  height)
+    .style("text-anchor", "middle")
+    .text("Nombre de mot");
 
 // Display x axis label
 svg.append("text")
-.attr("x", 40)
-.attr("y",  height)
-.style("font-size", "10px")
-.style("text-anchor", "left")
-.html("Source: <a href='https://genius.com'>Genius</a>");
+    .attr("x", 40)
+    .attr("y",  height)
+    .style("font-size", "10px")
+    .style("text-anchor", "left")
+    .html("Source: <a href='https://genius.com'>Genius</a>");
 
 d3.json("http://127.0.0.1:8080/all_artists").then( data => {
     dataSet = data;
@@ -146,7 +146,7 @@ function computeBeeswarmSimulation(dataSet){
     }
 }
 
-function updateChart(){
+function applyFilter(){
     dataSet.forEach((x)=>{
 
         if((x.sexe == beeswarmParams.sexe || beeswarmParams.sexe == paramSexe.all) && 
@@ -161,21 +161,21 @@ function updateChart(){
 
 function focusArtist(name){
     d3.select("#circle_" + Helper.replaceStringSpace(name))
-    .transition()
-    .duration(50)
-    .style("fill", "url(#artist_" + Helper.replaceStringSpace(name) + ")")
-    .transition()
-    .duration(1000)
-    .attr("r", CIRCLE_RADIUS)
+        .transition()
+        .duration(50)
+        .style("fill", "url(#artist_" + Helper.replaceStringSpace(name) + ")")
+        .transition()
+        .duration(1000)
+        .attr("r", CIRCLE_RADIUS)
 }
 
 function hideArtist(name){
     d3.select("#circle_" + Helper.replaceStringSpace(name))
-    .transition()
-    .duration(1000)
-    .attr("r", 5)
-    .transition()
-    .style("fill", null)
+        .transition()
+        .duration(1000)
+        .attr("r", 5)
+        .transition()
+        .style("fill", null)
 }
 
 let elementsArray = document.querySelectorAll(".radio-beeswarm");
@@ -193,7 +193,7 @@ elementsArray.forEach(function(elem) {
                 beeswarmParams.year = e.target.value
                 break
         }
-        updateChart();
+        applyFilter();
     });
 });
 
@@ -203,8 +203,6 @@ let radioButtons = document.querySelectorAll(".radio-button-beeswarm input[type=
 
 inputSearch.addEventListener("input", (e)=>{
     let input = e.target.value
-
-    console.log('test');
 
     proposedArtistsDiv.innerHTML = ""
 
@@ -251,5 +249,5 @@ function resetFilter(){
     beeswarmParams.artistType = "All"
     beeswarmParams.year = "All"
 
-    updateChart()
+    applyFilter()
 }
