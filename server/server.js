@@ -5,6 +5,12 @@ var cors = require('cors') // for local dev only
 var app = express()
 app.use(cors())// for local dev only
 
+function ceilYear(year){
+    let yearStr = year.toString()
+    yearStr = yearStr.slice(0, -1) + "0"
+    return parseInt(yearStr)
+}
+
 app.get('/artist/:artist_name', function(req, res) {
     try {
         var json = JSON.parse(fs.readFileSync('..\\artists\\' + req.params.artist_name + '.json', 'utf8'))
@@ -26,22 +32,17 @@ app.get('/all_artists', function(req, res) {
         let artist = JSON.parse(fs.readFileSync('..\\artists\\' + dirent.name, 'utf8'))
         response.push({"name" : artist.name, 
                         "image_url" : artist.image_url,
-                        "vocab_length" : artist.vocab_length,
-                        "sexe" : artist.sexe,
-                        "artist_type":artist.type})
+                        "vocab_ratio" : artist.vocab_ratio,
+                        "gender" : artist.sexe,
+                        "artist_type":artist.type,
+                        "year":ceilYear(artist.year_avg),
+                        "number_songs":artist.num_songs})
     }
     dir.closeSync()
     
     res.setHeader('Content-Type', 'application/json')
     res.json(response)
 });
-
-app.get("/json", function(req, res){
-    //res.setHeader('Content-disposition', 'attachment; filename=test.json');
-    res.setHeader('Content-Type', 'application/json')
-    res.send({"test":2000, "test1":3000, "fes":2300})
-});
-
 
 app.listen(8080);
 
