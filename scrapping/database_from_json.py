@@ -6,7 +6,7 @@ myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 mydb = myclient["zumba_cafew"]
 mycol = mydb["artists"]
 
-DIR = "..\\artists"
+DIR = "artists"
 
 for filename in os.listdir(DIR):
     if filename.endswith(".json"):
