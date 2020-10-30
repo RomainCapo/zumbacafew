@@ -64,10 +64,10 @@ d3.json("http://127.0.0.1:8080/all_artists").then( data => {
         xScale = d3.scaleLinear().range([ margin.left, width - margin.right ])
 
         xScale.domain(d3.extent(dataSet, function(d) {
-            return +d["vocab_ratio"];
+            return d["vocab_ratio"]
         }));
 
-        let xAxis = d3.axisBottom(xScale).ticks(15).tickSizeOuter(0);
+        let xAxis = d3.axisBottom(xScale).ticks(25).tickSizeOuter(0);
 
         d3.select(".x.axis").call(xAxis);
 
@@ -108,7 +108,7 @@ d3.json("http://127.0.0.1:8080/all_artists").then( data => {
 
         // Show tooltip when hovering over circle (data for respective country)
         d3.selectAll(".artists").on("mousemove", function(d) {
-            tooltip.html('<strong>Nom: '+d.name+'</strong><br>Mot unique par musique: ' + Math.round(d.vocab_ratio) + '<br>Genre: ' + Helper.sexToFrench(d.gender) + '<br>Type d\'artiste: ' + Helper.artistTypeToFrench(d.artist_type) + '<br>Année: ' + d.year + '<br>Nombre de musique: ' + d.number_songs)
+            tooltip.html('<strong>Nom: '+d.name+'</strong><br>Mot unique par musique: ' + Math.round(d.vocab_ratio*100)/100 + '<br>Genre: ' + Helper.sexToFrench(d.gender) + '<br>Type d\'artiste: ' + Helper.artistTypeToFrench(d.artist_type) + '<br>Année: ' + d.year + '<br>Nombre de musique: ' + d.number_songs)
                 .style('top', d3.event.pageY - 12 + 'px')
                 .style('left', d3.event.pageX + 25 + 'px')
                 .style("opacity", 0.9);
