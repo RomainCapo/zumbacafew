@@ -31,24 +31,6 @@ artistSchema.statics.artistsStats = () => {
 };
 
 artistSchema.statics.vocabulary = () => {
-    // https://stackoverflow.com/questions/58137178/how-to-count-word-frequency-in-a-set-of-documents-using-node-js-and-mongoose
-    /*return Artist.find({},
-        {
-            _id: 0,
-            vocab: "$vocab"
-        }).lean().exec();*/
-
-    /*
-            {
-            $group: {
-                _id: "$words",
-                count: { "$sum": 1 }
-            }
-        },
-        { $project: { "_id": 0, "word": "$_id", "count": 1 } },
-        { $sort: { "count": -1 } }
-    */
-
     return Artist.aggregate([
         {
             $project: {

@@ -18,21 +18,6 @@ export async function wordFrequency(req, res) {
 
     try {
         const termFrequency = await Artist.vocabulary();
-        console.log(termFrequency);
-        /*
-        let termFrequency = new Map();
-        for(let artistVoc of vocabulary) {
-            for(let term in artistVoc['vocab']) {
-                let freq = artistVoc['vocab'][term]
-                if (termFrequency.has(term)) {
-                    termFrequency.set(term, termFrequency.get(term) + freq);
-                }
-                else {
-                    termFrequency.set(term, freq);
-                }
-            }
-        }*/
-
         res.json(termFrequency);
     }
     catch (err) {
