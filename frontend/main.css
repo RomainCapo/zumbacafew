@@ -8,7 +8,7 @@ body {
     margin: 20px auto;
 }
 
-#main-section{
+#beeswarm{
     margin-bottom: 100px;
 }
 
@@ -19,7 +19,7 @@ body {
 
 nav{
     background-color: rgb(255, 255, 255);
-    border-bottom: 1px solid rgb(45, 150, 200);
+    border-bottom: 1px solid rgb(0, 178, 99);
     margin-bottom: 20px;
 }
 
@@ -61,7 +61,7 @@ div.tooltip {
 .proposed-artist{
    margin: auto;
     width: 80%;
-    border-bottom: solid 1px rgb(45, 150, 200);
+    border-bottom: solid 1px rgb(0, 178, 99);
     padding: 3px;
 }
 
@@ -72,13 +72,23 @@ div.tooltip {
 
 }
 
+#wordHistogram{
+    background-color:  rgb(247, 247, 247);
+}
+
+.custom-control-input:checked ~ .custom-control-label::before {
+    color: #fff;
+    border-color: rgb(0, 178, 99);
+    background-color: rgb(0, 178, 99);
+  }
+
 .footer {
     position: fixed;
     bottom: 0;
     width: 100%;
     height: 60px;
     line-height: 60px;
-    background-color: rgb(45, 150, 200);
+    background-color: rgb(0, 178, 99);
 }
 
 .panel-footer {
