@@ -1,102 +1,107 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <title>Zumba Cafew</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
-        crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kanit">
-    <link rel="icon" type="image/png" href="res/img/favicon.ico" />
-    <link rel="stylesheet" href="main.css">
-    </link>
-</head>
-
-<body>
-    <nav class="navbar navbar-expand-lg">
-        <div class="container">
-            <img src="res/img/logo.png" alt="logo">
-            <h1 class="text-left">Zumba Cafew</h1>
-        </div>
-    </nav>
-    <div class="container" id="main-section">
-        <p>Visualiser quel artiste de Hip-hop fraçais a le vocabulaire le plus riche !</p>
-        <div id="svganchor" class="graph centered"></div>
-        <div class="row radio-button-beeswarm">
-            <div class="col-sm" style="text-align: center;">
-                <strong>Sexe</strong>
-                <div class="form-check">
-                    <input class="form-check-input radio-beeswarm" type="radio" name="radio-sex" id="radio-sex-all"
-                        value="All" checked>
-                    <label class="form-check-label" for="radio-sex-all">Les deux</label>
+    <head>
+        <title>Zumba Cafew</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+            integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+            crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kanit">
+        <link rel="icon" type="image/png" href="res/img/favicon.ico" />
+        <link rel="stylesheet" href="main.css">
+        </link>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <img src="res/img/logo.png" alt="logo">
+                <h1 class="text-left">Zumba Cafew</h1>
+            </div>
+        </nav>
+        <div class="container" id="beeswarm">
+            <p>Visualiser quel artiste de Hip-hop fraçais a le vocabulaire le plus riche !</p>
+            <div id="svganchor" class="graph centered"></div>
+            <div class="row radio-button-beeswarm">
+                <div class="col-sm" style="text-align: center;">
+                    <strong>Sexe</strong>
+                    <div class="form-check">
+                        <input class="form-check-input radio-beeswarm" type="radio" name="radio-sex" id="radio-sex-all"
+                            value="All" checked>
+                        <label class="form-check-label" for="radio-sex-all">Les deux</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input radio-beeswarm" type="radio" name="radio-sex" id="radio-men"
+                            value="Men">
+                        <label class="form-check-label" for="radio-men">Homme</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input radio-beeswarm" type="radio" name="radio-sex" id="radio-woman"
+                            value="Woman">
+                        <label class="form-check-label" for="radio-woman">Femme</label>
+                    </div>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input radio-beeswarm" type="radio" name="radio-sex" id="radio-men"
-                        value="Men">
-                    <label class="form-check-label" for="radio-men">Homme</label>
+                <div class="col-sm" style="text-align: center;">
+                    <strong>Type d'artiste</strong>
+                    <div class="form-check">
+                        <input class="form-check-input radio-beeswarm" type="radio" name="radio-artist-type"
+                            id="radio-artist-type-all" value="All" checked>
+                        <label class="form-check-label" for="radio-artist-type-all">Les deux</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input radio-beeswarm" type="radio" name="radio-artist-type"
+                            id="radio-individual" value="Individual">
+                        <label class="form-check-label" for="radio-individual">Artiste solo</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input radio-beeswarm" type="radio" name="radio-artist-type"
+                            id="radio-group" value="Group">
+                        <label class="form-check-label" for="radio-group">Groupe</label>
+                    </div>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input radio-beeswarm" type="radio" name="radio-sex" id="radio-woman"
-                        value="Woman">
-                    <label class="form-check-label" for="radio-woman">Femme</label>
+                <div class="col-sm" style="text-align: center;">
+                    <strong>Année</strong>
+                    <div class="form-check">
+                        <input class="form-check-input radio-beeswarm" type="radio" name="radio-year" id="radio-year-all"
+                            value="All" checked>
+                        <label class="form-check-label" for="radio-year-all">Toutes les années</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input radio-beeswarm" type="radio" name="radio-year" id="radio-1990"
+                            value="1990">
+                        <label class="form-check-label" for="radio-1990">1990</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input radio-beeswarm" type="radio" name="radio-year" id="radio-2000"
+                            value="2000">
+                        <label class="form-check-label" for="radio-2000">2000</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input radio-beeswarm" type="radio" name="radio-year" id="radio-2010"
+                            value="2010">
+                        <label class="form-check-label" for="radio-2010">2010</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input radio-beeswarm" type="radio" name="radio-year" id="radio-2020"
+                            value="2020">
+                        <label class="form-check-label" for="radio-2020">2020</label>
+                    </div>
+                </div>
+                <div class="col-sm" style="text-align: center;">
+                    <label for="input-artist-search"><strong>Recherche d'artiste</strong></label>
+                    <input type="text" class="form-control" id="input-artist-search">
+                    <div id="proposed-artists-container"></div>
                 </div>
             </div>
-            <div class="col-sm" style="text-align: center;">
-                <strong>Type d'artiste</strong>
-                <div class="form-check">
-                    <input class="form-check-input radio-beeswarm" type="radio" name="radio-artist-type"
-                        id="radio-artist-type-all" value="All" checked>
-                    <label class="form-check-label" for="radio-artist-type-all">Les deux</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input radio-beeswarm" type="radio" name="radio-artist-type"
-                        id="radio-individual" value="Individual">
-                    <label class="form-check-label" for="radio-individual">Artiste solo</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input radio-beeswarm" type="radio" name="radio-artist-type"
-                        id="radio-group" value="Group">
-                    <label class="form-check-label" for="radio-group">Groupe</label>
+            <div id="wordHistogram">
+                <div class="container">
+                    <div class="row" id="word-histogram"></div>
                 </div>
             </div>
-            <div class="col-sm" style="text-align: center;">
-                <strong>Année</strong>
-                <div class="form-check">
-                    <input class="form-check-input radio-beeswarm" type="radio" name="radio-year" id="radio-year-all"
-                        value="All" checked>
-                    <label class="form-check-label" for="radio-year-all">Toutes les années</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input radio-beeswarm" type="radio" name="radio-year" id="radio-1990"
-                        value="1990">
-                    <label class="form-check-label" for="radio-1990">1990</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input radio-beeswarm" type="radio" name="radio-year" id="radio-2000"
-                        value="2000">
-                    <label class="form-check-label" for="radio-2000">2000</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input radio-beeswarm" type="radio" name="radio-year" id="radio-2010"
-                        value="2010">
-                    <label class="form-check-label" for="radio-2010">2010</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input radio-beeswarm" type="radio" name="radio-year" id="radio-2020"
-                        value="2020">
-                    <label class="form-check-label" for="radio-2020">2020</label>
-                </div>
-            </div>
-            <div class="col-sm" style="text-align: center;">
-                <label for="input-artist-search"><strong>Recherche d'artiste</strong></label>
-                <input type="text" class="form-control" id="input-artist-search">
-                <div id="proposed-artists-container"></div>
-            </div>
+            <div id="svgwordcloud" class="graph centered"></div>
         </div>
         <p>Les mots les plus fréquements rencontrés sont : </p>
         <div id="svgwordcloud" class="graph centered"></div>
