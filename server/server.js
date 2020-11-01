@@ -1,38 +1,46 @@
-var express = require('express')
-var fs = require('fs')
-var cors = require('cors') // for local dev only
-var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://db:27017/";
+import cors from 'cors';
+import dotenv from 'dotenv';
+import express from 'express';
+import mongoose from 'mongoose';
 
-const client = new MongoClient(url, { useUnifiedTopology: true });
+import apiRouter from './api/api.js';
+import notFoundResponse from "./helpers/ApiResponse.js";
 
-var app = express()
-app.use(cors())// for local dev only
+dotenv.config();
 
-app.get('/all_artists', function (req, res) {
-    res.setHeader('Content-Type', 'application/json')
+var app = express();
 
-    client.connect().then((client) => {
-        var db = client.db('zumba_cafew')
-        db.collection("artists").find({}, {
-            projection: {
-                _id: 0,
-                name: 1,
-                image_url: 1,
-                gender: "$sexe",
-                artist_type: "$type",
-                vocab_ratio: 1,
-                year: "$year_avg",
-                number_songs: "$num_songs"
-            }
-        }).toArray(function (err, result) {
-            res.json(result)
-            
-        })
-    }).catch((error) => {
-        console.error(error)
-    })
-})
+function setupServer() {
+    app.use(cors()); // TODO only for local dev only
 
-app.listen(8080);
+    app.listen(process.env.PORT || 8080);
+
+    app.use("/api/", apiRouter);
+
+    app.all("*", function (req, res) {
+        return notFoundResponse(res, "Page not found");
+    });
+
+    console.log("Server is up")
+}
+
+function setupDbConnection() {
+    mongoose.connection
+        .on('error', console.error)
+        .on('disconnected', setupDbConnection)
+        .once('open', setupServer);
+
+    mongoose.connect(process.env.MONGODB_URL, {
+        keepAlive: 1,
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    });
+}
+
+setupDbConnection();
+
+export default app;
+
+
+
 
