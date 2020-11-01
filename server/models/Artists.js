@@ -51,7 +51,7 @@ artistSchema.statics.vocabulary = () => {
             }
         },
         { $sort: { "count": -1 } },
-        { $limit: 100 }
+        { $limit: 500 }
     ]);
 }
 

@@ -1,4 +1,5 @@
 import Artist from '../models/Artists.js';
+import StopWords from '../models/StopWords.js';
 
 
 export async function allArtistsVocabulary(req, res) {
@@ -18,6 +19,13 @@ export async function wordFrequency(req, res) {
 
     try {
         const termFrequency = await Artist.vocabulary();
+        const stopWords = await StopWords.words();
+
+        // TODO filter stop words
+        /*for(let word in stopWords) {
+            let stopWord = stopWords[word]['words']
+        }*/
+
         res.json(termFrequency);
     }
     catch (err) {
