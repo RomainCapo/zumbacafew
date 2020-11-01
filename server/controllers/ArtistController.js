@@ -1,5 +1,6 @@
 import Artist from '../models/Artists.js';
 
+
 export async function allArtistsVocabulary(req, res) {
     res.setHeader('Content-Type', 'application/json');
 
@@ -12,26 +13,29 @@ export async function allArtistsVocabulary(req, res) {
     }
 }
 
-export function wordFrequency(res, req) {
-    // res.setHeader('Content-Type', 'application/json')
+export async function wordFrequency(req, res) {
+    res.setHeader('Content-Type', 'application/json')
 
-    // client.connect().then((client) => {
-    //     var db = client.db('zumba_cafew')
-    //     var termFreq = {}
-    //     db.collection("artists").find().forEach((doc) => {
-    //         let voc = doc.vocab
-    //         for (const [term, freq] of Object.entries(voc)) {
-    //             if (term in termFreq) {
-    //                 termFreq[term] += freq
-    //             }
-    //             else {
-    //                 termFreq[term] = freq
-    //             }
-    //         }
-    //     })
-    //     console.log(termFreq)
-    //     res.json(termFreq)
-    // }).catch((error) => {
-    //     console.error(error)
-    // })
+    try {
+        const termFrequency = await Artist.vocabulary();
+        console.log(termFrequency);
+        /*
+        let termFrequency = new Map();
+        for(let artistVoc of vocabulary) {
+            for(let term in artistVoc['vocab']) {
+                let freq = artistVoc['vocab'][term]
+                if (termFrequency.has(term)) {
+                    termFrequency.set(term, termFrequency.get(term) + freq);
+                }
+                else {
+                    termFrequency.set(term, freq);
+                }
+            }
+        }*/
+
+        res.json(termFrequency);
+    }
+    catch (err) {
+        console.error(err)
+    }
 }

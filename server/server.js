@@ -11,7 +11,8 @@ dotenv.config();
 var app = express();
 
 function setupServer() {
-    app.use(cors()); // TODO only for local dev only
+    if(process.env.ENV === "DEV")
+        app.use(cors());
 
     app.listen(process.env.PORT || 8080);
 
@@ -40,7 +41,3 @@ function setupDbConnection() {
 setupDbConnection();
 
 export default app;
-
-
-
-
