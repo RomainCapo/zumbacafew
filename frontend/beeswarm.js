@@ -53,7 +53,7 @@ svg.append("text")
     .style("text-anchor", "left")
     .html("Source: <a href='https://genius.com'>Genius</a>");
 
-d3.json("http://127.0.0.1:8080/all_artists").then( data => {
+d3.json("http://localhost:8080/api/artists/stats").then( data => {
     dataSet = data;
 
     redraw();
