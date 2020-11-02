@@ -28,6 +28,8 @@
         layout.start();
 
         function draw(words) {
+            var colors = d3.scaleSequential().domain([1, myWords.length]).range(["#8E59AB", "#00B263"]);
+
             svg.append("g")
                 .attr("width", width)
                 .attr("height", height)
@@ -36,7 +38,7 @@
                 .data(words)
                 .enter().append("text")
                 .style("font-size", function (d) { return d.size + "px"; })
-                .style("fill", "#000000")
+                .style("fill", (d) => colors(d.size))
                 .attr("text-anchor", "middle")
                 .style("font-family", "Impact")
                 .attr("transform", function (d) {
