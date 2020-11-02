@@ -23,7 +23,7 @@
             .words(myWords.map(function (d) { return { text: d._id, size: (d.count / mostFrequentWord) }; }))
             .padding(2)
             .rotate(function () { return ~~(Math.random() * 2) * 90; })
-            .fontSize(function (d) { return d.size * width / 3; })
+            .fontSize(function (d) { return d.size * width / 4; })
             .on("end", draw);
         layout.start();
 
