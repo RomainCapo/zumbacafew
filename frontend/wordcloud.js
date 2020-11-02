@@ -21,7 +21,7 @@
         var layout = d3.layout.cloud()
             .size([width, height])
             .words(myWords.map(function (d) { return { text: d._id, size: (d.count / mostFrequentWord) }; }))
-            .padding(2)
+            .padding(4)
             .rotate(function () { return ~~(Math.random() * 2) * 90; })
             .fontSize(function (d) { return d.size * width / 4; })
             .on("end", draw);
