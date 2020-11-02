@@ -1,52 +1,3 @@
-class WordHistogram{
-    constructor(data, numberBin){
-        this.data = data
-        this.numberBin = numberBin
-    }
-
-    _getInterval(){
-        let values = []
-        this.data.forEach(x => {
-            values.push(x.value)
-        });
-
-        return {"min": Math.min.apply(null, Object.values(values)),
-                 "max":Math.max.apply(null, Object.values(values))}
-    }
-
-    _computeBin(){
-        let minMax = this._getInterval()
-        let binWidth = (minMax.max - minMax.min) / this.numberBin;
-
-        let histogramBin = {}
-
-        let binInterval = []
-        
-        for(let i=minMax.min; i <= minMax.max; i+=binWidth){ binInterval.push(i)}
-
-        this.data.forEach(x => {
-            for(let i=0;i<binInterval.length;i++){
-
-                if(x.value > binInterval[i] && x.value < binInterval[i+1]){
-                    if(typeof(histogramBin[i]) == 'undefined'){
-                        histogramBin[i] = []
-                    }
-                    histogramBin[i].push(x)
-                }
-            }
-        })
-        return histogramBin
-    }
-
-    computeHistogram(div){
-        /*let bins = this._computeBin()
-
-        for(let i = 0; i < Object.keys(bins).length; i++){
-            div.innerHTML = '<div class="col-sm" style="text-align: center;">'
-            for(let j; i < Object.keys(bins[i]); j++){
-
-            }
-        }*/
         /*'IAM', 
     'jokair', 
     'mcbox', 
@@ -64,18 +15,75 @@ class WordHistogram{
     'imen es'
     'Casseurs Flowters'
     1995*/
+
+class WordHistogram{
+    constructor(data, numberBin){
+        this.data = data
+        this.numberBin = numberBin
+    }
+
+    _getInterval(){
+        let values = []
+        this.data.forEach(x => {
+            values.push(x.vocab_ratio)
+        });
+
+        return {"min": Math.min.apply(null, Object.values(values)),
+                 "max":Math.max.apply(null, Object.values(values))}
+    }
+
+    _computeBin(){
+        let minMax = this._getInterval()
+        let binWidth = (minMax.max - minMax.min) / this.numberBin;
+
+        let histogramBin = {}
+
+        this.binInterval = []
+        
+        for(let i=minMax.min; i <= minMax.max; i+=binWidth){ this.binInterval.push(i)}
+
+        this.data.forEach(x => {
+            for(let i=0;i<this.binInterval.length;i++){
+
+                if(x.vocab_ratio > this.binInterval[i] && x.vocab_ratio < this.binInterval[i+1]){
+                    if(typeof(histogramBin[i]) == 'undefined'){
+                        histogramBin[i] = []
+                    }
+                    histogramBin[i].push(x)
+                }
+            }
+        })
+        return histogramBin
+    }
+
+    computeHistogram(div){
+        let bins = this._computeBin()
+
+        let html = ''
+        for(let i = 0; i < Object.keys(bins).length; i++){
+            html += '<div class="col-sm">'
+            bins[i].sort((a, b) => (a.vocab_ratio < b.vocab_ratio) ? 1 : -1) // Sort artist
+
+            for(let j=0; j < Object.keys(bins[i]).length; j++){
+                html += '<span class="align-bottom y'+ Helper.ceilYear(bins[i][j].year) +'">' + bins[i][j].name + '</span><br>'
+            }
+
+            html += '<hr/><span>'+ Math.round(this.binInterval[i]*100)/100 +' - '+ Math.round(this.binInterval[i+1]*100)/100 +'</span></div>'
+        }
+        div.innerHTML= html
     }
 }
 
-fetch('http://127.0.0.1:8080/word_histogram').then((response) => {
+fetch('http://localhost:8080/api/artists/stats').then((response) => {
       if (response.status !== 200) {
         return;
       }
 
       response.json().then(function(data) {
+
         let wh = new WordHistogram(data, 6)
 
-        let div = document.getElementById("word-histogram")
+        let div = document.getElementById("word-histogram-chart")
 
         wh.computeHistogram(div)
       });

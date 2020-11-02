@@ -146,7 +146,6 @@ function computeBeeswarmSimulation(dataSet){
 
 function applyFilter(){
     dataSet.forEach((x)=>{
-
         if((x.gender == beeswarmParams.gender || beeswarmParams.gender == paramGender.all) && 
         (x.artist_type == beeswarmParams.artistType || beeswarmParams.artistType == paramArtistType.all) && 
         (Helper.ceilYear(x.year) == beeswarmParams.year || beeswarmParams.year == paramYear.all)){
