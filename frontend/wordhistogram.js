@@ -40,15 +40,16 @@ class WordHistogram{
 
         this.binInterval = []
         
-        for(let i=minMax.min; i <= minMax.max; i+=binWidth){ this.binInterval.push(i)}
-
+        for(let i=minMax.min; i <= minMax.max; i+=binWidth){ this.binInterval.push(Math.round(i*100)/100)}
+ 
         this.data.forEach(x => {
-            for(let i=0;i<this.binInterval.length;i++){
+            for(let i=0;i<=this.binInterval.length;i++){
 
-                if(x.vocab_ratio > this.binInterval[i] && x.vocab_ratio < this.binInterval[i+1]){
+                if(x.vocab_ratio >= this.binInterval[i] && x.vocab_ratio <= this.binInterval[i+1]){
                     if(typeof(histogramBin[i]) == 'undefined'){
                         histogramBin[i] = []
                     }
+                    //console.log(x.vocab_ratio);
                     histogramBin[i].push(x)
                 }
             }
