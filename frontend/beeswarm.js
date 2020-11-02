@@ -76,7 +76,7 @@ d3.json("http://localhost:8080/api/artists/stats").then( data => {
         // Create country circles
         let circles = svg.selectAll(".artists")
             .data(dataSet, function(d) { return d; });
-            
+
         dataSet.forEach((d) => {
             svg.append("svg:pattern")
                 .attr("id", "artist_" + Helper.replaceStringSpace(d.name))

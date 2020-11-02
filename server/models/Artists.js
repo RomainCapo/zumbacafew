@@ -30,5 +30,30 @@ artistSchema.statics.artistsStats = () => {
     ).lean().exec();
 };
 
+artistSchema.statics.vocabulary = () => {
+    return Artist.aggregate([
+        {
+            $project: {
+                matchWord: { $objectToArray: '$vocab' }
+            }
+        },
+        { $unwind: "$matchWord" },
+        {
+            $project: {
+                _id: "$matchWord.k",
+                count: "$matchWord.v"
+           }
+        },
+        {
+        $group: {
+                _id: "$_id",
+                count: { "$sum": "$count" }
+            }
+        },
+        { $sort: { "count": -1 } },
+        { $limit: 500 }
+    ]);
+}
+
 const Artist = mongoose.model('artist', artistSchema);
 export default Artist;
