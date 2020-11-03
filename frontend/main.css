@@ -74,7 +74,7 @@ div.tooltip {
 
 #word-histogram{
     padding-bottom: 100px;
-    padding-bottom: 100px;
+    padding-top: 100px;
     background-color:  rgb(247, 247, 247);
     margin-bottom: 70px;
 }
@@ -88,11 +88,16 @@ div.tooltip {
     border-top: 1px solid black;
 }
 
-#word-histogram #legend{
+#word-histogram #legend-container{
     width: 10%;
     text-align: center;
-    position: relative;
-    top: 50px;
+    float: left;
+}
+
+#word-histogram #criterion-container{
+    width: 10%;
+    float: right;
+    text-align: center;
 }
 
 #word-histogram #source{
@@ -119,6 +124,22 @@ div.tooltip {
 }
 
 #word-histogram .y2020{
+    color: black;
+}
+
+#word-histogram .c0{
+    color:rgb(142, 89, 171);
+}
+
+#word-histogram .c1{
+    color:rgb(240, 71, 112);
+}
+
+#word-histogram .c2{
+    color: rgb(0, 178, 99);
+}
+
+#word-histogram .c3{
     color: black;
 }
 

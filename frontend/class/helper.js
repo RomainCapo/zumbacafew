@@ -34,10 +34,33 @@ class Helper{
         return french
     }
 
+    static criterionToFrench(criterion){
+        let french = ""
+        switch(criterion){
+            case "gender":
+                french = "Sexe"
+                break
+            case "year":
+                french = "Année"
+                break
+            case "artist_type" :
+                french = "Type d'artiste"
+                break
+            default :
+                french = "Inconnu"
+        }
+        return french
+    }
+
     static ceilYear(year){
         let yearStr = year.toString()
         yearStr = yearStr.slice(0, -1) + "0"
         return parseInt(yearStr)
+    }
+
+    static round(number, decimal=2){
+        let factor = Math.pow(10,decimal)
+        return Math.round(number*factor)/factor
     }
 }
 
