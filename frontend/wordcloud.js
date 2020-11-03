@@ -21,13 +21,15 @@
         var layout = d3.layout.cloud()
             .size([width, height])
             .words(myWords.map(function (d) { return { text: d._id, size: (d.count / mostFrequentWord) }; }))
-            .padding(2)
+            .padding(4)
             .rotate(function () { return ~~(Math.random() * 2) * 90; })
-            .fontSize(function (d) { return d.size * width / 3; })
+            .fontSize(function (d) { return d.size * width / 4; })
             .on("end", draw);
         layout.start();
 
         function draw(words) {
+            var colors = d3.scaleSequential().domain([1, myWords.length]).range(["#8E59AB", "#00B263"]);
+
             svg.append("g")
                 .attr("width", width)
                 .attr("height", height)
@@ -36,7 +38,7 @@
                 .data(words)
                 .enter().append("text")
                 .style("font-size", function (d) { return d.size + "px"; })
-                .style("fill", "#000000")
+                .style("fill", (d) => colors(d.size))
                 .attr("text-anchor", "middle")
                 .style("font-family", "Impact")
                 .attr("transform", function (d) {

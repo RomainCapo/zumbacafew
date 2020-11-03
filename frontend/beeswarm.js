@@ -106,10 +106,11 @@ class Beeswarm{
                 .style("fill", function(d) { return "url(#artist_" + Helper.replaceStringSpace(d.name) + ")"; })
 
             let self = this
-            d3.selectAll(".artists").on("mousemove", function(d)  {
+            d3.selectAll(".artists").on("mousemove", function(event, d)  {
+
                 self.tooltip.html('<strong>Nom: '+d.name+'</strong><br>Mot unique par musique: ' + Helper.round(d.vocab_ratio) + '<br>Genre: ' + Helper.sexToFrench(d.gender) + '<br>Type d\'artiste: ' + Helper.artistTypeToFrench(d.artist_type) + '<br>Année: ' + d.year + '<br>Nombre de musique: ' + d.number_songs)
-                .style('top', d3.event.pageY - 12 + 'px')
-                .style('left', d3.event.pageX + 25 + 'px')
+                .style('top', event.y - 12 + 'px')
+                .style('left', event.x + 25 + 'px')
                 .style("opacity", 0.9);
 
                 self.xLine.attr("x1", d3.select(this).attr("cx"))

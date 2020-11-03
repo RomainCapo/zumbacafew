@@ -18,13 +18,11 @@ export async function wordFrequency(req, res) {
     res.setHeader('Content-Type', 'application/json')
 
     try {
-        const termFrequency = await Artist.vocabulary();
-        const stopWords = await StopWords.words();
+        let termFrequency = await Artist.vocabulary();
+        let stopWords = await StopWords.words();
 
-        // TODO filter stop words
-        /*for(let word in stopWords) {
-            let stopWord = stopWords[word]['words']
-        }*/
+        stopWords = stopWords[0]["words"];
+        termFrequency = termFrequency.filter(term => !stopWords.includes(term["_id"]));
 
         res.json(termFrequency);
     }
