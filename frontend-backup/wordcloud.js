@@ -27,15 +27,15 @@
             .on("end", draw);
         layout.start();
 
-        function draw(words) {
-            var colors = d3.scaleSequential().domain([1, myWords.length]).range(["#8E59AB", "#00B263"]);
+        function draw(word) {
+            var colors = d3.scaleSequential().domain([1, this.termFrequency.length]).range(["#8E59AB", "#00B263"]);
 
             svg.append("g")
                 .attr("width", width)
                 .attr("height", height)
                 .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
                 .selectAll("text")
-                .data(words)
+                .data(word)
                 .enter().append("text")
                 .style("font-size", function (d) { return d.size + "px"; })
                 .style("fill", (d) => colors(d.size))
