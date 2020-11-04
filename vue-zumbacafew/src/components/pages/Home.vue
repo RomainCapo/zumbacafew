@@ -1,33 +1,20 @@
 <template>
-  <div>
-    <h1>YOOOOOOO</h1>
-    <p> {{ msg }} </p>
-    <h2>Test</h2>
-  </div>
+  <Header/>
+  <Beeswarm/>
+  <Footer/>
 </template>
 
 <script>
+import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer'
+//import Beeswarm from '@/components/charts/Beeswarm'
+
 export default {
   name: 'Home',
-  props: {
-    msg: String
+  components: {
+    Header,
+    Footer,
+    //Beeswarm
   }
 }
 </script>
-
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
