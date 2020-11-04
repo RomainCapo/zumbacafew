@@ -1,6 +1,9 @@
 <template>
-  <h1>YOOOOOOO</h1>
-  <p>{{ msg }}</p>
+  <div>
+    <h1>YOOOOOOO</h1>
+    <p> {{ msg }} </p>
+    <h2>Test</h2>
+  </div>
 </template>
 
 <script>
@@ -12,7 +15,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h3 {
   margin: 40px 0 0;
