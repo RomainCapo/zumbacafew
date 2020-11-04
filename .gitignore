@@ -1,2 +1,26 @@
 *.csv
 server/node_modules/*
+
+vue-zumbacafew/.DS_Store
+vue-zumbacafew/node_modules
+vue-zumbacafew/dist
+
+
+# local env files
+vue-zumbacafew/.env.local
+vue-zumbacafew/.env.*.local
+
+# Log files
+vue-zumbacafew/npm-debug.log*
+vue-zumbacafew/yarn-debug.log*
+vue-zumbacafew/yarn-error.log*
+vue-zumbacafew/pnpm-debug.log*
+
+# Editor directories and files
+vue-zumbacafew/.idea
+vue-zumbacafew/.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
