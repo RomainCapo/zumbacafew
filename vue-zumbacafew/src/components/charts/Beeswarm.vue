@@ -77,14 +77,13 @@
 </template>
 
 <script>
-//import Beeswarm from "@/services/class/Beeswarm";
-
 import * as d3 from "d3";
 import Helper from '@/services/class/Helper.js'
 
 export default {
   name: "Beeswarm",
   props: {
+    artistsStats: Object,
     height: {
       type: Number,
       default: 600
@@ -123,7 +122,6 @@ export default {
     }
   },
   mounted() {
-      //console.log(this.height);
     this.init();
     this.computeChart();
   },
@@ -181,77 +179,74 @@ export default {
         this.addEventListenerSearchBar()
     },
     computeChart(){
-        d3.json(process.env.VUE_APP_BACKENDURL + "artists/stats").then( data => {
-            this.dataSet = data;
-            this.xScale = d3.scaleLinear().range([ this.margin.left, this.width - this.margin.right ])
+        this.xScale = d3.scaleLinear().range([ this.margin.left, this.width - this.margin.right ])
 
-            this.xScale.domain(d3.extent(this.dataSet, function(d) {
-                return d["vocab_ratio"]
-            }));
+        this.xScale.domain(d3.extent(this.artistsStats, function(d) {
+            return d["vocab_ratio"]
+        }));
 
-            let xAxis = d3.axisBottom(this.xScale).ticks(25).tickSizeOuter(0);
+        let xAxis = d3.axisBottom(this.xScale).ticks(25).tickSizeOuter(0);
 
-            d3.select(".x.axis").call(xAxis);
+        d3.select(".x.axis").call(xAxis);
 
-            this.computeBeeswarmSimulation(this.xScale)
+        this.computeBeeswarmSimulation(this.xScale)
 
-            // Create country circles
-            let circles = this.svg.selectAll(".artists").data(this.dataSet, function(d) { return d; });
+        // Create country circles
+        let circles = this.svg.selectAll(".artists").data(this.artistsStats, function(d) { return d; });
 
-            this.dataSet.forEach((d) => {
-                this.svg.append("svg:pattern")
-                .attr("id", "artist_" + Helper.replaceStringSpace(d.name))
-                .attr("width", 1) 
-                .attr("height", 1)
-                    .append("svg:image")
-                    .attr("stroke-width", 0)
-                    .attr("xlink:href", d.image_url)
-                    .attr("width", this.circle_focus_radius*2)
-                    .attr("height", this.circle_focus_radius*2)
-                    .attr("x", 0)
-                    .attr("y", 0)
-                    .attr("preserveAspectRatio", "none")
-            })
-
-            circles.enter()
-            .append("circle")
-            .attr("class", "artists")
-            .attr("cx", 0)
-            .attr("cy", (this.height / 2) - this.margin.bottom / 2)
-            .attr("r", this.circle_focus_radius)
-            .attr("id", function(d) { return "circle_" + Helper.replaceStringSpace(d.name); })
-            .merge(circles)
-                .transition()
-                .duration(2000)
-                .attr("cx", function(d) { return d.x; })
-                .attr("cy", function(d) { return d.y; })
-                .style("fill", function(d) { return "url(#artist_" + Helper.replaceStringSpace(d.name) + ")"; })
-
-            let self = this
-            d3.selectAll(".artists").on("mousemove", function(event, d)  {
-
-                self.tooltip.html('<strong>Nom: '+d.name+'</strong><br>Mot unique par musique: ' + Helper.round(d.vocab_ratio) + '<br>Genre: ' + Helper.sexToFrench(d.gender) + '<br>Type d\'artiste: ' + Helper.artistTypeToFrench(d.artist_type) + '<br>Année: ' + d.year + '<br>Nombre de musique: ' + d.number_songs)
-                .style('top', event.y - 12 + 'px')
-                .style('left', event.x + 25 + 'px')
-                .style("opacity", 0.9);
-
-                self.xLine.attr("x1", d3.select(this).attr("cx"))
-                .attr("y1", d3.select(this).attr("cy"))
-                .attr("y2", (self.height - self.margin.bottom))
-                .attr("x2",  d3.select(this).attr("cx"))
-                .attr("opacity", 1);
-
-            }).on("mouseout", x => {
-                self.tooltip.style("opacity", 0);
-                self.xLine.attr("opacity", 0);
-                return x;
-            });
+        this.artistsStats.forEach((d) => {
+            this.svg.append("svg:pattern")
+            .attr("id", "artist_" + Helper.replaceStringSpace(d.name))
+            .attr("width", 1) 
+            .attr("height", 1)
+                .append("svg:image")
+                .attr("stroke-width", 0)
+                .attr("xlink:href", d.image_url)
+                .attr("width", this.circle_focus_radius*2)
+                .attr("height", this.circle_focus_radius*2)
+                .attr("x", 0)
+                .attr("y", 0)
+                .attr("preserveAspectRatio", "none")
         })
+
+        circles.enter()
+        .append("circle")
+        .attr("class", "artists")
+        .attr("cx", 0)
+        .attr("cy", (this.height / 2) - this.margin.bottom / 2)
+        .attr("r", this.circle_focus_radius)
+        .attr("id", function(d) { return "circle_" + Helper.replaceStringSpace(d.name); })
+        .merge(circles)
+            .transition()
+            .duration(2000)
+            .attr("cx", function(d) { return d.x; })
+            .attr("cy", function(d) { return d.y; })
+            .style("fill", function(d) { return "url(#artist_" + Helper.replaceStringSpace(d.name) + ")"; })
+
+        let self = this
+        d3.selectAll(".artists").on("mousemove", function(event, d)  {
+
+            self.tooltip.html('<strong>Nom: '+d.name+'</strong><br>Mot unique par musique: ' + Helper.round(d.vocab_ratio) + '<br>Genre: ' + Helper.sexToFrench(d.gender) + '<br>Type d\'artiste: ' + Helper.artistTypeToFrench(d.artist_type) + '<br>Année: ' + d.year + '<br>Nombre de musique: ' + d.number_songs)
+            .style('top', event.y - 12 + 'px')
+            .style('left', event.x + 25 + 'px')
+            .style("opacity", 0.9);
+
+            self.xLine.attr("x1", d3.select(this).attr("cx"))
+            .attr("y1", d3.select(this).attr("cy"))
+            .attr("y2", (self.height - self.margin.bottom))
+            .attr("x2",  d3.select(this).attr("cx"))
+            .attr("opacity", 1);
+
+        }).on("mouseout", x => {
+            self.tooltip.style("opacity", 0);
+            self.xLine.attr("opacity", 0);
+            return x;
+        });
     },
     computeBeeswarmSimulation(xscale){
 
         // Create simulation with specified dataset
-        let simulation = d3.forceSimulation(this.dataSet)
+        let simulation = d3.forceSimulation(this.artistsStats)
         // Apply positioning force to push nodes towards desired position along X axis
         .force("x", d3.forceX(function(d) {
             // Mapping of values from total/perCapita column of dataset to range of SVG chart (<margin.left, margin.right>)
@@ -262,12 +257,12 @@ export default {
         .stop();  // Stop simulation from starting automatically
     
         // Manually run simulation
-        for (let i = 0; i < this.dataSet.length; ++i) {
+        for (let i = 0; i < this.artistsStats.length; ++i) {
             simulation.tick(10);
         }
     },
     applyFilter(){
-        this.dataSet.forEach(x =>{
+        this.artistsStats.forEach(x =>{
             if((x.gender == this.beeswarmParams.gender || this.beeswarmParams.gender == this.paramGender.all) && 
             (x.artist_type == this.beeswarmParams.artistType || this.beeswarmParams.artistType == this.paramArtistType.all) && 
             (Helper.ceilYear(x.year) == this.beeswarmParams.year || this.beeswarmParams.year == this.paramYear.all)){
@@ -313,7 +308,7 @@ export default {
                 })
             }
         
-            this.dataSet.forEach(x => {
+            this.artistsStats.forEach(x => {
                 let name = x.name.toLowerCase()
         
                 if(name.includes(input.toLowerCase())){

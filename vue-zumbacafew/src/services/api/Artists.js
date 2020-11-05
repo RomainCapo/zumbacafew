@@ -7,5 +7,8 @@ export default {
   name: "ArtistsAPI",
   getTermFrequency () {
     return axios.get("/artists/termfrequency").then(result => result.data);
+  },
+  getStats(){
+    return axios.get("/artists/stats").then(result => result.data);
   }
 }
