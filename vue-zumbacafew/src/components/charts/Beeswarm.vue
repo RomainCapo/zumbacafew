@@ -1,22 +1,22 @@
 <template>
         <div class="container" id="beeswarm">
             <p>Visualiser quel artiste de Hip-hop fraçais a le vocabulaire le plus riche !</p>
-            <div id="svganchor" class="graph centered"></div>
+            <div ref="svganchor" class="graph centered"></div>
             <div class="row radio-button-beeswarm">
                 <div class="col-sm" style="text-align: center;">
                     <strong>Sexe</strong>
                     <div class="form-check">
-                        <input class="form-check-input radio-beeswarm" type="radio" name="radio-sex" id="radio-sex-all"
-                            value="All" checked>
+                        <input class="form-check-input" type="radio" name="radio-sex" id="radio-sex-all"
+                            value="All" checked >
                         <label class="form-check-label" for="radio-sex-all">Les deux</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input radio-beeswarm" type="radio" name="radio-sex" id="radio-men"
-                            value="Men">
+                        <input class="form-check-input" type="radio" name="radio-sex" id="radio-men"
+                            value="Men" >
                         <label class="form-check-label" for="radio-men">Homme</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input radio-beeswarm" type="radio" name="radio-sex" id="radio-woman"
+                        <input class="form-check-input" type="radio" name="radio-sex" id="radio-woman"
                             value="Woman">
                         <label class="form-check-label" for="radio-woman">Femme</label>
                     </div>
@@ -24,17 +24,17 @@
                 <div class="col-sm" style="text-align: center;">
                     <strong>Type d'artiste</strong>
                     <div class="form-check">
-                        <input class="form-check-input radio-beeswarm" type="radio" name="radio-artist-type"
+                        <input class="form-check-input" type="radio" name="radio-artist-type"
                             id="radio-artist-type-all" value="All" checked>
                         <label class="form-check-label" for="radio-artist-type-all">Les deux</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input radio-beeswarm" type="radio" name="radio-artist-type"
+                        <input class="form-check-input" type="radio" name="radio-artist-type"
                             id="radio-individual" value="Individual">
                         <label class="form-check-label" for="radio-individual">Artiste solo</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input radio-beeswarm" type="radio" name="radio-artist-type"
+                        <input class="form-check-input" type="radio" name="radio-artist-type"
                             id="radio-group" value="Group">
                         <label class="form-check-label" for="radio-group">Groupe</label>
                     </div>
@@ -42,27 +42,27 @@
                 <div class="col-sm" style="text-align: center;">
                     <strong>Année</strong>
                     <div class="form-check">
-                        <input class="form-check-input radio-beeswarm" type="radio" name="radio-year" id="radio-year-all"
+                        <input class="form-check-input" type="radio" name="radio-year" id="radio-year-all"
                             value="All" checked>
                         <label class="form-check-label" for="radio-year-all">Toutes les années</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input radio-beeswarm" type="radio" name="radio-year" id="radio-1990"
+                        <input class="form-check-input" type="radio" name="radio-year" id="radio-1990"
                             value="1990">
                         <label class="form-check-label" for="radio-1990">1990</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input radio-beeswarm" type="radio" name="radio-year" id="radio-2000"
+                        <input class="form-check-input" type="radio" name="radio-year" id="radio-2000"
                             value="2000">
                         <label class="form-check-label" for="radio-2000">2000</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input radio-beeswarm" type="radio" name="radio-year" id="radio-2010"
+                        <input class="form-check-input" type="radio" name="radio-year" id="radio-2010"
                             value="2010">
                         <label class="form-check-label" for="radio-2010">2010</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input radio-beeswarm" type="radio" name="radio-year" id="radio-2020"
+                        <input class="form-check-input" type="radio" name="radio-year" id="radio-2020"
                             value="2020">
                         <label class="form-check-label" for="radio-2020">2020</label>
                     </div>
@@ -77,76 +77,111 @@
 </template>
 
 <script>
+//import Beeswarm from "@/services/class/Beeswarm";
+
+import * as d3 from "d3";
+import Helper from '@/services/class/Helper.js'
+
 export default {
-    name: 'Beeswarm'
-}
-//import * as d3 from "d3";
-
-//import Helper from '@/class/Helper.js'
-
-/*class Beeswarm{
-    constructor(svg_element="#svganchor", height=600, width=1200, margin={top: 0, right: 40, bottom: 34, left: 40}, circle_focus_radius=40, circle_hide_radius=5, explode_force=45){
-    this.height = height
-    this.width = width
-    this.margin = margin 
-    this.circle_focus_radius = circle_focus_radius
-    this.circle_hide_radius = circle_hide_radius
-    this.explode_force = explode_force
-
-    this.svg = d3.select(svg_element)
-    .append("svg")
-    .attr("width", this.width)
-    .attr("height", this.height)
-
-    this.svg.append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(0," + (this.height - this.margin.bottom) + ")")
-
-    this.xLine = this.svg.append("line")
-    .attr("stroke", "rgb(0,0,0)")
-    .attr("stroke-dasharray", "10,5");
-
-    this.tooltip = d3.select("#svganchor").append("div")
-        .attr("class", "tooltip")
-        .style("opacity", 0);
-
-    this.paramGender = {men:"Men", woman:"Woman", all:"All"}
-    this.paramArtistType = {individual:"Individual", group:"Group", all:"All"}
-    this.paramYear = {y1990:"1990", y2000:"2000", y2010:"2010", y2020:"2020", all:"All"}
-
-    this.beeswarmParams = {}
-    this.beeswarmParams.gender = this.paramGender.all
-    this.beeswarmParams.artistType = this.paramArtistType.all
-    this.beeswarmParams.year = this.paramYear.all
-
-    // Display x axis label
-    this.svg.append("text")
-    .attr("x", this.width/2)
-    .attr("y",  this.height)
-    .style("text-anchor", "middle")
-    .text("Nombre de mot");
-
-    // Display x axis label
-    this.svg.append("text")
-    .attr("x", 40)
-    .attr("y",  this.height)
-    .style("font-size", "10px")
-    .style("text-anchor", "left")
-    .html("Source: <a href='https://genius.com'>Genius</a>");
-    
-    this.elementsArray = document.querySelectorAll(".radio-beeswarm");
-    this.inputSearch = document.getElementById("input-artist-search")
-    console.log(this.inputSearch);
-    this.proposedArtistsDiv = document.getElementById("proposed-artists-container")
-    this.radioButtons = document.querySelectorAll(".radio-button-beeswarm input[type='radio']")
-
-    this.addEventListenerRadioButtons()
-
-    this.addEventListenerSearchBar()
+  name: "Beeswarm",
+  props: {
+    height: {
+      type: Number,
+      default: 600
+    },
+    width: {
+      type: Number,
+      default: 1200
+    },
+    marginBottom: {
+      type: Number,
+      default: 34
+    },
+    marginLeft: {
+      type: Number,
+      default: 40
+    },
+    marginRight: {
+      type: Number,
+      default: 40
+    },
+    marginTop: {
+      type: Number,
+      default: 0
+    },
+    circle_focus_radius: {
+        type: Number,
+        default: 40
+    },
+    circle_hide_radius:{
+        type: Number,
+        default: 5
+    },
+    explode_force:{
+        type:Number,
+        default: 45
     }
+  },
+  mounted() {
+      //console.log(this.height);
+    this.init();
+    this.computeChart();
+  },
+  methods:{
+    init(){
+        this.margin = {top: this.marginTop, right: this.marginRight, bottom: this.marginBottom, left: this.marginLeft}
 
+        this.svg = d3.select(this.$refs.svganchor)
+        .append("svg")
+        .attr("width", this.width)
+        .attr("height", this.height)
+
+        this.svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + (this.height - this.margin.bottom) + ")")
+
+        this.xLine = this.svg.append("line")
+        .attr("stroke", "rgb(0,0,0)")
+        .attr("stroke-dasharray", "10,5");
+
+        this.tooltip = d3.select(this.$refs.svganchor).append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
+
+        this.paramGender = {men:"Men", woman:"Woman", all:"All"}
+        this.paramArtistType = {individual:"Individual", group:"Group", all:"All"}
+        this.paramYear = {y1990:"1990", y2000:"2000", y2010:"2010", y2020:"2020", all:"All"}
+
+        this.beeswarmParams = {}
+        this.beeswarmParams.gender = this.paramGender.all
+        this.beeswarmParams.artistType = this.paramArtistType.all
+        this.beeswarmParams.year = this.paramYear.all
+
+        // Display x axis label
+        this.svg.append("text")
+        .attr("x", this.width/2)
+        .attr("y",  this.height)
+        .style("text-anchor", "middle")
+        .text("Nombre de mot");
+
+        // Display x axis label
+        this.svg.append("text")
+        .attr("x", 40)
+        .attr("y",  this.height)
+        .style("font-size", "10px")
+        .style("text-anchor", "left")
+        .html("Source: <a href='https://genius.com'>Genius</a>");
+        
+        this.inputSearch = document.getElementById("input-artist-search")
+        this.proposedArtistsDiv = document.getElementById("proposed-artists-container")
+        this.radioButtons = document.querySelectorAll(".radio-button-beeswarm input[type='radio']")
+
+        this.addEventListenerRadioButtons()
+
+        this.addEventListenerSearchBar()
+    },
     computeChart(){
-        d3.json("http://localhost:8080/api/artists/stats").then( data => {
+        d3.json(process.env.VUE_APP_BACKENDURL + "artists/stats").then( data => {
             this.dataSet = data;
             this.xScale = d3.scaleLinear().range([ this.margin.left, this.width - this.margin.right ])
 
@@ -209,11 +244,10 @@ export default {
             }).on("mouseout", x => {
                 self.tooltip.style("opacity", 0);
                 self.xLine.attr("opacity", 0);
-                return x
+                return x;
             });
         })
-    }
-
+    },
     computeBeeswarmSimulation(xscale){
 
         // Create simulation with specified dataset
@@ -231,8 +265,7 @@ export default {
         for (let i = 0; i < this.dataSet.length; ++i) {
             simulation.tick(10);
         }
-    }
-
+    },
     applyFilter(){
         this.dataSet.forEach(x =>{
             if((x.gender == this.beeswarmParams.gender || this.beeswarmParams.gender == this.paramGender.all) && 
@@ -243,8 +276,7 @@ export default {
                 this.hideArtist(x.name)
             }
         })
-    }
-
+    },
     focusArtist(name){
         d3.select("#circle_" + Helper.replaceStringSpace(name))
             .transition()
@@ -253,8 +285,7 @@ export default {
             .transition()
             .duration(1000)
             .attr("r", this.circle_focus_radius)
-    }
-    
+    },
     hideArtist(name){
         d3.select("#circle_" + Helper.replaceStringSpace(name))
             .transition()
@@ -262,8 +293,7 @@ export default {
             .attr("r", this.circle_hide_radius)
             .transition()
             .style("fill", null)
-    }
-
+    },
     addEventListenerSearchBar(){
         this.inputSearch.addEventListener("input", e =>{
             let input = e.target.value
@@ -288,7 +318,7 @@ export default {
         
                 if(name.includes(input.toLowerCase())){
                     if(input != ""){
-                        this.proposedArtistsDiv.innerHTML += "<div class='proposed-artist' onclick='Beeswarm.artistClick(this)'>" + x.name + "</div>" 
+                        this.proposedArtistsDiv.innerHTML += "<div class='proposed-artist' @click='artistClick'>" + x.name + "</div>" 
                     }
                     this.focusArtist(x.name)
                 }else{
@@ -296,10 +326,9 @@ export default {
                 }
             })
         })
-    }
-
+    },
     addEventListenerRadioButtons(){
-        this.elementsArray.forEach(elem => {
+        this.radioButtons.forEach(elem => {
             elem.addEventListener("input", e => {
                 switch(e.target.name){
                     case "radio-sex":
@@ -315,8 +344,7 @@ export default {
                 this.applyFilter();
                 });
             });
-    }
-    
+    },
     resetFilter(){
         document.getElementById("radio-sex-all").checked = true
         document.getElementById("radio-artist-type-all").checked = true
@@ -328,16 +356,6 @@ export default {
     
         this.applyFilter()
     }
-
-    static artistClick(e){
-        let inputSearch = document.getElementById("input-artist-search")
-
-        inputSearch.value = e.innerHTML
-        inputSearch.dispatchEvent(new Event('input'));
-        document.getElementById("proposed-artists-container").innerHTML = "";
-    }
+  }
 }
-
-let b = new Beeswarm()
-b.computeChart();*/
 </script>

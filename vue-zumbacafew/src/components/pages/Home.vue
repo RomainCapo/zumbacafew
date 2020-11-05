@@ -17,6 +17,7 @@
 import ArtistsApi from "@/services/api/Artists";
 import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
+import Beeswarm from '@/components/charts/Beeswarm.vue';
 import WordCloud from "@/components/charts/WordCloud.vue";
 
 export default {
@@ -24,6 +25,7 @@ export default {
   components: {
     Footer,
     Header,
+    Beeswarm,
     WordCloud,
   },
   data() {

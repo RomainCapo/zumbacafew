@@ -1,4 +1,4 @@
-class Helper{
+export default class Helper{
     
     static replaceStringSpace(str, symbol="_"){
         return str.replace(/\s+/g, symbol)
@@ -63,4 +63,3 @@ class Helper{
         return Math.round(number*factor)/factor
     }
 }
-
