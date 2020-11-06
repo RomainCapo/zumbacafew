@@ -1,5 +1,10 @@
-import { Router } from "express";
-import { allArtistsVocabulary, wordFrequency } from "../../controllers/ArtistController.js";
+import {
+    Router
+} from "express";
+import {
+    allArtistsVocabulary,
+    wordFrequency
+} from "../../controllers/ArtistController.js";
 
 var router = Router();
 

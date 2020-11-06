@@ -20,11 +20,7 @@
     <div id="beeswarm">
       <h1 class="title">Nombre de mots uniques par artistes</h1>
       <div class="container">
-        <Beeswarm
-          ref="beeswarm"
-          v-if="artistsStats !== null"
-          v-bind:artistsStats="artistsStats"
-        />
+        <Beeswarm ref="beeswarm" v-if="artistsStats !== null" v-bind:artistsStats="artistsStats" />
         <div class="row radio-button-beeswarm">
           <GroupRadio
             v-bind:legend="'Sexe'"
@@ -78,10 +74,7 @@
         libero quod magni? Plus d'information <a href="">ici</a>
       </p>
     </div>
-    <WordCloud
-      v-if="termFrequency !== null"
-      v-bind:termFrequency="termFrequency"
-    >
+    <WordCloud v-if="termFrequency !== null" v-bind:termFrequency="termFrequency">
     </WordCloud>
     <div class="container inter-text annotation">
       <p>
@@ -119,22 +112,52 @@ export default {
   data() {
     return {
       artistsStats: null,
-      filtersArtistType: [
-        { key: "all", value: "Les deux" },
-        { key: "individual", value: "Individuel" },
-        { key: "group", value: "Groupe" },
+      filtersArtistType: [{
+          key: "all",
+          value: "Les deux"
+        },
+        {
+          key: "individual",
+          value: "Individuel"
+        },
+        {
+          key: "group",
+          value: "Groupe"
+        },
       ],
-      filtersDecade: [
-        { key: "all", value: "Toutes les années" },
-        { key: "1990", value: "1990" },
-        { key: "2000", value: "2000" },
-        { key: "2010", value: "2010" },
-        { key: "2020", value: "2020" },
+      filtersDecade: [{
+          key: "all",
+          value: "Toutes les années"
+        },
+        {
+          key: "1990",
+          value: "1990"
+        },
+        {
+          key: "2000",
+          value: "2000"
+        },
+        {
+          key: "2010",
+          value: "2010"
+        },
+        {
+          key: "2020",
+          value: "2020"
+        },
       ],
-      filtersSex: [
-        { key: "all", value: "Les deux" },
-        { key: "men", value: "Homme" },
-        { key: "woman", value: "Femme" },
+      filtersSex: [{
+          key: "all",
+          value: "Les deux"
+        },
+        {
+          key: "men",
+          value: "Homme"
+        },
+        {
+          key: "woman",
+          value: "Femme"
+        },
       ],
       termFrequency: null,
     };

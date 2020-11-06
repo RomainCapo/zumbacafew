@@ -1,4 +1,5 @@
 *.csv
+*.env
 server/node_modules/*
 
 vue-zumbacafew/.DS_Store

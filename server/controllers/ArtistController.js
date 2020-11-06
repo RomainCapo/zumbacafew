@@ -8,8 +8,7 @@ export async function allArtistsVocabulary(req, res) {
     try {
         const artistStats = await Artist.artistsStats();
         res.json(artistStats);
-    }
-    catch (err) {
+    } catch (err) {
         console.error(err)
     }
 }
@@ -25,8 +24,7 @@ export async function wordFrequency(req, res) {
         termFrequency = termFrequency.filter(term => !stopWords.includes(term["_id"]));
 
         res.json(termFrequency);
-    }
-    catch (err) {
+    } catch (err) {
         console.error(err)
     }
 }
