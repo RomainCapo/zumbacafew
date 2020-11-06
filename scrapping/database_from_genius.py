@@ -54,29 +54,27 @@ with open(FILENAME, encoding='utf-8') as file:
         
         artist_dict["name"] = artist.name
         artist_dict["image_url"] = artist.image_url
+        artist_dict["sexe"] = "Woman" if artist_name in womans else "Men"
+        artist_dict["type"] = "Group" if artist_name in groups else "Individual"
 
-        if artist_name in womans:
-            artist_dict["sexe"] = "Woman"
-        else:
-            artist_dict["sexe"] = "Men"
-
-        if artist_name in groups:
-            artist_dict["type"] = "Group"
-        else:
-            artist_dict["type"] = "Individual"
-            
         vocab = {}
         years = []
         year_value = "0"
         for song in artist.songs:
-            if song.year:
-                year_value = int(song.year.split("-")[0])
-                years.append(year_value)
-            vocab[year_value] = process_lycrics(song.lyrics)
+            if song.lyrics: 
+                if song.year:
+                    year_value = int(song.year.split("-")[0])
+                    years.append(year_value)
+                    
+                    try :
+                        vocab[year_value].extend(process_lycrics(song.lyrics))
+                    except :
+                        vocab[year_value] = []
 
-        vocab_list = list(vocab.values())[0]
+        vocab_list = []
+        [vocab_list.extend(w) for w in vocab.values()]
 
-        artist_dict["vocab_length"] = len(vocab_list) if len(vocab_list) < LYRICS_THRESHOLD else LYRICS_THRESHOLD
+        artist_dict["vocab_length"] = (len(vocab_list) if len(vocab_list) < LYRICS_THRESHOLD else LYRICS_THRESHOLD)
         artist_dict["vocab_number_unique_word"] = len(list(set(vocab_list[0:LYRICS_THRESHOLD])))
         artist_dict["is_complete"] = False if len(vocab_list) < LYRICS_THRESHOLD else True
         artist_dict["num_songs"] = artist.num_songs
@@ -84,4 +82,6 @@ with open(FILENAME, encoding='utf-8') as file:
         artist_dict["years"] = years
         artist_dict["vocab"] = count_words_by_year(vocab)
         
-        mycol.insert_one(artist_dict)
+        print(artist_dict)
+        #mycol.insert_one(artist_dict)
+        break

@@ -3,16 +3,25 @@ body {
     font-family: 'Kanit';
 }
 
+a:hover{
+    color:black;
+}
+
+a {
+    color:  rgb(0, 178, 99);
+}
+
 #intro {
     text-align: center;
     font-size: 75px;
     font-weight: bold;
-    height: 300px;
+    height: 250px;
     margin-bottom: 20px;
 }
 
 .title{
     padding-top: 20px;
+    font-size: 50px;
 }
 
 #intro p {
@@ -151,8 +160,11 @@ div.tooltip {
     color: black;
 }
 
-.inter-text{
+.annotation{
     padding: 50px;
+    font-size: 24px;
+    width: 80%;
+    text-align: left;
 }
 
 .footer {

@@ -8,9 +8,17 @@
         <p id="right">de vos rappeurs préférés !</p>
       </div>
     </div>
-
+    <div class="container inter-text annotation">
+      <p>
+        Toutes les données de ce projet proviennent du site web
+        <a href="https://genius.com/">Genius</a>. Pour chaque artiste, le nombre
+        de mots uniques est calculé sur un ensemble de
+        <strong>20'000 mots</strong> récupéré sur ses chansons les plus
+        populaires.
+      </p>
+    </div>
     <div id="beeswarm">
-      <h1 class="title">Nombre de mots uniques par chanteur</h1>
+      <h1 class="title">Nombre de mots uniques par artistes</h1>
       <div class="container">
         <Beeswarm
           ref="beeswarm"
@@ -39,24 +47,30 @@
             v-on:radio-btn-clicked="filterBeeSwarm"
             ref="radioYear"
           />
-          <SearchBar v-bind:legend="'Recherche d\'artistes'" v-on:search-input="searchBeeSwarm" ref="searchBeeswarm"/>
+          <SearchBar
+            v-bind:legend="'Recherche d\'artistes'"
+            v-on:search-input="searchBeeSwarm"
+            ref="searchBeeswarm"
+          />
         </div>
       </div>
     </div>
 
-    <div class="container inter-text">
+    <div class="container inter-text annotation">
       <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt natus,
-        reprehenderit quibusdam dolorum aliquid error deleniti aut corporis
-        iusto, accusamus sequi voluptatem eos quisquam aliquam! Atque sequi
-        libero quod magni? Plus d'information <a href="">ici</a>
+        Ce graphique graphique permet de voir la richesse du vocabulaire de
+        chaque artiste.
       </p>
     </div>
-    <WordHistogram
-      v-if="artistsStats !== null"
-      v-bind:artistsStats="artistsStats"
-    />
-    <div class="container inter-text">
+    <div id="word-histogram">
+        <h1 class="title">Histogramme du nombre de mot unique par artiste</h1>
+        <WordHistogram
+          v-if="artistsStats !== null"
+          v-bind:artistsStats="artistsStats"
+        />
+    </div>
+
+    <div class="container inter-text annotation">
       <p>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt natus,
         reprehenderit quibusdam dolorum aliquid error deleniti aut corporis
@@ -69,7 +83,7 @@
       v-bind:termFrequency="termFrequency"
     >
     </WordCloud>
-    <div class="container inter-text">
+    <div class="container inter-text annotation">
       <p>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt natus,
         reprehenderit quibusdam dolorum aliquid error deleniti aut corporis
@@ -100,7 +114,7 @@ export default {
     Header,
     WordCloud,
     WordHistogram,
-    SearchBar
+    SearchBar,
   },
   data() {
     return {
@@ -133,9 +147,13 @@ export default {
     filterBeeSwarm(e) {
       this.$refs.beeswarm.filter(e);
     },
-    searchBeeSwarm(e){
-      this.$refs.beeswarm.search(e, this.$refs.searchBeeswarm, [this.$refs.radioSex, this.$refs.radioArtistType, this.$refs.radioYear]);
-    }
-  }
+    searchBeeSwarm(e) {
+      this.$refs.beeswarm.search(e, this.$refs.searchBeeswarm, [
+        this.$refs.radioSex,
+        this.$refs.radioArtistType,
+        this.$refs.radioYear,
+      ]);
+    },
+  },
 };
 </script>
