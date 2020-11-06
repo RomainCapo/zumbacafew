@@ -120,18 +120,6 @@ export default {
         .style("font-size", "10px")
         .style("text-anchor", "left")
         .html("Source: <a href='https://genius.com'>Genius</a>");
-
-      this.inputSearch = document.getElementById("input-artist-search");
-      this.proposedArtistsDiv = document.getElementById(
-        "proposed-artists-container"
-      );
-      this.radioButtons = document.querySelectorAll(
-        ".radio-button-beeswarm input[type='radio']"
-      );
-
-      //this.addEventListenerRadioButtons();
-
-      //this.addEventListenerSearchBar();
     },
     computeChart() {
       this.xScale = d3
@@ -287,42 +275,6 @@ export default {
         .transition()
         .style("fill", null);
     },
-    addEventListenerSearchBar() {
-      this.inputSearch.addEventListener("input", (e) => {
-        let input = e.target.value;
-
-        this.proposedArtistsDiv.innerHTML = "";
-
-        if (input.length == 1) {
-          this.radioButtons.forEach((x) => {
-            this.resetFilter();
-            x.disabled = true;
-          });
-        }
-
-        if (input.length == 0) {
-          this.radioButtons.forEach((x) => {
-            x.disabled = false;
-          });
-        }
-
-        this.artistsStats.forEach((x) => {
-          let name = x.name.toLowerCase();
-
-          if (name.includes(input.toLowerCase())) {
-            if (input != "") {
-              this.proposedArtistsDiv.innerHTML +=
-                "<div class='proposed-artist' onclick='artistClick'>" +
-                x.name +
-                "</div>";
-            }
-            this.focusArtist(x.name);
-          } else {
-            this.hideArtist(x.name);
-          }
-        });
-      });
-    },
     filter(e) {
       switch (e.name) {
         case "radio-sex":
@@ -337,10 +289,41 @@ export default {
       }
       this.applyFilter();
     },
-    resetFilter() {
-      document.getElementById("radio-sex-all").checked = true;
-      document.getElementById("radio-artist-type-all").checked = true;
-      document.getElementById("radio-year-all").checked = true;
+    search(e, searchBar, radioButtonGroups) {
+      let input = e.value;
+
+      if (input.length == 1) {
+        this.resetFilter(radioButtonGroups);
+        radioButtonGroups.forEach((x) => {
+          x.disable(true);
+        });
+      }
+
+      if (input.length == 0) {
+        radioButtonGroups.forEach((x) => {
+          x.disable(false);
+        });
+      }
+
+      searchBar.removePropositions();
+
+      this.artistsStats.forEach((x) => {
+        let name = x.name.toLowerCase();
+
+        if (name.includes(input.toLowerCase())) {
+          if (input != "") {
+            searchBar.addElement(x.name);
+          }
+          this.focusArtist(x.name);
+        } else {
+          this.hideArtist(x.name);
+        }
+      });
+    },
+    resetFilter(radioButtons) {
+      radioButtons.forEach((x) => {
+        x.reset();
+      });
 
       this.beeswarmParams.gender = "All";
       this.beeswarmParams.artistType = "All";

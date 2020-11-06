@@ -6,7 +6,7 @@
         class="form-check-input"
         type="radio"
         :name="'radio-' + radioGroup"
-        ref="radio-{{ radioGroup }}-{{ filter.key }}"
+        :ref="'radio-'+radioGroup +'-' +filter.key"
         :id="'radio-' + radioGroup + '-' + filter.key"
         :value="filter.key"
         v-model="checked"
@@ -40,6 +40,14 @@ export default {
     radioBtnClicked(e) {
       this.$emit("radio-btn-clicked", e.target);
     },
+    reset(){
+      this.$refs['radio-'+this.radioGroup +'-all'].checked = true
+    },
+    disable(status){
+      this.filters.forEach(x => {
+        this.$refs['radio-'+this.radioGroup +'-'+x.key].disabled = status
+      });
+    }
   },
 };
 </script>

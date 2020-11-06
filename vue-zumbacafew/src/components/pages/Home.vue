@@ -23,19 +23,23 @@
             v-bind:radioGroup="'sex'"
             v-bind:filters="filtersSex"
             v-on:radio-btn-clicked="filterBeeSwarm"
+            ref="radioSex"
           />
           <GroupRadio
             v-bind:legend="'Type d\'artiste'"
             v-bind:radioGroup="'artist-type'"
             v-bind:filters="filtersArtistType"
             v-on:radio-btn-clicked="filterBeeSwarm"
+            ref="radioArtistType"
           />
           <GroupRadio
             v-bind:legend="'Decenie'"
             v-bind:radioGroup="'year'"
             v-bind:filters="filtersDecade"
             v-on:radio-btn-clicked="filterBeeSwarm"
+            ref="radioYear"
           />
+          <SearchBar v-bind:legend="'Recherche d\'artistes'" v-on:search-input="searchBeeSwarm" ref="searchBeeswarm"/>
         </div>
       </div>
     </div>
@@ -85,6 +89,7 @@ import GroupRadio from "@/components/ui/GroupRadio.vue";
 import Header from "@/components/layout/Header";
 import WordCloud from "@/components/charts/WordCloud.vue";
 import WordHistogram from "@/components/charts/WordHistogram.vue";
+import SearchBar from "@/components/ui/SearchBar.vue";
 
 export default {
   name: "Home",
@@ -95,6 +100,7 @@ export default {
     Header,
     WordCloud,
     WordHistogram,
+    SearchBar
   },
   data() {
     return {
@@ -126,6 +132,9 @@ export default {
   methods: {
     filterBeeSwarm(e) {
       this.$refs.beeswarm.filter(e);
+    },
+    searchBeeSwarm(e){
+      this.$refs.beeswarm.search(e, this.$refs.searchBeeswarm, [this.$refs.radioSex, this.$refs.radioArtistType, this.$refs.radioYear]);
     }
   }
 };
