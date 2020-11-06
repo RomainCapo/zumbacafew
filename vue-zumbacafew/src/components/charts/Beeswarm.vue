@@ -85,7 +85,11 @@ export default {
         .attr("class", "tooltip")
         .style("opacity", 0);
 
-      this.paramGender = { men: "men", woman: "woman", all: "all" };
+      this.paramGender = {
+        men: "men",
+        woman: "woman",
+        all: "all"
+      };
       this.paramArtistType = {
         individual: "individual",
         group: "group",
@@ -187,17 +191,17 @@ export default {
           self.tooltip
             .html(
               "<strong>Nom: " +
-                d.name +
-                "</strong><br>Mot unique par musique: " +
-                Helper.round(d.vocab_ratio) +
-                "<br>Genre: " +
-                Helper.sexToFrench(d.gender) +
-                "<br>Type d'artiste: " +
-                Helper.artistTypeToFrench(d.artist_type) +
-                "<br>Année: " +
-                d.year +
-                "<br>Nombre de musique: " +
-                d.number_songs
+              d.name +
+              "</strong><br>Mot unique par musique: " +
+              Helper.round(d.vocab_ratio) +
+              "<br>Genre: " +
+              Helper.sexToFrench(d.gender) +
+              "<br>Type d'artiste: " +
+              Helper.artistTypeToFrench(d.artist_type) +
+              "<br>Année: " +
+              d.year +
+              "<br>Nombre de musique: " +
+              d.number_songs
             )
             .style("top", event.y - 12 + "px")
             .style("left", event.x + 25 + "px")
@@ -222,10 +226,10 @@ export default {
         .force(
           "x",
           d3
-            .forceX(function (d) {
-              return xscale(+d["vocab_ratio"]);
-            })
-            .strength(2)
+          .forceX(function (d) {
+            return xscale(+d["vocab_ratio"]);
+          })
+          .strength(2)
         )
         .force("y", d3.forceY(this.height / 2 - this.margin.bottom / 2))
         .force("collide", d3.forceCollide(this.explode_force))

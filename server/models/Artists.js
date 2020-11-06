@@ -13,45 +13,56 @@ const artistSchema = new mongoose.Schema({
         type: Map,
         of: Number
     }
-}, { collection: 'artists' });
+}, {
+    collection: 'artists'
+});
 
 artistSchema.statics.artistsStats = () => {
-    return Artist.find({},
-        {
-            _id: 0,
-            name: "$name",
-            image_url: "$image_url",
-            gender: "$sexe",
-            artist_type: "$type",
-            vocab_ratio: "$vocab_ratio",
-            year: "$year_avg",
-            number_songs: "$num_songs"
-        }
-    ).lean().exec();
+    return Artist.find({}, {
+        _id: 0,
+        name: "$name",
+        image_url: "$image_url",
+        gender: "$sexe",
+        artist_type: "$type",
+        vocab_ratio: "$vocab_ratio",
+        year: "$year_avg",
+        number_songs: "$num_songs"
+    }).lean().exec();
 };
 
 artistSchema.statics.vocabulary = () => {
-    return Artist.aggregate([
-        {
+    return Artist.aggregate([{
             $project: {
-                matchWord: { $objectToArray: '$vocab' }
+                matchWord: {
+                    $objectToArray: '$vocab'
+                }
             }
         },
-        { $unwind: "$matchWord" },
+        {
+            $unwind: "$matchWord"
+        },
         {
             $project: {
                 _id: "$matchWord.k",
                 count: "$matchWord.v"
-           }
-        },
-        {
-        $group: {
-                _id: "$_id",
-                count: { "$sum": "$count" }
             }
         },
-        { $sort: { "count": -1 } },
-        { $limit: 500 }
+        {
+            $group: {
+                _id: "$_id",
+                count: {
+                    "$sum": "$count"
+                }
+            }
+        },
+        {
+            $sort: {
+                "count": -1
+            }
+        },
+        {
+            $limit: 500
+        }
     ]);
 }
 

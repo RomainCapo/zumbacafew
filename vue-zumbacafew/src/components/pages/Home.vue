@@ -12,38 +12,15 @@
     <div id="beeswarm">
       <h1 class="title">Nombre de mots uniques par chanteur</h1>
       <div class="container">
-        <Beeswarm
-          ref="beeswarm"
-          v-if="artistsStats !== null"
-          v-bind:artistsStats="artistsStats"
-        />
+        <Beeswarm ref="beeswarm" v-if="artistsStats !== null" v-bind:artistsStats="artistsStats" />
         <div class="row radio-button-beeswarm">
-          <GroupRadio
-            v-bind:legend="'Sexe'"
-            v-bind:radioGroup="'sex'"
-            v-bind:filters="filtersSex"
-            v-on:radio-btn-clicked="filterBeeSwarm"
-            ref="radioSex"
-          />
-          <GroupRadio
-            v-bind:legend="'Type d\'artiste'"
-            v-bind:radioGroup="'artist-type'"
-            v-bind:filters="filtersArtistType"
-            v-on:radio-btn-clicked="filterBeeSwarm"
-            ref="radioArtistType"
-          />
-          <GroupRadio
-            v-bind:legend="'Decenie'"
-            v-bind:radioGroup="'year'"
-            v-bind:filters="filtersDecade"
-            v-on:radio-btn-clicked="filterBeeSwarm"
-            ref="radioYear"
-          />
-          <SearchBar
-            v-bind:legend="'Recherche d\'artistes'"
-            v-on:search-input="searchBeeSwarm"
-            ref="searchBeeswarm"
-          />
+          <GroupRadio v-bind:legend="'Sexe'" v-bind:radioGroup="'sex'" v-bind:filters="filtersSex"
+            v-on:radio-btn-clicked="filterBeeSwarm" ref="radioSex" />
+          <GroupRadio v-bind:legend="'Type d\'artiste'" v-bind:radioGroup="'artist-type'"
+            v-bind:filters="filtersArtistType" v-on:radio-btn-clicked="filterBeeSwarm" ref="radioArtistType" />
+          <GroupRadio v-bind:legend="'Decenie'" v-bind:radioGroup="'year'" v-bind:filters="filtersDecade"
+            v-on:radio-btn-clicked="filterBeeSwarm" ref="radioYear" />
+          <SearchBar v-bind:legend="'Recherche d\'artistes'" v-on:search-input="searchBeeSwarm" ref="searchBeeswarm" />
         </div>
       </div>
     </div>
@@ -56,10 +33,7 @@
         libero quod magni? Plus d'information <a href="">ici</a>
       </p>
     </div>
-    <WordHistogram
-      v-if="artistsStats !== null"
-      v-bind:artistsStats="artistsStats"
-    />
+    <WordHistogram v-if="artistsStats !== null" v-bind:artistsStats="artistsStats" />
     <div class="container inter-text">
       <p>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt natus,
@@ -68,10 +42,7 @@
         libero quod magni? Plus d'information <a href="">ici</a>
       </p>
     </div>
-    <WordCloud
-      v-if="termFrequency !== null"
-      v-bind:termFrequency="termFrequency"
-    >
+    <WordCloud v-if="termFrequency !== null" v-bind:termFrequency="termFrequency">
     </WordCloud>
     <div class="container inter-text">
       <p>
@@ -109,22 +80,52 @@ export default {
   data() {
     return {
       artistsStats: null,
-      filtersArtistType: [
-        { key: "all", value: "Les deux" },
-        { key: "individual", value: "Individuel" },
-        { key: "group", value: "Groupe" },
+      filtersArtistType: [{
+          key: "all",
+          value: "Les deux"
+        },
+        {
+          key: "individual",
+          value: "Individuel"
+        },
+        {
+          key: "group",
+          value: "Groupe"
+        },
       ],
-      filtersDecade: [
-        { key: "all", value: "Toutes les années" },
-        { key: "1990", value: "1990" },
-        { key: "2000", value: "2000" },
-        { key: "2010", value: "2010" },
-        { key: "2020", value: "2020" },
+      filtersDecade: [{
+          key: "all",
+          value: "Toutes les années"
+        },
+        {
+          key: "1990",
+          value: "1990"
+        },
+        {
+          key: "2000",
+          value: "2000"
+        },
+        {
+          key: "2010",
+          value: "2010"
+        },
+        {
+          key: "2020",
+          value: "2020"
+        },
       ],
-      filtersSex: [
-        { key: "all", value: "Les deux" },
-        { key: "men", value: "Homme" },
-        { key: "woman", value: "Femme" },
+      filtersSex: [{
+          key: "all",
+          value: "Les deux"
+        },
+        {
+          key: "men",
+          value: "Homme"
+        },
+        {
+          key: "woman",
+          value: "Femme"
+        },
       ],
       termFrequency: null,
     };

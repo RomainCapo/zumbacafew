@@ -63,7 +63,10 @@ export default {
         .size([this.width, this.height])
         .words(
           this.termFrequency.map(function (d) {
-            return { text: d._id, size: d.count / maxFrequency };
+            return {
+              text: d._id,
+              size: d.count / maxFrequency
+            };
           })
         )
         .padding(4)
@@ -89,10 +92,10 @@ export default {
         .attr(
           "transform",
           "translate(" +
-            this.layout.size()[0] / 2 +
-            "," +
-            this.layout.size()[1] / 2 +
-            ")"
+          this.layout.size()[0] / 2 +
+          "," +
+          this.layout.size()[1] / 2 +
+          ")"
         )
         .selectAll("text")
         .data(word)

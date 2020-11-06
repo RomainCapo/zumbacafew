@@ -12,37 +12,18 @@
       <span id="criterion-container">
         <strong>Critères</strong>
         <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="radio-word-histogram"
-            id="radio-year"
-            value="year"
-            checked
-          />
+          <input class="form-check-input" type="radio" name="radio-word-histogram" id="radio-year" value="year"
+            checked />
           <label class="form-check-label" for="radio-year">Année</label>
         </div>
         <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="radio-word-histogram"
-            id="radio-sex"
-            value="gender"
-          />
+          <input class="form-check-input" type="radio" name="radio-word-histogram" id="radio-sex" value="gender" />
           <label class="form-check-label" for="radio-sex">Sexe</label>
         </div>
         <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="radio-word-histogram"
-            id="radio-artist-type"
-            value="artist_type"
-          />
-          <label class="form-check-label" for="radio-artist-type"
-            >Type d'artiste</label
-          >
+          <input class="form-check-input" type="radio" name="radio-word-histogram" id="radio-artist-type"
+            value="artist_type" />
+          <label class="form-check-label" for="radio-artist-type">Type d'artiste</label>
         </div>
       </span>
       <div class="row align-items-end" id="word-histogram-chart"></div>
@@ -51,6 +32,8 @@
     </div>
   </div>
 </template>
+
+
 <script>
 import Helper from "@/services/class/Helper.js";
 

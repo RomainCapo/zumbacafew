@@ -11,7 +11,7 @@ dotenv.config();
 var app = express();
 
 function setupServer() {
-    if(process.env.ENV === "DEV")
+    if (process.env.ENV === "DEV")
         app.use(cors());
 
     app.listen(process.env.PORT || 8080);
