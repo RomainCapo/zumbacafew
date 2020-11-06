@@ -104,7 +104,6 @@ export default {
       this.beeswarmParams.artistType = this.paramArtistType.all;
       this.beeswarmParams.year = this.paramYear.all;
 
-      // Display x axis label
       this.svg
         .append("text")
         .attr("x", this.width / 2)
@@ -112,7 +111,6 @@ export default {
         .style("text-anchor", "middle")
         .text("Nombre de mots");
 
-      // Display x axis label
       this.svg
         .append("text")
         .attr("x", 40)
@@ -138,7 +136,6 @@ export default {
 
       this.computeBeeswarmSimulation(this.xScale);
 
-      // Create country circles
       let circles = this.svg
         .selectAll(".artists")
         .data(this.artistsStats, function (d) {
@@ -220,24 +217,20 @@ export default {
         });
     },
     computeBeeswarmSimulation(xscale) {
-      // Create simulation with specified dataset
       let simulation = d3
         .forceSimulation(this.artistsStats)
-        // Apply positioning force to push nodes towards desired position along X axis
         .force(
           "x",
           d3
             .forceX(function (d) {
-              // Mapping of values from total/perCapita column of dataset to range of SVG chart (<margin.left, margin.right>)
-              return xscale(+d["vocab_ratio"]); // This is the desired position
+              return xscale(+d["vocab_ratio"]);
             })
             .strength(2)
-        ) // Increase velocity
-        .force("y", d3.forceY(this.height / 2 - this.margin.bottom / 2)) // // Apply positioning force to push nodes towards center along Y axis
-        .force("collide", d3.forceCollide(this.explode_force)) // Apply collision force with radius of 9 - keeps nodes centers 9 pixels apart
-        .stop(); // Stop simulation from starting automatically
+        )
+        .force("y", d3.forceY(this.height / 2 - this.margin.bottom / 2))
+        .force("collide", d3.forceCollide(this.explode_force))
+        .stop();
 
-      // Manually run simulation
       for (let i = 0; i < this.artistsStats.length; ++i) {
         simulation.tick(10);
       }

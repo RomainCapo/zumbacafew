@@ -39,7 +39,11 @@
             v-on:radio-btn-clicked="filterBeeSwarm"
             ref="radioYear"
           />
-          <SearchBar v-bind:legend="'Recherche d\'artistes'" v-on:search-input="searchBeeSwarm" ref="searchBeeswarm"/>
+          <SearchBar
+            v-bind:legend="'Recherche d\'artistes'"
+            v-on:search-input="searchBeeSwarm"
+            ref="searchBeeswarm"
+          />
         </div>
       </div>
     </div>
@@ -100,7 +104,7 @@ export default {
     Header,
     WordCloud,
     WordHistogram,
-    SearchBar
+    SearchBar,
   },
   data() {
     return {
@@ -133,9 +137,13 @@ export default {
     filterBeeSwarm(e) {
       this.$refs.beeswarm.filter(e);
     },
-    searchBeeSwarm(e){
-      this.$refs.beeswarm.search(e, this.$refs.searchBeeswarm, [this.$refs.radioSex, this.$refs.radioArtistType, this.$refs.radioYear]);
-    }
-  }
+    searchBeeSwarm(e) {
+      this.$refs.beeswarm.search(e, this.$refs.searchBeeswarm, [
+        this.$refs.radioSex,
+        this.$refs.radioArtistType,
+        this.$refs.radioYear,
+      ]);
+    },
+  },
 };
 </script>

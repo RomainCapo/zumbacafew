@@ -3,7 +3,6 @@
 </template>
 
 <script>
-// TODO only import necessary
 import * as d3 from "d3";
 import * as cloud from "d3-cloud";
 import * as d3scale from "d3-scale";
@@ -13,29 +12,29 @@ export default {
   props: {
     height: {
       type: Number,
-      default: 800
+      default: 800,
     },
     marginBottom: {
       type: Number,
-      default: 34
+      default: 34,
     },
     marginLeft: {
       type: Number,
-      default: 40
+      default: 40,
     },
     marginRight: {
       type: Number,
-      default: 40
+      default: 40,
     },
     marginTop: {
       type: Number,
-      default: 0
+      default: 0,
     },
     termFrequency: Object,
     width: {
       type: Number,
-      default: 800
-    }
+      default: 800,
+    },
   },
   mounted() {
     this.drawChart();
@@ -111,7 +110,7 @@ export default {
         .text(function (d) {
           return d.text;
         });
-    }
+    },
   },
 };
 </script>
