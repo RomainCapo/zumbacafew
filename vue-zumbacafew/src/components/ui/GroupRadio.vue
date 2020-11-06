@@ -10,7 +10,7 @@
         :id="'radio-' + radioGroup + '-' + filter.key"
         :value="filter.key"
         v-model="checked"
-        @click="radioClick"
+        @click="radioBtnClicked"
       />
       <label
         class="form-check-label"
@@ -21,22 +21,25 @@
     </div>
   </div>
 </template>
+
+
 <script>
 export default {
-
   name: "GroupRadio",
   data() {
-    return { checked: "all" };
+    return {
+      checked: "all",
+    };
   },
   props: {
     filters: Array,
-    radioGroup: String,
     legend: String,
+    radioGroup: String,
   },
-  methods:{
-      radioClick(e){
-          this.$emit('test', e.target)
-      }
-  }
+  methods: {
+    radioBtnClicked(e) {
+      this.$emit("radio-btn-clicked", e.target);
+    },
+  },
 };
 </script>

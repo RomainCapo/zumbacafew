@@ -1,63 +1,30 @@
 <template>
-    <div>
-        <h1 class="title">Nombre de mots uniques par chanteur</h1>
-        <div ref="svganchor" class="graph centered"></div>
-                <div class="row radio-button-beeswarm">
-          <GroupRadio
-            v-bind:legend="'Sexe'"
-            v-bind:radioGroup="'sex'"
-            v-bind:filters="[
-              { key: 'all', value: 'Les deux' },
-              { key: 'men', value: 'Homme' },
-              { key: 'woman', value: 'Femme' },
-            ]"
-            v-on:test="test"
-          />
-          <GroupRadio
-            v-bind:legend="'Type d\'artiste'"
-            v-bind:radioGroup="'artist-type'"
-            v-bind:filters="[
-              { key:'all', value: 'Les deux'},
-              { key: 'individual', value: 'Individuel' },
-              { key: 'group', value: 'Groupe' },
-            ]"
-            v-on:test="test"
-          />
-          <GroupRadio
-            v-bind:legend="'Decenie'"
-            v-bind:radioGroup="'year'"
-            v-bind:filters="[
-              { key: 'all', value: 'Toutes les années' },
-              { key: '1990', value: '1990' },
-              { key: '2000', value: '2000' },
-              { key: '2010', value: '2010' },
-              { key: '2020', value: '2020' },
-            ]"
-            v-on:test="test"
-          />
-        </div>
-    </div>
+  <div ref="svganchor" class="graph centered"></div>
 </template>
 
 <script>
 import * as d3 from "d3";
 import Helper from "@/services/class/Helper.js";
-import GroupRadio from "@/components/ui/GroupRadio.vue";
 
 export default {
   name: "Beeswarm",
-  components: {
-    GroupRadio,
-  },
   props: {
     artistsStats: Object,
+    circle_focus_radius: {
+      type: Number,
+      default: 40,
+    },
+    circle_hide_radius: {
+      type: Number,
+      default: 5,
+    },
+    explode_force: {
+      type: Number,
+      default: 45,
+    },
     height: {
       type: Number,
       default: 600,
-    },
-    width: {
-      type: Number,
-      default: 1200,
     },
     marginBottom: {
       type: Number,
@@ -75,17 +42,9 @@ export default {
       type: Number,
       default: 0,
     },
-    circle_focus_radius: {
+    width: {
       type: Number,
-      default: 40,
-    },
-    circle_hide_radius: {
-      type: Number,
-      default: 5,
-    },
-    explode_force: {
-      type: Number,
-      default: 45,
+      default: 1200,
     },
   },
   mounted() {
@@ -364,38 +323,19 @@ export default {
         });
       });
     },
-    addEventListenerRadioButtons() {
-      this.radioButtons.forEach((elem) => {
-        elem.addEventListener("input", (e) => {
-          switch (e.target.name) {
-            case "radio-sex":
-              this.beeswarmParams.gender = e.target.value;
-              break;
-            case "radio-artist-type":
-              this.beeswarmParams.artistType = e.target.value;
-              break;
-            case "radio-year":
-              this.beeswarmParams.year = e.target.value;
-              break;
-          }
-          this.applyFilter();
-        });
-      });
-    },
-    test(e){
-        console.log(e.value);
-        switch (e.name) {
-            case "radio-sex":
-              this.beeswarmParams.gender = e.value;
-              break;
-            case "radio-artist-type":
-              this.beeswarmParams.artistType = e.value;
-              break;
-            case "radio-year":
-              this.beeswarmParams.year = e.value;
-              break;
-          }
-          this.applyFilter();
+    filter(e) {
+      switch (e.name) {
+        case "radio-sex":
+          this.beeswarmParams.gender = e.value;
+          break;
+        case "radio-artist-type":
+          this.beeswarmParams.artistType = e.value;
+          break;
+        case "radio-year":
+          this.beeswarmParams.year = e.value;
+          break;
+      }
+      this.applyFilter();
     },
     resetFilter() {
       document.getElementById("radio-sex-all").checked = true;

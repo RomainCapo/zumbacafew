@@ -21,8 +21,6 @@ function setupServer() {
     app.all("*", function (req, res) {
         return notFoundResponse(res, "Page not found");
     });
-
-    console.log("Server is up")
 }
 
 function setupDbConnection() {

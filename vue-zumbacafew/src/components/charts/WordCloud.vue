@@ -31,11 +31,11 @@ export default {
       type: Number,
       default: 0
     },
+    termFrequency: Object,
     width: {
       type: Number,
       default: 800
-    },
-    termFrequency: Object
+    }
   },
   mounted() {
     this.drawChart();
