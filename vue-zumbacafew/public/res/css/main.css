@@ -3,13 +3,39 @@ body {
     font-family: 'Kanit';
 }
 
+#intro {
+    text-align: center;
+    font-size: 75px;
+    font-weight: bold;
+    height: 300px;
+    margin-bottom: 20px;
+}
+
+.title{
+    padding-top: 20px;
+}
+
+#intro p {
+    margin-top: 0px ;
+    margin-bottom: 0px ;
+}
+
+#intro #left{
+    float: left;
+}
+
+#intro #right{
+    float: right;
+}
+
 .centered {
     display: table;
     margin: 20px auto;
 }
 
 #beeswarm{
-    margin-bottom: 100px;
+    background-color:  rgb(247, 247, 247);
+    padding-bottom: 20px;
 }
 
 .graph {
@@ -20,7 +46,6 @@ body {
 nav{
     background-color: rgb(255, 255, 255);
     border-bottom: 1px solid rgb(0, 178, 99);
-    margin-bottom: 20px;
 }
 
 nav h1 {
@@ -28,9 +53,9 @@ nav h1 {
     margin-left: 80px;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1400px) {
     .container{
-        max-width: 1200px;
+        max-width: 1400px;
     }
 }
 
@@ -110,22 +135,6 @@ div.tooltip {
     color: black;
 }
 
-#word-histogram .y1990{
-    color:rgb(142, 89, 171);
-}
-
-#word-histogram .y2000{
-    color:rgb(240, 71, 112);
-}
-
-#word-histogram .y2010{
-    color: rgb(0, 178, 99);
-}
-
-#word-histogram .y2020{
-    color: black;
-}
-
 #word-histogram .c0{
     color:rgb(142, 89, 171);
 }
@@ -142,7 +151,12 @@ div.tooltip {
     color: black;
 }
 
+.inter-text{
+    padding: 50px;
+}
+
 .footer {
+    margin-top: 30px;
     position: fixed;
     bottom: 0;
     width: 100%;
@@ -155,3 +169,4 @@ div.tooltip {
     display: flex;
     justify-content: space-between;
   }
+

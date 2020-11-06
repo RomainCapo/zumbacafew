@@ -9,7 +9,7 @@ import pymongo
 from collections import Counter, OrderedDict
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-mydb = myclient["zumba_cafew"]
+mydb = myclient["zumba_cafew1"]
 mycol = mydb["artists"]
 
 FILENAME = "artists.txt"
@@ -28,11 +28,24 @@ def process_lycrics(lyrics):
     
     return  [l for l in lyrics if l != '' and l != ' ' ]
 
-womans = ["Wejdene", "Diam's", "Aya Nakamura"]
-groups = ["13 Organisé", "Suprême NTM", "Sexion d’Assaut"]
+def count_words_by_year(vocab):
+    counter_vocab = {}
+    for y in vocab:
+        counter_vocab[str(y)] = Counter(vocab[y])
+    return counter_vocab
+
+womans = ["Wejdene", "Diam's", "Aya Nakamura", "imen es"]
+groups = ["13 Organisé", 
+"Suprême NTM", 
+"Sexion d’Assaut", 
+"IAM", 
+"1995", 
+"Sniper",
+"Casseurs Flowters"]
 
 
 MAX_SONGS = 50
+LYRICS_THRESHOLD = 20000
 
 with open(FILENAME, encoding='utf-8') as file:
     for artist_name in file.read().split('\n'):
@@ -52,18 +65,23 @@ with open(FILENAME, encoding='utf-8') as file:
         else:
             artist_dict["type"] = "Individual"
             
-        vocab = []
+        vocab = {}
         years = []
+        year_value = "0"
         for song in artist.songs:
-            vocab.extend(process_lycrics(song.lyrics))
             if song.year:
-                years.append(int(song.year.split("-")[0]))
-        
-        vocab_length = len(set(vocab))
-        artist_dict["vocab_length"] = vocab_length
-        artist_dict["vocab_ratio"] = vocab_length/artist.num_songs
+                year_value = int(song.year.split("-")[0])
+                years.append(year_value)
+            vocab[year_value] = process_lycrics(song.lyrics)
+
+        vocab_list = list(vocab.values())[0]
+
+        artist_dict["vocab_length"] = len(vocab_list) if len(vocab_list) < LYRICS_THRESHOLD else LYRICS_THRESHOLD
+        artist_dict["vocab_number_unique_word"] = len(list(set(vocab_list[0:LYRICS_THRESHOLD])))
+        artist_dict["is_complete"] = False if len(vocab_list) < LYRICS_THRESHOLD else True
         artist_dict["num_songs"] = artist.num_songs
-        artist_dict["year_avg"] = round(sum(years)/len(years))
-        artist_dict["vocab"] = Counter(vocab)
+        years.sort()
+        artist_dict["years"] = years
+        artist_dict["vocab"] = count_words_by_year(vocab)
         
         mycol.insert_one(artist_dict)

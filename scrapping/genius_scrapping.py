@@ -21,13 +21,14 @@ def process_lycrics(lyrics):
     
     return  [l for l in lyrics if l != '' and l != ' ' ]
 
-womans = ["Wejdene", "Diam's", "Aya Nakamura"]
-groups = ["13 Organisé", "Suprême NTM", "Sexion d’Assaut"]
-artists = [
-    "Gims",
-    "Sofiane",
-    "Roméo Elvis",
-    "Dosseh"]
+womans = ["Wejdene", "Diam's", "Aya Nakamura", "imen es"]
+groups = ["13 Organisé", 
+"Suprême NTM", 
+"Sexion d’Assaut", 
+"IAM", 
+"1995", 
+"Sniper",
+"Casseurs Flowters"]
 
 MAX_SONGS = 50
 ARTIST_FOLDER = "artists"

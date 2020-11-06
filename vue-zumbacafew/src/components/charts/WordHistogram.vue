@@ -1,5 +1,6 @@
 <template>
     <div id="word-histogram">
+        <!--<h1 class="title">Histogramme du nombre de mot unique par artiste</h1>-->
         <div class="container">
             <span id="legend-container">
                 <div><strong>Année</strong></div>
@@ -24,7 +25,7 @@
                 </div>
             </span>
             <div class="row align-items-end" id="word-histogram-chart"></div>
-            <div id="xaxis-legend" style="text-align: center;">Nombre de mot</div>
+            <div id="xaxis-legend" style="text-align: center;">Nombre de mots</div>
             <div id="source">Source: <a href='https://genius.com'>Genius</a></div>
         </div>
     </div>
