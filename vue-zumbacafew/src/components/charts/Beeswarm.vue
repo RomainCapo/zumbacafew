@@ -12,7 +12,7 @@ export default {
     artistsStats: Object,
     circle_focus_radius: {
       type: Number,
-      default: 40,
+      default: 25,
     },
     circle_hide_radius: {
       type: Number,
@@ -20,7 +20,7 @@ export default {
     },
     explode_force: {
       type: Number,
-      default: 45,
+      default: 30,
     },
     height: {
       type: Number,
@@ -48,6 +48,9 @@ export default {
     },
   },
   mounted() {
+    this.artistsStats.forEach(x=>{
+      console.log(x.gender);
+    })
     this.init();
     this.computeChart();
   },
@@ -130,7 +133,7 @@ export default {
 
       this.xScale.domain(
         d3.extent(this.artistsStats, function (d) {
-          return d["vocab_ratio"];
+          return d["vocab_number_unique_word"];
         })
       );
 
@@ -193,7 +196,7 @@ export default {
               "<strong>Nom: " +
               d.name +
               "</strong><br>Mot unique par musique: " +
-              Helper.round(d.vocab_ratio) +
+              Helper.round(d.vocab_number_unique_word) +
               "<br>Genre: " +
               Helper.sexToFrench(d.gender) +
               "<br>Type d'artiste: " +
@@ -227,7 +230,7 @@ export default {
           "x",
           d3
           .forceX(function (d) {
-            return xscale(+d["vocab_ratio"]);
+            return xscale(+d["vocab_number_unique_word"]);
           })
           .strength(2)
         )

@@ -22,18 +22,26 @@ const artistSchema = new mongoose.Schema({
 });
 
 artistSchema.statics.artistsStats = () => {
-    return Artist.find({}, {
-        _id: 0,
-        name: "$name",
-        image_url: "$image_url",
-        gender: "$sexe",
-        artist_type: "$type",
-        vocab_length: "$vocab_length",
-        vocab_number_unique_word: "$vocab_number_unique_word",
-        years: "$years",
-        is_complete: "$is_complete",
-        number_songs: "$num_songs"
-    }).lean().exec();
+    return Artist.aggregate([
+        {
+            $project: {
+                _id: 0,
+                name: "$name",
+                image_url: "$image_url",
+                gender: "$sexe",
+                artist_type: "$type",
+                vocab_length: "$vocab_length",
+                vocab_number_unique_word: "$vocab_number_unique_word",
+                year: {
+                    $round: {
+                        $avg : "$years"
+                    }
+                    },
+                is_complete: "$is_complete",
+                number_songs: "$num_songs"
+            }
+        },
+    ])
 };
 
 artistSchema.statics.numberOfAnalyzedArtists = () => {
