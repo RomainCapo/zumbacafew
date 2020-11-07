@@ -48,9 +48,6 @@ export default {
     },
   },
   mounted() {
-    this.artistsStats.forEach(x=>{
-      console.log(x.gender);
-    })
     this.init();
     this.computeChart();
   },
@@ -91,7 +88,7 @@ export default {
       this.paramGender = {
         men: "men",
         woman: "woman",
-        all: "all"
+        all: "all",
       };
       this.paramArtistType = {
         individual: "individual",
@@ -194,17 +191,17 @@ export default {
           self.tooltip
             .html(
               "<strong>Nom: " +
-              d.name +
-              "</strong><br>Mot unique par musique: " +
-              Helper.round(d.vocab_number_unique_word) +
-              "<br>Genre: " +
-              Helper.sexToFrench(d.gender) +
-              "<br>Type d'artiste: " +
-              Helper.artistTypeToFrench(d.artist_type) +
-              "<br>Année: " +
-              d.year +
-              "<br>Nombre de musique: " +
-              d.number_songs
+                d.name +
+                "</strong><br>Mot unique par musique: " +
+                Helper.round(d.vocab_number_unique_word) +
+                "<br>Genre: " +
+                Helper.sexToFrench(d.gender) +
+                "<br>Type d'artiste: " +
+                Helper.artistTypeToFrench(d.artist_type) +
+                "<br>Année: " +
+                d.year +
+                "<br>Nombre de musique: " +
+                d.number_songs
             )
             .style("top", event.layerY - 12 + "px")
             .style("left", event.layerX + 25 + "px")
@@ -229,10 +226,10 @@ export default {
         .force(
           "x",
           d3
-          .forceX(function (d) {
-            return xscale(+d["vocab_number_unique_word"]);
-          })
-          .strength(2)
+            .forceX(function (d) {
+              return xscale(+d["vocab_number_unique_word"]);
+            })
+            .strength(2)
         )
         .force("y", d3.forceY(this.height / 2 - this.margin.bottom / 2))
         .force("collide", d3.forceCollide(this.explode_force))
@@ -289,36 +286,22 @@ export default {
       }
       this.applyFilter();
     },
-    search(e, searchBar, radioButtonGroups) {
-      let input = e.value;
-
-      if (input.length == 1) {
+    search(propositions, radioButtonGroups) {
         this.resetFilter(radioButtonGroups);
-        radioButtonGroups.forEach((x) => {
-          x.disable(true);
-        });
-      }
+        radioButtonGroups.forEach((x) => x.disable(true));
 
-      if (input.length == 0) {
-        radioButtonGroups.forEach((x) => {
-          x.disable(false);
-        });
-      }
-
-      searchBar.removePropositions();
-
-      this.artistsStats.forEach((x) => {
-        let name = x.name.toLowerCase();
-
-        if (name.includes(input.toLowerCase())) {
-          if (input != "") {
-            searchBar.addElement(x.name);
+      if (propositions.length == 0) {
+        radioButtonGroups.forEach((x) => x.disable(false));
+        this.artistsStats.forEach((x) => this.focusArtist(x.name));
+      } else {
+        this.artistsStats.forEach((x) => {
+          if (propositions.includes(x.name)) {
+            this.focusArtist(x.name);
+          } else {
+            this.hideArtist(x.name);
           }
-          this.focusArtist(x.name);
-        } else {
-          this.hideArtist(x.name);
-        }
-      });
+        });
+      }
     },
     resetFilter(radioButtons) {
       radioButtons.forEach((x) => {
@@ -335,14 +318,13 @@ export default {
 };
 </script>
 <style scoped>
-
 .centered {
-    display: table;
-    margin: 20px auto;
+  display: table;
+  margin: 20px auto;
 }
 
 .graph {
-    width: 50%;
-    margin: 0 auto;
+  width: 50%;
+  margin: 0 auto;
 }
 </style>

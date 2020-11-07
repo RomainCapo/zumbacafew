@@ -34,7 +34,7 @@
             v-bind:filters="filtersArtistType" v-on:radio-btn-clicked="filterBeeSwarm" ref="radioArtistType" />
           <GroupRadio v-bind:legend="'Decenie'" v-bind:radioGroup="'year'" v-bind:filters="filtersDecade"
             v-on:radio-btn-clicked="filterBeeSwarm" ref="radioYear" />
-          <SearchBar v-if="artists !== null" v-bind:values="artists" v-bind:legend="'Recherche d\'artistes'" v-on:search-input="searchBeeSwarm" ref="searchBeeswarm" />
+          <SearchBar v-if="artists !== null" v-bind:values="artists" v-bind:legend="'Recherche d\'artistes'" v-bind:idName="'beeswarm'" v-on:search-input="searchBeeSwarm" ref="searchBeeswarm" />
         </div>
       </div>
     </div>
@@ -79,7 +79,7 @@
     </div>
     <div class="container">
       <WordCloud v-if="termFrequency !== null" v-bind:termFrequency="termFrequency" />
-      <SearchBar v-if="artists !== null" v-bind:values="artists" v-bind:legend="'Recherche d\'artistes'" v-on:search-input="searchWordCloud" ref="searchWordCloudBar" />
+      <SearchBar v-if="artists !== null" v-bind:values="artists" v-bind:legend="'Recherche d\'artistes'" v-bind:idName="'wordcloud'" v-on:search-input="searchWordCloud" ref="searchWordCloudBar" />
     </div>
     <div class="container inter-text annotation">
       <p>
@@ -178,12 +178,11 @@ export default {
       this.$refs.beeswarm.filter(e);
     },
     searchBeeSwarm(propositions) {
-      console.log(propositions);
-      /*this.$refs.beeswarm.search(e, this.$refs.searchBeeswarm, [
+      this.$refs.beeswarm.search(propositions, [
         this.$refs.radioSex,
         this.$refs.radioArtistType,
         this.$refs.radioYear,
-      ]);*/
+      ])
     },
     searchWordCloud(propositions) {
       console.log(propositions);

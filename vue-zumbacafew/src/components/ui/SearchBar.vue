@@ -1,7 +1,7 @@
 <template>
   <div class="col-sm" style="text-align: center">
-    <label for="input-search"><strong>{{ legend }}</strong></label>
-    <input type="text" class="form-control" ref="inputSearch" id="input-search" @input="searchInput" />
+    <label :for="'search-input-' + idName"><strong>{{ legend }}</strong></label>
+    <input type="text" class="form-control" ref="inputSearch" :id="'search-input-' + idName" @input="searchInput" />
     <div v-for="prop in propositions" v-bind:key="prop">
       <div class="search-proposition" @click="propositionClick">{{ prop }}</div>
     </div>
@@ -13,8 +13,9 @@
 export default {
   name: "SearchBar",
   props: {
+    idName : String,
     legend: String,
-    values: String
+    values: Object
   },
   data() {
     return {
