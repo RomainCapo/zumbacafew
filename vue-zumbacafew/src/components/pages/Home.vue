@@ -34,7 +34,8 @@
             v-bind:filters="filtersArtistType" v-on:radio-btn-clicked="filterBeeSwarm" ref="radioArtistType" />
           <GroupRadio v-bind:legend="'Decenie'" v-bind:radioGroup="'year'" v-bind:filters="filtersDecade"
             v-on:radio-btn-clicked="filterBeeSwarm" ref="radioYear" />
-          <SearchBar v-if="artists !== null" v-bind:values="artists" v-bind:legend="'Recherche d\'artistes'" v-on:search-input="searchBeeSwarm" ref="searchBeeswarm" />
+          <SearchBar v-if="artists !== null" v-bind:values="artists" v-bind:legend="'Recherche d\'artistes'"
+            v-on:search-input="searchBeeSwarm" ref="searchBeeswarm" />
         </div>
       </div>
     </div>
@@ -78,8 +79,15 @@
       </p>
     </div>
     <div class="container">
-      <WordCloud ref="wordCloud" v-if="termFrequency !== null" v-bind:termFrequency="termFrequency" />
-      <SearchBar v-if="artists !== null" v-bind:values="artists" v-bind:legend="'Recherche d\'artistes'" v-on:search-input-click="searchWordCloud" ref="searchWordCloudBar" />
+      <div class="rows">
+        <div class="col-sm">
+          <WordCloud ref="wordCloud" v-if="termFrequency !== null" v-bind:termFrequency="termFrequency" />
+        </div>
+        <div class="col-sm">
+          <SearchBar v-if="artists !== null" v-bind:values="artists" v-bind:legend="'Recherche d\'artistes'"
+            v-on:search-input-click="searchWordCloud" ref="searchWordCloudBar" />
+        </div>
+      </div>
     </div>
     <div class="container inter-text annotation">
       <p>
