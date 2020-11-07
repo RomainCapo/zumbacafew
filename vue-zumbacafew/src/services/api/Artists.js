@@ -7,6 +7,9 @@ export default {
   getArtists() {
     return axios.get("/artists").then(result => result.data);
   },
+  getTermFrequencyByArtist(artist) {
+    return axios.get(`/artists/termfrequency/${artist}`).then(result => result.data);
+  },
   getTermFrequency() {
     return axios.get("/artists/termfrequency").then(result => result.data);
   },

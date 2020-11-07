@@ -133,13 +133,14 @@
       <WordCloud
         v-if="termFrequency !== null"
         v-bind:termFrequency="termFrequency"
+        ref="wordCloud"
       />
       <SearchBar
         v-if="artists !== null"
         v-bind:values="artists"
         v-bind:legend="'Recherche d\'artistes'"
         v-bind:idName="'wordcloud'"
-        v-on:search-input="searchWordCloud"
+        v-on:search-input-click="searchWordCloud"
         ref="searchWordCloudBar"
       />
     </div>
@@ -266,10 +267,10 @@ export default {
     filterWordHistogram(e) {
       this.$refs.wordHistogram.applyFilter(e.value);
     },
-    searchWordCloud(propositions) {
-      console.log(propositions);
-      //this.$refs.wordCloud;
-    },
+    async searchWordCloud(proposition) {
+      const termFrequency = await ArtistsApi.getTermFrequencyByArtist(proposition);
+      this.$refs.wordCloud.drawChart(termFrequency);
+    }
   },
 };
 </script>
