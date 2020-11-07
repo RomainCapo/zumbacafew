@@ -9,7 +9,7 @@ const stopWordsSchema = new mongoose.Schema({
 stopWordsSchema.statics.words = () => {
     return StopWords.find({}, {
         _id: 0,
-        words: "$words"
+        words: '$words'
     }).lean().exec();
 }
 
