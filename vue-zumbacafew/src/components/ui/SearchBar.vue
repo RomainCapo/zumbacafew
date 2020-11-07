@@ -40,23 +40,24 @@ export default {
   },
 };
 </script>
+
+
 <style scoped>
-#input-search{
-    width: 80%; 
-    margin: auto;
+#input-search {
+  width: 80%;
+  margin: auto;
 }
 
-.search-proposition{
-   margin: auto;
-    width: 80%;
-    border-bottom: solid 1px rgb(0, 178, 99);
-    padding: 3px;
+.search-proposition {
+  margin: auto;
+  width: 80%;
+  border-bottom: solid 1px rgb(0, 178, 99);
+  padding: 3px;
 }
 
 
-.search-proposition:hover{
-    background:rgb(237, 239, 238);
-    cursor: pointer;
-
+.search-proposition:hover {
+  background: rgb(237, 239, 238);
+  cursor: pointer;
 }
 </style>
