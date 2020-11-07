@@ -45,50 +45,61 @@ artistSchema.statics.artistsStats = () => {
 };
 
 artistSchema.statics.numberOfAnalyzedArtists = () => {
-    return Artist.find().count().exec();
+    return Artist.find().countDocuments().exec();
 }
 
 artistSchema.statics.numberOfSongs = () => {
-    return Artist.aggregate([
-        {
+    return Artist.aggregate([{
             $project: {
                 _id: 0,
-                numSongs: "$num_songs"
+                numSongs: '$num_songs'
             }
         },
         {
             $group: {
                 _id: 0,
                 count: {
-                    $sum: "$numSongs"
+                    $sum: '$numSongs'
                 }
             }
         },
         {
             $project: {
                 _id: 0,
-                count: "$count"
+                count: '$count'
             }
         }
     ]);
 }
 
-artistSchema.statics.vocabulary = () => {
-    return Artist.aggregate([{
+artistSchema.statics.vocabulary = (artistName) => {
+    let matchStage = {
+        $match: {}
+    };
+
+    if (typeof artistName !== 'undefined')
+        matchStage.$match.name = {
+            $regex: new RegExp(artistName, 'i')
+        };
+
+
+    return Artist.aggregate([
+        matchStage,
+        {
             $project: {
                 _id: 0,
                 allVocab: {
-                    $objectToArray: "$vocab"
+                    $objectToArray: '$vocab'
                 }
             }
         },
         {
             $project: {
-                yearVocab: "$allVocab.v"
+                yearVocab: '$allVocab.v'
             }
         },
         {
-            $unwind: "$yearVocab"
+            $unwind: '$yearVocab'
         },
         {
             $project: {
@@ -98,25 +109,25 @@ artistSchema.statics.vocabulary = () => {
             }
         },
         {
-            $unwind: "$matchWord"
+            $unwind: '$matchWord'
         },
         {
             $project: {
-                _id: "$matchWord.k",
-                count: "$matchWord.v"
+                _id: '$matchWord.k',
+                count: '$matchWord.v'
             }
         },
         {
             $group: {
-                _id: "$_id",
+                _id: '$_id',
                 count: {
-                    "$sum": "$count"
+                    '$sum': '$count'
                 }
             }
         },
         {
             $sort: {
-                "count": -1
+                'count': -1
             }
         },
         {

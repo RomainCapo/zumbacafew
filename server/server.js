@@ -4,22 +4,22 @@ import express from 'express';
 import mongoose from 'mongoose';
 
 import apiRouter from './api/api.js';
-import notFoundResponse from "./helpers/ApiResponse.js";
+import notFoundResponse from './helpers/ApiResponse.js';
 
 dotenv.config();
 
 var app = express();
 
 function setupServer() {
-    if (process.env.ENV === "DEV")
+    if (process.env.ENV === 'DEV')
         app.use(cors());
 
     app.listen(process.env.PORT || 8080);
 
-    app.use("/api/", apiRouter);
+    app.use('/api/', apiRouter);
 
-    app.all("*", function (req, res) {
-        return notFoundResponse(res, "Page not found");
+    app.all('*', function (req, res) {
+        return notFoundResponse(res, 'Page not found');
     });
 }
 
