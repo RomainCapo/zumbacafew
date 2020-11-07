@@ -9,7 +9,7 @@ import pymongo
 from collections import Counter, OrderedDict
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-mydb = myclient["zumba_cafew1"]
+mydb = myclient["zumba_cafew2"]
 mycol = mydb["artists"]
 
 FILENAME = "artists.txt"
@@ -54,8 +54,8 @@ with open(FILENAME, encoding='utf-8') as file:
         
         artist_dict["name"] = artist.name
         artist_dict["image_url"] = artist.image_url
-        artist_dict["sexe"] = "Woman" if artist_name in womans else "Men"
-        artist_dict["type"] = "Group" if artist_name in groups else "Individual"
+        artist_dict["sexe"] = ("Woman" if artist_name in womans else "Men")
+        artist_dict["type"] = ("Group" if artist_name in groups else "Individual")
 
         vocab = {}
         years = []
@@ -76,12 +76,10 @@ with open(FILENAME, encoding='utf-8') as file:
 
         artist_dict["vocab_length"] = (len(vocab_list) if len(vocab_list) < LYRICS_THRESHOLD else LYRICS_THRESHOLD)
         artist_dict["vocab_number_unique_word"] = len(list(set(vocab_list[0:LYRICS_THRESHOLD])))
-        artist_dict["is_complete"] = False if len(vocab_list) < LYRICS_THRESHOLD else True
+        artist_dict["is_complete"] = (False if len(vocab_list) < LYRICS_THRESHOLD else True)
         artist_dict["num_songs"] = artist.num_songs
         years.sort()
         artist_dict["years"] = years
         artist_dict["vocab"] = count_words_by_year(vocab)
         
-        print(artist_dict)
-        #mycol.insert_one(artist_dict)
-        break
+        mycol.insert_one(artist_dict)

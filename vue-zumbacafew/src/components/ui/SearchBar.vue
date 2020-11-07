@@ -1,9 +1,9 @@
 <template>
   <div class="col-sm" style="text-align: center">
-    <label for="input-artist-search"><strong>{{ legend }}</strong></label>
-    <input type="text" class="form-control" ref="inputArtistSearch" id="input-artist-search" @input="searchInput" />
-    <div ref="proposedArtistsContainer" v-for="prop in propositions" v-bind:key="prop">
-      <div class="proposed-artist" @click="propositionClick">{{ prop }}</div>
+    <label for="input-search"><strong>{{ legend }}</strong></label>
+    <input type="text" class="form-control" ref="inputSearch" id="input-search" @input="searchInput" />
+    <div v-for="prop in propositions" v-bind:key="prop">
+      <div class="search-proposition" @click="propositionClick">{{ prop }}</div>
     </div>
   </div>
 </template>
@@ -33,9 +33,30 @@ export default {
     propositionClick(e) {
       this.removePropositions();
 
-      this.$refs.inputArtistSearch.value = e.target.textContent;
-      this.$refs.inputArtistSearch.dispatchEvent(new Event("input"));
+      this.$refs.inputSearch.value = e.target.textContent;
+      this.$refs.inputSearch.dispatchEvent(new Event("input"));
+      this.propositions = [];
     },
   },
 };
 </script>
+<style scoped>
+#input-search{
+    width: 80%; 
+    margin: auto;
+}
+
+.search-proposition{
+   margin: auto;
+    width: 80%;
+    border-bottom: solid 1px rgb(0, 178, 99);
+    padding: 3px;
+}
+
+
+.search-proposition:hover{
+    background:rgb(237, 239, 238);
+    cursor: pointer;
+
+}
+</style>

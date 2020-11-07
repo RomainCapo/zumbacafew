@@ -14,3 +14,21 @@ export default {
   name: 'Footer'
 }
 </script>
+
+<style scoped>
+.footer {
+    margin-top: 30px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    background-color: rgb(0, 178, 99);
+}
+
+.panel-footer {
+    display: flex;
+    justify-content: space-between;
+  }
+
+</style>

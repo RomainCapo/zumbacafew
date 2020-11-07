@@ -203,8 +203,8 @@ export default {
               "<br>Nombre de musique: " +
               d.number_songs
             )
-            .style("top", event.y - 12 + "px")
-            .style("left", event.x + 25 + "px")
+            .style("top", event.layerY - 12 + "px")
+            .style("left", event.layerX + 25 + "px")
             .style("opacity", 0.9);
 
           self.xLine
@@ -331,3 +331,15 @@ export default {
   },
 };
 </script>
+<style scoped>
+
+.centered {
+    display: table;
+    margin: 20px auto;
+}
+
+.graph {
+    width: 50%;
+    margin: 0 auto;
+}
+</style>
