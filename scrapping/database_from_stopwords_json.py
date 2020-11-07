@@ -3,7 +3,7 @@ import os
 import json
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-mydb = myclient["zumba_cafew"]
+mydb = myclient["zumba_cafew2"]
 mycol = mydb["stopwords"]
 
 FILE_NAME = 'stopwords.json'

@@ -6,12 +6,16 @@ const artistSchema = new mongoose.Schema({
     sexe: String,
     type: String,
     vocab_length: Number,
-    vocab_ratio: Number,
+    vocab_number_unique_word: Number,
+    is_complete: Boolean,
     num_songs: Number,
-    year_avg: Number,
+    years: Array,
     vocab: {
         type: Map,
-        of: Number
+        of: {
+            type: Map,
+            of: Number
+        }
     }
 }, {
     collection: 'artists'
@@ -24,17 +28,36 @@ artistSchema.statics.artistsStats = () => {
         image_url: "$image_url",
         gender: "$sexe",
         artist_type: "$type",
-        vocab_ratio: "$vocab_ratio",
-        year: "$year_avg",
+        vocab_length: "$vocab_length",
+        vocab_number_unique_word: "$vocab_number_unique_word",
+        years: "$years",
+        is_complete: "$is_complete",
         number_songs: "$num_songs"
     }).lean().exec();
 };
 
 artistSchema.statics.vocabulary = () => {
-    return Artist.aggregate([{
+    return Artist.aggregate([
+        {
+            $project: {
+                _id: 0,
+                allVocab: {
+                    $objectToArray: "$vocab"
+                }
+            }
+        },
+        {
+            $project: {
+                yearVocab: "$allVocab.v"
+            }
+        },
+        {
+            $unwind: "$yearVocab"
+        },
+        {
             $project: {
                 matchWord: {
-                    $objectToArray: '$vocab'
+                    $objectToArray: '$yearVocab'
                 }
             }
         },
@@ -61,7 +84,7 @@ artistSchema.statics.vocabulary = () => {
             }
         },
         {
-            $limit: 500
+            $limit:500
         }
     ]);
 }
