@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="col-sm" v-for="value in values" v-bind:key="value">
-            <span>{{ value }}</span><br>
+        <div class="col-sm align-middle" v-for="value in values" v-bind:key="value">
+            <span :id="'artist' + value" >{{ value }}</span><br>
         </div>
         <hr/>
         <span>
@@ -12,19 +12,13 @@
 
 
 <script>
+
 export default {
   name: "StackedColumn",
   props:{
+      values:Array,
       start: Number,
       stop : Number
-  },
-  data() {
-    return {
-      values: [],
-    };
-  },
-  methods: {
-
   },
 };
 </script>

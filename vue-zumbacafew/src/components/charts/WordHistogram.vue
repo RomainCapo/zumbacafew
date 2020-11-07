@@ -1,38 +1,16 @@
 <template>
-    <!--<div class="container">
-      <span id="legend-container">
-        <div><strong>Année</strong></div>
-        <div class="y1990">1990</div>
-        <div class="y2000">2000</div>
-        <div class="y2010">2010</div>
-        <div class="y2020">2020</div>
-      </span>
-      <span id="criterion-container">
-        <strong>Critères</strong>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="radio-word-histogram" id="radio-year" value="year"
-            checked />
-          <label class="form-check-label" for="radio-year">Année</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="radio-word-histogram" id="radio-sex" value="gender" />
-          <label class="form-check-label" for="radio-sex">Sexe</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="radio-word-histogram" id="radio-artist-type"
-            value="artist_type" />
-          <label class="form-check-label" for="radio-artist-type">Type d'artiste</label>
-        </div>
-      </span>
-      <div class="row align-items-end" id="word-histogram-chart"></div>
-      <div id="xaxis-legend" style="text-align: center">Nombre de mots</div>
-      <div id="source">Source: <a href="https://genius.com">Genius</a></div>
-      <StackedColumn v-bind:start="100" v-bind:stop="200" ref="test"/>
-    </div>-->
-    <div class="row align-items-end" id="word-histogram-chart">
-      <StackedColumn  v-for="bin in bins" v-bind:key="bin" v-bind:start="100" v-bind:stop="200"></StackedColumn>
-      <p v-for="(bin,key) in bins" v-bind:key="bin">{{ bin }} {{key}}</p>
-    </div>
+  <div
+    class="row align-items-end justify-content-center"
+    id="word-histogram-chart"
+  >
+    <StackedColumn
+      v-for="bin in bins"
+      v-bind:key="bin"
+      v-bind:start="bin.start"
+      v-bind:stop="bin.stop"
+      v-bind:values="bin.values"
+    ></StackedColumn>
+  </div>
 </template>
 
 
@@ -42,43 +20,33 @@ import StackedColumn from "@/components/ui/StackedColumn.vue";
 
 export default {
   name: "WordHistogram",
-  components:{
-    StackedColumn
+  components: {
+    StackedColumn,
   },
-  data(){
+  data() {
     return {
       bins: [],
     };
   },
   props: {
     artistsStats: Object,
+    legend: Object,
     numberBin: {
       type: Number,
       default: 6,
     },
   },
   mounted() {
-
-    this.bins.push(4)
-    this.bins.push(5)
-    this.bins.push(6)
-
-    //this.init();
-
-    /*let div = document.getElementById("word-histogram-chart");
-    this.computeHistogram(div);*/
+    this.bins = this._computeBin();
+  },
+  updated() {
+    this.applyFilter("year");
   },
   methods: {
-    init() {
-      this.radioButtons = document.querySelectorAll(
-        "#word-histogram input[type='radio']"
-      );
-      this.addEventListnerRadioButtons();
-    },
     _getInterval() {
       let values = [];
       this.artistsStats.forEach((x) => {
-        values.push(x.vocab_ratio);
+        values.push(x.vocab_number_unique_word);
       });
 
       return {
@@ -91,7 +59,7 @@ export default {
 
       let binWidth = Math.round((minMax.max - minMax.min) / this.numberBin);
 
-      let histogramBin = {};
+      let binvValues = [];
 
       this.binInterval = [];
 
@@ -104,61 +72,29 @@ export default {
       this.artistsStats.forEach((x) => {
         for (let i = 0; i <= this.binInterval.length; i++) {
           if (
-            x.vocab_ratio >= this.binInterval[i] &&
-            x.vocab_ratio <= this.binInterval[i + 1]
+            x.vocab_number_unique_word >= this.binInterval[i] &&
+            x.vocab_number_unique_word <= this.binInterval[i + 1]
           ) {
-            if (typeof histogramBin[i] == "undefined") {
-              histogramBin[i] = [];
+            if (typeof binvValues[i] == "undefined") {
+              binvValues[i] = [];
             }
-            histogramBin[i].push(x);
+            binvValues[i].push(x.name);
           }
         }
       });
-      return histogramBin;
-    },
-    computeHistogram(div) {
-      let bins = this._computeBin();
 
-      let html = "";
-      for (let i = 0; i < Object.keys(bins).length; i++) {
-        html += '<div class="col-sm">';
-        bins[i].sort((a, b) => (a.vocab_ratio < b.vocab_ratio ? 1 : -1)); // Sort artist
-
-        for (let j = 0; j < Object.keys(bins[i]).length; j++) {
-          html +=
-            '<span id="artist' +
-            Helper.replaceStringSpace(bins[i][j].name) +
-            '">' +
-            bins[i][j].name +
-            "</span><br>";
-        }
-
-        // Legend for each bin
-        html += '<hr/><span">';
-
-        if (i == 0) {
-          html += "- " + Helper.round(this.binInterval[i + 1]);
-        } else if (i == Object.keys(bins).length - 1) {
-          html += "+ " + Helper.round(this.binInterval[i]);
-        } else {
-          html +=
-            Helper.round(this.binInterval[i]) +
-            " - " +
-            Helper.round(this.binInterval[i + 1]);
-        }
-        html += "</span></div>";
-      }
-      div.innerHTML = html;
-
-      this.applyFilter("year");
-    },
-    addEventListnerRadioButtons() {
-      this.radioButtons.forEach((elem) => {
-        elem.addEventListener("input", (x) => {
-          this.applyFilter(x.target.value);
+      let histogramBin = [];
+      binvValues.forEach((x, k) => {
+        x.sort();
+        histogramBin.push({
+          start: this.binInterval[k],
+          stop: this.binInterval[k + 1],
+          values: x,
         });
       });
+      return histogramBin;
     },
+
     applyFilter(criterion) {
       if (criterion != "year") {
         let criterionValues = Array.from(
@@ -166,9 +102,7 @@ export default {
         );
 
         this.artistsStats.forEach((x) => {
-          let artistSpan = document.getElementById(
-            "artist" + Helper.replaceStringSpace(x.name)
-          );
+          let artistSpan = document.getElementById("artist" + x.name);
           artistSpan.className =
             "align-bottom c" + criterionValues.indexOf(x[criterion]);
         });
@@ -180,9 +114,8 @@ export default {
         criterionValues.sort();
 
         this.artistsStats.forEach((x) => {
-          let artistSpan = document.getElementById(
-            "artist" + Helper.replaceStringSpace(x.name)
-          );
+
+          let artistSpan = document.getElementById("artist" + x.name);
           artistSpan.className =
             "align-bottom c" +
             criterionValues.indexOf(Helper.ceilYear(x[criterion]));
@@ -191,29 +124,36 @@ export default {
       }
     },
     updateLegend(criterion, criterionValues) {
-      this.legendContainer = document.getElementById("legend-container");
-      let html = "<strong>" + Helper.criterionToFrench(criterion) + "</strong>";
+      let strong = document.createElement("STRONG");
+      strong.appendChild(document.createTextNode(Helper.criterionToFrench(criterion)));
+
+      while (this.legend.firstChild) {
+        this.legend.firstChild.remove();
+      }
+      this.legend.appendChild(strong);
 
       criterionValues.forEach((value, index) => {
         if (criterion == "gender") {
-          html +=
-            "<div class='c" +
-            index +
-            "'>" +
-            Helper.sexToFrench(value) +
-            "</div>";
+          
+            let div = document.createElement("DIV");
+            div.classList.add("c" + index)
+            div.appendChild(document.createTextNode(Helper.sexToFrench(value)))
+
+            this.legend.appendChild(div)
         } else if (criterion == "artist_type") {
-          html +=
-            "<div class='c" +
-            index +
-            "'>" +
-            Helper.artistTypeToFrench(value) +
-            "</div>";
+            let div = document.createElement("DIV");
+            div.classList.add("c" + index)
+            div.appendChild(document.createTextNode(Helper.artistTypeToFrench(value)))
+
+            this.legend.appendChild(div)
         } else {
-          html += "<div class='c" + index + "'>" + value + "</div>";
+          let div = document.createElement("DIV");
+            div.classList.add("c" + index)
+            div.appendChild(document.createTextNode(value))
+
+            this.legend.appendChild(div)
         }
       });
-      this.legendContainer.innerHTML = html;
     },
   },
 };
