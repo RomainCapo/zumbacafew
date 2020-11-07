@@ -78,8 +78,8 @@
       </p>
     </div>
     <div class="container">
-      <WordCloud v-if="termFrequency !== null" v-bind:termFrequency="termFrequency" />
-      <SearchBar v-if="artists !== null" v-bind:values="artists" v-bind:legend="'Recherche d\'artistes'" v-on:search-input="searchWordCloud" ref="searchWordCloudBar" />
+      <WordCloud ref="wordCloud" v-if="termFrequency !== null" v-bind:termFrequency="termFrequency" />
+      <SearchBar v-if="artists !== null" v-bind:values="artists" v-bind:legend="'Recherche d\'artistes'" v-on:search-input-click="searchWordCloud" ref="searchWordCloudBar" />
     </div>
     <div class="container inter-text annotation">
       <p>
@@ -185,9 +185,9 @@ export default {
         this.$refs.radioYear,
       ]);*/
     },
-    searchWordCloud(propositions) {
-      console.log(propositions);
-      //this.$refs.wordCloud;
+    async searchWordCloud(proposition) {
+      const termFrequency = await ArtistsApi.getTermFrequencyByArtist(proposition);
+      this.$refs.wordCloud.drawChart(termFrequency);
     }
   },
 };

@@ -37,16 +37,18 @@ export default {
     },
   },
   mounted() {
-    this.drawChart();
+    this.drawChart(this.termFrequency);
   },
   methods: {
-    drawChart() {
+    drawChart(termFrequency) {
       let maxFrequency = Math.max.apply(
         Math,
-        this.termFrequency.map(function (o) {
+        termFrequency.map(function (o) {
           return o.count;
         })
       );
+
+      d3.select(this.$refs.svgwordcloud).select("svg").remove();
 
       this.svg = d3
         .select(this.$refs.svgwordcloud)
@@ -62,19 +64,19 @@ export default {
       this.layout = cloud()
         .size([this.width, this.height])
         .words(
-          this.termFrequency.map(function (d) {
+          termFrequency.map(function (d) {
             return {
               text: d._id,
               size: d.count / maxFrequency
             };
           })
         )
-        .padding(4)
+        .padding(5)
         .rotate(function () {
           return ~~(Math.random() * 2) * 90;
         })
         .fontSize(function (d) {
-          return d.size * 100;
+          return d.size * 150;
         })
         .on("end", this.drawWord);
       this.layout.start();

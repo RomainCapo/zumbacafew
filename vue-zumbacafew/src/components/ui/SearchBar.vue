@@ -43,6 +43,8 @@ export default {
       this.$refs.inputSearch.value = e.target.textContent;
       this.$refs.inputSearch.dispatchEvent(new Event("input"));
       this.propositions = [];
+
+      this.$emit("search-input-click", this.$refs.inputSearch.value);
     },
   },
 };
