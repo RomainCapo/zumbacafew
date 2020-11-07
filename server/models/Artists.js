@@ -36,9 +36,37 @@ artistSchema.statics.artistsStats = () => {
     }).lean().exec();
 };
 
-artistSchema.statics.vocabulary = () => {
+artistSchema.statics.numberOfAnalyzedArtists = () => {
+    return Artist.find().count().exec();
+}
+
+artistSchema.statics.numberOfSongs = () => {
     return Artist.aggregate([
         {
+            $project: {
+                _id: 0,
+                numSongs: "$num_songs"
+            }
+        },
+        {
+            $group: {
+                _id: 0,
+                count: {
+                    $sum: "$numSongs"
+                }
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                count: "$count"
+            }
+        }
+    ]);
+}
+
+artistSchema.statics.vocabulary = () => {
+    return Artist.aggregate([{
             $project: {
                 _id: 0,
                 allVocab: {
@@ -84,7 +112,7 @@ artistSchema.statics.vocabulary = () => {
             }
         },
         {
-            $limit:500
+            $limit: 500
         }
     ]);
 }

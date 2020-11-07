@@ -13,6 +13,30 @@ export async function allArtistsVocabulary(req, res) {
     }
 }
 
+export async function numberOfArtists(req, res) {
+    res.setHeader('Content-Type', 'application/json');
+
+    try {
+        const numberOfArtists = await Artist.numberOfAnalyzedArtists();
+        res.json({
+            count: numberOfArtists
+        });
+    } catch (err) {
+        console.error(err)
+    }
+}
+
+export async function numberOfSongs(req, res) {
+    res.setHeader('Content-Type', 'application/json');
+
+    try {
+        const numberOfSongs = await Artist.numberOfSongs();
+        res.json(numberOfSongs[0]);
+    } catch (err) {
+        console.error(err)
+    }
+}
+
 export async function wordFrequency(req, res) {
     res.setHeader('Content-Type', 'application/json')
 
