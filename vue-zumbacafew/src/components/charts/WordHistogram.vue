@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <!--<div class="container">
       <span id="legend-container">
         <div><strong>Année</strong></div>
         <div class="y1990">1990</div>
@@ -27,15 +27,29 @@
       <div class="row align-items-end" id="word-histogram-chart"></div>
       <div id="xaxis-legend" style="text-align: center">Nombre de mots</div>
       <div id="source">Source: <a href="https://genius.com">Genius</a></div>
+      <StackedColumn v-bind:start="100" v-bind:stop="200" ref="test"/>
+    </div>-->
+    <div class="row align-items-end" id="word-histogram-chart">
+      <StackedColumn  v-for="bin in bins" v-bind:key="bin" v-bind:start="100" v-bind:stop="200"></StackedColumn>
+      <p v-for="(bin,key) in bins" v-bind:key="bin">{{ bin }} {{key}}</p>
     </div>
 </template>
 
 
 <script>
 import Helper from "@/services/class/Helper.js";
+import StackedColumn from "@/components/ui/StackedColumn.vue";
 
 export default {
   name: "WordHistogram",
+  components:{
+    StackedColumn
+  },
+  data(){
+    return {
+      bins: [],
+    };
+  },
   props: {
     artistsStats: Object,
     numberBin: {
@@ -44,10 +58,15 @@ export default {
     },
   },
   mounted() {
-    this.init();
 
-    let div = document.getElementById("word-histogram-chart");
-    this.computeHistogram(div);
+    this.bins.push(4)
+    this.bins.push(5)
+    this.bins.push(6)
+
+    //this.init();
+
+    /*let div = document.getElementById("word-histogram-chart");
+    this.computeHistogram(div);*/
   },
   methods: {
     init() {

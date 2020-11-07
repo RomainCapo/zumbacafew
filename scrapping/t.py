@@ -12,7 +12,8 @@ mycol = mydb["artists"]
 
 l = []
 
-for x in mycol.find({},{ "_id": 0, "vocab":0 }):
+for x in mycol.find({},{ "_id": 0}):
     l.append(x)
 
-print(json.dumps(l))
+with open('artists.json', 'w') as outfile:
+    json.dump(l, outfile, indent=4)

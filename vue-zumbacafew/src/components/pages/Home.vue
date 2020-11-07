@@ -8,13 +8,17 @@
         <p id="right">de vos rappeurs préférés !</p>
       </div>
     </div>
+    <div class="container stats">
+      <p>Nombre d'artistes analysé: <strong>75</strong></p>
+      <p>Nombre de musiques totales : <strong>556</strong></p>
+      <p>Nombre de mots totales : <strong>34'098</strong></p>
+    </div>
     <div class="container inter-text annotation">
       <p>
-        Toutes les données de ce projet proviennent du site web
-        <a href="https://genius.com/">Genius</a>. Pour chaque artiste, le nombre
-        de mots uniques est calculé sur un ensemble de
-        <strong>20'000 mots</strong> récupéré sur ses chansons les plus
-        populaires.
+        Vous avez toujours voulu savoir si le vocabulaire d'un rappeur était plus riche qu'un autre ? Si le rap c'était mieux avant ? Si le vocabulaire de <a href="https://genius.com/artists/Booba">Booba</a> est plus riche que celui de <a href="https://genius.com/artists/Kaaris">Kaaris</a> ? 
+      </p>
+      <p>
+        Le graphique suivant va vous donner la réponse !
       </p>
     </div>
     <div id="beeswarm">
@@ -53,9 +57,18 @@
     </div>
 
     <div class="container inter-text annotation">
+        <p>
+        Toutes les données de ce projet proviennent du site web
+        <a href="https://genius.com/">Genius</a>. Pour chaque artiste, le nombre
+        de mots uniques est calculé sur un ensemble de
+        <strong>20'000 mots</strong> récupéré sur ses musiques les plus
+        populaires. Les artistes qui n'atteignent pas ce seuil son précisé via une annotation.
+      </p>  
       <p>
-        Ce graphique graphique permet de voir la richesse du vocabulaire de
-        chaque artiste.
+        Le graphique permet de filtrer les artistes selon leur <strong>sexe</strong>, si il s'agit <strong>d'un groupe ou d'un artiste solo</strong> et <strong>l'année</strong> de celui ci.
+      </p>
+      <p>
+        La décennie à laquelle appartient chaque artiste est calculé à partir de la moyenne de ces musiques les plus populaires.
       </p>
     </div>
     <div id="word-histogram">
@@ -65,13 +78,18 @@
           v-bind:artistsStats="artistsStats"
         />
     </div>
-
     <div class="container inter-text annotation">
       <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt natus,
-        reprehenderit quibusdam dolorum aliquid error deleniti aut corporis
-        iusto, accusamus sequi voluptatem eos quisquam aliquam! Atque sequi
-        libero quod magni? Plus d'information <a href="">ici</a>
+        Ce graphique présente une autre vue du premier graphique. Chaque artistes est disposé dans une collonne en fonction de la richesse de son vocabulaire
+      </p>
+    </div>
+    <hr class="annotation-separator">  
+    <div class="container inter-text annotation">
+      <p>
+        Vous voulez découvrir quels sont les mots les plus fréquent dans le rap français ? Quel termes sont les plus utilisé par un artiste ? Si le mot le plus utilisé par <a href="https://genius.com/artists/Wejdene">Wejdene</a> est Coco ?  
+      </p>
+      <p>
+        Vous êtes au bon endroit !
       </p>
     </div>
     <WordCloud v-if="termFrequency !== null" v-bind:termFrequency="termFrequency">
@@ -107,7 +125,7 @@ export default {
     Header,
     WordCloud,
     WordHistogram,
-    SearchBar,
+    SearchBar
   },
   data() {
     return {

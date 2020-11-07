@@ -7,19 +7,30 @@ a:hover{
     color:black;
 }
 
+.stats{
+    font-size: 24px;
+    color: gray;
+    font-style: italic;
+}
+
 a {
     color:  rgb(0, 178, 99);
 }
 
+.annotation-separator{
+    width: 40%;
+    border-top: 1px solid rgb(0, 178, 99);
+}
+
 #intro {
     text-align: center;
-    font-size: 75px;
+    font-size: 80px;
     font-weight: bold;
     height: 250px;
     margin-bottom: 20px;
 }
 
-.title{
+#beeswarm .title{
     padding-top: 20px;
     font-size: 50px;
 }
@@ -41,8 +52,6 @@ a {
     background-color:  rgb(247, 247, 247);
     padding-bottom: 20px;
 }
-
-
 
 @media (min-width: 1400px) {
     .container{
@@ -68,11 +77,16 @@ div.tooltip {
     margin-top:50px;
 }
 
-#word-histogram{
-    padding-bottom: 100px;
-    padding-top: 100px;
-    background-color:  rgb(247, 247, 247);
+#word-histogram .title{
+    font-size: 50px;
     margin-bottom: 70px;
+}
+
+
+#word-histogram{
+    padding-bottom: 50px;
+    padding-top: 50px;
+    background-color:  rgb(247, 247, 247);
 }
 
 #word-histogram .col-sm{
@@ -125,7 +139,7 @@ div.tooltip {
 
 .annotation{
     padding: 50px;
-    font-size: 24px;
+    font-size: 28px;
     width: 80%;
     text-align: left;
 }
