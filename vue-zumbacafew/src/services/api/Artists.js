@@ -4,6 +4,9 @@ axios.defaults.baseURL = process.env.VUE_APP_BACKENDURL;
 
 export default {
   name: "ArtistsAPI",
+  getArtists() {
+    return axios.get("/artists").then(result => result.data);
+  },
   getTermFrequency() {
     return axios.get("/artists/termfrequency").then(result => result.data);
   },

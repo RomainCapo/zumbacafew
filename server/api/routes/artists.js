@@ -2,6 +2,7 @@ import {
     Router
 } from 'express';
 import {
+    allArtists,
     allArtistsVocabulary,
     numberOfArtists,
     numberOfSongs,
@@ -10,6 +11,7 @@ import {
 
 var router = Router();
 
+router.get('/', allArtists)
 router.get('/artistcount', numberOfArtists);
 router.get('/stats', allArtistsVocabulary);
 router.get('/soundcount', numberOfSongs);

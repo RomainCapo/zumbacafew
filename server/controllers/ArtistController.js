@@ -1,6 +1,16 @@
 import Artist from '../models/Artists.js';
 import StopWords from '../models/StopWords.js';
 
+export async function allArtists(req, res) {
+    res.setHeader('Content-Type', 'application/json');
+
+    try {
+        const allArtists = await Artist.allArtists();
+        res.json(allArtists);
+    } catch (err) {
+        console.error(err)
+    }
+}
 
 export async function allArtistsVocabulary(req, res) {
     res.setHeader('Content-Type', 'application/json');

@@ -81,9 +81,9 @@ export default {
     },
     drawWord(word) {
       let colors = d3scale
-        .scaleSequential()
-        .domain([1, this.termFrequency.length])
-        .range(["#8E59AB", "#00B263"]);
+        .scaleLinear()
+        .domain([1, 50])
+        .range(['#8e59ab', '#00b263']);
 
       this.svg
         .append("g")

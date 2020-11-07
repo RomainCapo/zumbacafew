@@ -14,6 +14,7 @@ export default {
   name: "SearchBar",
   props: {
     legend: String,
+    values: String
   },
   data() {
     return {
@@ -21,11 +22,17 @@ export default {
     };
   },
   methods: {
-    searchInput(e) {
-      this.$emit("search-input", e.target);
+    filterValues() {
+      const inputSearch = this.$refs.inputSearch.value.toLowerCase();
+      this.values.forEach(value => {
+        if (inputSearch !== "" && value.name.toLowerCase().includes(inputSearch))
+          this.propositions.push(value.name);
+      })
     },
-    addElement(value) {
-      this.propositions.push(value);
+    searchInput() {
+      this.removePropositions();
+      this.filterValues();
+      this.$emit("search-input", this.propositions);
     },
     removePropositions() {
       this.propositions = [];
