@@ -1,5 +1,5 @@
 <template>
-  <div ref="svganchor" class="graph centered"></div>
+  <div ref="svganchor" class="graph centered" id="test"></div>
 </template>
 
 <script>
@@ -20,11 +20,11 @@ export default {
     },
     explode_force: {
       type: Number,
-      default: 30,
+      default: 25,
     },
     height: {
       type: Number,
-      default: 600,
+      default: 500,
     },
     marginBottom: {
       type: Number,
@@ -44,13 +44,14 @@ export default {
     },
     width: {
       type: Number,
-      default: 1200,
+      default: 1000,
     },
   },
   mounted() {
     this.init();
     this.computeChart();
   },
+
   methods: {
     init() {
       this.margin = {
@@ -63,8 +64,9 @@ export default {
       this.svg = d3
         .select(this.$refs.svganchor)
         .append("svg")
-        .attr("width", this.width)
-        .attr("height", this.height);
+        .attr("viewBox", "0 0 " + this.width + " " + this.height )
+        .attr("preserveAspectRatio", "xMidYMid meet");
+
 
       this.svg
         .append("g")
@@ -333,13 +335,5 @@ export default {
 };
 </script>
 <style scoped>
-.centered {
-  display: table;
-  margin: 20px auto;
-}
 
-.graph {
-  width: 50%;
-  margin: 0 auto;
-}
 </style>

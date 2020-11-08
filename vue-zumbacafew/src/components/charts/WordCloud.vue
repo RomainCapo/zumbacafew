@@ -12,11 +12,11 @@ export default {
   props: {
     height: {
       type: Number,
-      default: 800,
+      default: 1400,
     },
     marginBottom: {
       type: Number,
-      default: 34,
+      default: 0,
     },
     marginLeft: {
       type: Number,
@@ -33,7 +33,7 @@ export default {
     termFrequency: Object,
     width: {
       type: Number,
-      default: 800,
+      default: 1400,
     },
   },
   mounted() {
@@ -53,8 +53,9 @@ export default {
       this.svg = d3
         .select(this.$refs.svgwordcloud)
         .append("svg")
-        .attr("width", this.width + this.marginLeft + this.marginRight)
-        .attr("height", this.height + this.marginTop + this.marginBottom)
+        //.attr("width", this.width + this.marginLeft + this.marginRight)
+        //.attr("height", this.height + this.marginTop + this.marginBottom)
+        .attr("viewBox", "0 0 " + (this.width + this.marginLeft + this.marginRight) + " " +  (this.height + this.marginTop + this.marginBottom))
         .append("g")
         .attr(
           "transform",
@@ -89,8 +90,9 @@ export default {
 
       this.svg
         .append("g")
-        .attr("width", this.width)
-        .attr("height", this.height)
+        //.attr("width", this.width)
+        //.attr("height", this.height)
+        .attr("viewBox", "0 0 " + this.width  + " " +  this.height)
         .attr(
           "transform",
           "translate(" +

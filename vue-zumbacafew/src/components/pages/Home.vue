@@ -1,7 +1,6 @@
 <template>
   <div>
     <Header />
-
     <div id="intro">
       <div class="container inter-text">
         <p id="left">Découvrez les statistiques cachées</p>
@@ -44,9 +43,9 @@
       </p>
       <p>Le graphique suivant va vous donner la réponse !</p>
     </div>
-    <div id="beeswarm">
+    <div id="beeswarm-container">
       <h1 class="title">Nombre de mots uniques par artistes</h1>
-      <div class="container">
+      <div class="container justify-content-center">
         <Beeswarm
           ref="beeswarm"
           v-if="artistsStats !== null"
@@ -93,7 +92,6 @@
         </div>
       </div>
     </div>
-
     <div class="container inter-text annotation">
       <p>
         Toutes les données de ce projet proviennent du site web
@@ -114,24 +112,9 @@
         de la moyenne de ses musiques les plus populaires.
       </p>
     </div>
-    <div id="word-histogram">
+    <div id="word-histogram-container">
       <div class="container">
         <h1 class="title">Histogramme du nombre de mot uniques par artiste</h1>
-        <span ref="legendContainer" id="legend-container">
-          <div><strong>Année</strong></div>
-          <div class="y1990">1990</div>
-          <div class="y2000">2000</div>
-          <div class="y2010">2010</div>
-          <div class="y2020">2020</div>
-        </span>
-        <span id="criterion-container">
-          <GroupRadio
-            v-bind:legend="'Critère'"
-            v-bind:radioGroup="'criterions'"
-            v-bind:filters="filtersName"
-            v-on:radio-btn-clicked="filterWordHistogram"
-          />
-        </span>
         <WordHistogram
           v-if="artistsStats !== null"
           v-bind:artistsStats="artistsStats"
@@ -139,6 +122,29 @@
           ref="wordHistogram"
           id="word-histogram"
         />
+                        <div id="xaxis-legend">Nombre de mot</div>
+                <div id="source">Source: <a href='https://genius.com'>Genius</a></div>
+        <div class="row">
+          <div class="col-sm">
+            <span ref="legendContainer" id="legend-container">
+              <strong>Année</strong><br />
+              <span class="y1990">1990</span><br />
+              <span class="y2000">2000</span><br />
+              <span class="y2010">2010</span><br />
+              <span class="y2020">2020</span>
+            </span>
+          </div>
+          <div class="col-sm">
+            <span id="criterion-container">
+              <GroupRadio
+                v-bind:legend="'Critère'"
+                v-bind:radioGroup="'criterions'"
+                v-bind:filters="filtersName"
+                v-on:radio-btn-clicked="filterWordHistogram"
+              />
+            </span>
+          </div>
+        </div>
       </div>
     </div>
     <div class="container inter-text annotation">
@@ -159,28 +165,32 @@
       </p>
       <p>Vous êtes au bon endroit !</p>
     </div>
-    <div class="container">
-      <div class="rows">
-        <div class="col-sm">
-          <WordCloud
-            v-if="termFrequency !== null"
-            v-bind:termFrequency="termFrequency"
-            ref="wordCloud"
-            id="word-cloud"
-          />
-        </div>
-        <div class="col-sm">
-          <SearchBar
-            v-if="artists !== null"
-            v-bind:values="artists"
-            v-bind:legend="'Recherche d\'artistes'"
-            v-bind:idName="'wordcloud'"
-            v-on:search-input-click="searchWordCloud"
-            ref="searchWordCloudBar"
-          />
+    <div id="word-cloud-container">
+      <div class="container">
+        <div class="rows">
+          <div class="col-sm">
+            <h1>Nuage de mots</h1>
+            <WordCloud
+              v-if="termFrequency !== null"
+              v-bind:termFrequency="termFrequency"
+              ref="wordCloud"
+              id="word-cloud"
+            />
+          </div>
+          <div class="col-sm">
+            <SearchBar
+              v-if="artists !== null"
+              v-bind:values="artists"
+              v-bind:legend="'Recherche d\'artistes'"
+              v-bind:idName="'wordcloud'"
+              v-on:search-input-click="searchWordCloud"
+              ref="searchWordCloudBar"
+            />
+          </div>
         </div>
       </div>
     </div>
+
     <div class="container inter-text annotation">
       <p>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt natus,
@@ -196,12 +206,12 @@
 <script>
 import ArtistsApi from "@/services/api/Artists";
 import Beeswarm from "@/components/charts/Beeswarm.vue";
-import Footer from "@/components/layout/Footer";
-import GroupRadio from "@/components/ui/GroupRadio.vue";
 import Header from "@/components/layout/Header";
-import WordCloud from "@/components/charts/WordCloud.vue";
+import GroupRadio from "@/components/ui/GroupRadio.vue";
 import WordHistogram from "@/components/charts/WordHistogram.vue";
 import SearchBar from "@/components/ui/SearchBar.vue";
+import WordCloud from "@/components/charts/WordCloud.vue";
+import Footer from "@/components/layout/Footer";
 
 export default {
   name: "Home",
@@ -221,8 +231,8 @@ export default {
       artistCount: null,
       songCount: null,
       wordCount: null,
-      minYear : null,
-      maxYear : null,
+      minYear: null,
+      maxYear: null,
       filtersArtistType: [
         {
           key: "all",
@@ -273,19 +283,19 @@ export default {
           value: "Femme",
         },
       ],
-      filtersIsComplete:[
+      filtersIsComplete: [
         {
           key: "all",
-          value: "Tous les artistes"
+          value: "Tous les artistes",
         },
         {
           key: "complete",
-          value: "Seuil atteint"
+          value: "Seuil atteint",
         },
         {
           key: "incomplete",
-          value: "Seuil non atteint"
-        }
+          value: "Seuil non atteint",
+        },
       ],
       filtersName: [
         {
@@ -323,7 +333,7 @@ export default {
         this.$refs.radioSex,
         this.$refs.radioArtistType,
         this.$refs.radioYear,
-        this.$refs.radioIsComplete
+        this.$refs.radioIsComplete,
       ]);
     },
     filterWordHistogram(e) {

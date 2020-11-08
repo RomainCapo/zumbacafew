@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="stacked-column">
         <div class="col-sm align-middle" v-for="value in values" v-bind:key="value">
             <span :id="'artist' + value" >{{ value }}</span><br>
         </div>

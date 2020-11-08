@@ -27,10 +27,10 @@ a {
     font-size: 80px;
     font-weight: bold;
     height: 250px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
-#beeswarm .title{
+#beeswarm-container .title{
     padding-top: 20px;
     font-size: 50px;
 }
@@ -48,7 +48,7 @@ a {
     float: right;
 }
 
-#beeswarm{
+#beeswarm-container{
     background-color:  rgb(247, 247, 247);
     padding-bottom: 20px;
 }
@@ -81,61 +81,50 @@ div.tooltip {
     margin-top:50px;
 }
 
-#word-histogram .title{
+#word-histogram-container .title{
     font-size: 50px;
     margin-bottom: 70px;
 }
 
 
-#word-histogram{
+#word-histogram-container{
     padding-bottom: 50px;
     padding-top: 50px;
     background-color:  rgb(247, 247, 247);
 }
 
-#word-histogram .col-sm{
+#word-histogram-container .col-sm{
     text-align: center;
 }
 
-#word-histogram hr{
+#word-histogram-container hr{
     width:80%;
     border-top: 1px solid black;
 }
 
-#word-histogram #legend-container{
-    text-align: center;
-    float: left;
-}
-
-#word-histogram #criterion-container{
-    float: right;
-    text-align: center;
-}
-
-#word-histogram #source{
+#word-histogram-container #source{
     font-size: 10px;
-    position: relative;
-    top: 20px;
-    left: 10px;
+    float: left;
+    margin-left: 50px;
 }
 
-#word-histogram a{
+#word-histogram-container a{
     color: black;
 }
 
-#word-histogram .c0{
+#word-histogram-container .c0{
     color:rgb(142, 89, 171);
 }
 
-#word-histogram .c1{
+#word-histogram-container .c1{
     color:rgb(240, 71, 112);
 }
 
-#word-histogram .c2{
+#word-histogram-container .c2{
     color: rgb(0, 178, 99);
 }
 
-#word-histogram .c3{
+#word-histogram-container .c3{
     color: black;
 }
 
@@ -145,3 +134,47 @@ div.tooltip {
     width: 80%;
     text-align: left;
 }
+
+#word-histogram-container .row{
+    margin-top: 30px;
+}
+
+#word-histogram-container #xaxis-legend{
+    font-size: 16px;
+}
+
+#word-cloud-container{
+    background-color:  rgb(247, 247, 247);
+    padding: 50px;
+}
+
+#word-cloud-container h1{
+    font-size: 50px;
+}
+
+ .stacked-column{
+    width: 15%;
+}
+
+@media (max-width: 1000px) { 
+
+    p{
+        font-size: 20px;
+    }
+
+    #intro p{
+        font-size: 40px;
+    }
+
+    .stats{
+        margin-top: -100px;
+    }
+
+    #beeswarm-container .col-sm{
+        margin-bottom: 20px;
+    }
+
+    .container{
+        max-width: 2000px;
+    }
+ }
