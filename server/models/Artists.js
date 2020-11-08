@@ -52,6 +52,30 @@ artistSchema.statics.numberOfAnalyzedArtists = () => {
     return Artist.find().countDocuments().exec();
 }
 
+artistSchema.statics.numberOfWords = () => {
+    return Artist.aggregate([{
+            $project: {
+                _id: 0,
+                vocabLength: '$vocab_length'
+            }
+        },
+        {
+            $group: {
+                _id: 0,
+                count: {
+                    $sum: '$vocabLength'
+                }
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                count: '$count'
+            }
+        }
+    ]);
+}
+
 artistSchema.statics.numberOfSongs = () => {
     return Artist.aggregate([{
             $project: {
@@ -71,6 +95,58 @@ artistSchema.statics.numberOfSongs = () => {
             $project: {
                 _id: 0,
                 count: '$count'
+            }
+        }
+    ]);
+}
+
+artistSchema.statics.minYear = () => {
+    return Artist.aggregate([{
+            $project: {
+                _id: 0,
+                year: '$years'
+            }
+        },
+        {
+            $group: {
+                _id: 0,
+                minByArtist: {
+                    $min: '$year'
+                }
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                min: {
+                    $min: '$minByArtist'
+                }
+            }
+        }
+    ]);
+}
+
+artistSchema.statics.maxYear = () => {
+    return Artist.aggregate([{
+            $project: {
+                _id: 0,
+                year: '$years'
+            }
+        },
+        {
+            $group: {
+                _id: 0,
+                maxByArtist: {
+                    $max: '$year'
+                }
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                max: {
+                    $max: '$maxByArtist'
+                }
             }
         }
     ]);

@@ -9,9 +9,30 @@
       </div>
     </div>
     <div class="container stats">
-      <p>Nombre d'artistes analysé: <strong>75</strong></p>
-      <p>Nombre de musiques totales : <strong>556</strong></p>
-      <p>Nombre de mots totales : <strong>34'098</strong></p>
+      <p>
+        Nombre d'artistes analysés:
+        <strong v-if="artistCount !== null">{{
+          formatNumber(artistCount.count)
+        }}</strong>
+      </p>
+      <p>
+        Nombre de musiques analysées :
+        <strong v-if="songCount !== null">{{
+          formatNumber(songCount.count)
+        }}</strong>
+      </p>
+      <p>
+        Nombre de mots analysés :
+        <strong v-if="wordCount !== null">{{
+          formatNumber(wordCount.count)
+        }}</strong>
+      </p>
+      <p>
+        Nombre d'années analysés :
+        <strong v-if="minYear !== null && maxYear !== null">{{
+          formatNumber(maxYear.max - minYear.min)
+        }}</strong>
+      </p>
     </div>
     <div class="container inter-text annotation">
       <p>
@@ -89,12 +110,12 @@
       <div class="container">
         <h1 class="title">Histogramme du nombre de mot uniques par artiste</h1>
         <span ref="legendContainer" id="legend-container">
-                <div><strong>Année</strong></div>
-                <div class="y1990">1990</div>
-                <div class="y2000">2000</div>
-                <div class="y2010">2010</div>
-                <div class="y2020">2020</div>
-            </span>
+          <div><strong>Année</strong></div>
+          <div class="y1990">1990</div>
+          <div class="y2000">2000</div>
+          <div class="y2010">2010</div>
+          <div class="y2020">2020</div>
+        </span>
         <span id="criterion-container">
           <GroupRadio
             v-bind:legend="'Critère'"
@@ -130,19 +151,25 @@
       <p>Vous êtes au bon endroit !</p>
     </div>
     <div class="container">
-      <WordCloud
-        v-if="termFrequency !== null"
-        v-bind:termFrequency="termFrequency"
-        ref="wordCloud"
-      />
-      <SearchBar
-        v-if="artists !== null"
-        v-bind:values="artists"
-        v-bind:legend="'Recherche d\'artistes'"
-        v-bind:idName="'wordcloud'"
-        v-on:search-input-click="searchWordCloud"
-        ref="searchWordCloudBar"
-      />
+      <div class="rows">
+        <div class="col-sm">
+          <WordCloud
+            v-if="termFrequency !== null"
+            v-bind:termFrequency="termFrequency"
+            ref="wordCloud"
+          />
+        </div>
+        <div class="col-sm">
+          <SearchBar
+            v-if="artists !== null"
+            v-bind:values="artists"
+            v-bind:legend="'Recherche d\'artistes'"
+            v-bind:idName="'wordcloud'"
+            v-on:search-input-click="searchWordCloud"
+            ref="searchWordCloudBar"
+          />
+        </div>
+      </div>
     </div>
     <div class="container inter-text annotation">
       <p>
@@ -181,6 +208,11 @@ export default {
     return {
       artists: null,
       artistsStats: null,
+      artistCount: null,
+      songCount: null,
+      wordCount: null,
+      minYear : null,
+      maxYear : null,
       filtersArtistType: [
         {
           key: "all",
@@ -252,6 +284,11 @@ export default {
     this.artists = await ArtistsApi.getArtists();
     this.artistsStats = await ArtistsApi.getStats();
     this.termFrequency = await ArtistsApi.getTermFrequency();
+    this.artistCount = await ArtistsApi.getArtistCount();
+    this.songCount = await ArtistsApi.getSongCount();
+    this.wordCount = await ArtistsApi.getWordCount();
+    this.minYear = await ArtistsApi.getMinYear();
+    this.maxYear = await ArtistsApi.getMaxYear();
   },
   methods: {
     filterBeeSwarm(e) {
@@ -268,9 +305,14 @@ export default {
       this.$refs.wordHistogram.applyFilter(e.value);
     },
     async searchWordCloud(proposition) {
-      const termFrequency = await ArtistsApi.getTermFrequencyByArtist(proposition);
+      const termFrequency = await ArtistsApi.getTermFrequencyByArtist(
+        proposition
+      );
       this.$refs.wordCloud.drawChart(termFrequency);
-    }
+    },
+    formatNumber(number, separator = "'") {
+      return number.toLocaleString("en-US").replace(/,/g, separator);
+    },
   },
 };
 </script>

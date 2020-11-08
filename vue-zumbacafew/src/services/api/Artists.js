@@ -15,5 +15,20 @@ export default {
   },
   getStats() {
     return axios.get("/artists/stats").then(result => result.data);
+  },
+  getArtistCount(){
+    return axios.get("/artists/artistcount").then(result => result.data);
+  },
+  getSongCount(){
+    return axios.get("/artists/soundcount").then(result => result.data);
+  },
+  getWordCount(){
+    return axios.get("/artists/wordcount").then(result => result.data);
+  },
+  getMinYear(){
+    return axios.get("/artists/minyear").then(result => result.data);
+  },
+  getMaxYear(){
+    return axios.get("/artists/maxyear").then(result => result.data);
   }
 }

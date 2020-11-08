@@ -47,6 +47,39 @@ export async function numberOfSongs(req, res) {
     }
 }
 
+export async function numberOfWords(req, res) {
+    res.setHeader('Content-Type', 'application/json');
+
+    try {
+        const numberOfWords = await Artist.numberOfWords();
+        res.json(numberOfWords[0]);
+    } catch (err) {
+        console.error(err)
+    }
+}
+
+export async function minYear(req, res) {
+    res.setHeader('Content-Type', 'application/json');
+
+    try {
+        const minYear = await Artist.minYear();
+        res.json(minYear[0]);
+    } catch (err) {
+        console.error(err)
+    }
+}
+
+export async function maxYear(req, res) {
+    res.setHeader('Content-Type', 'application/json');
+
+    try {
+        const maxYear = await Artist.maxYear();
+        res.json(maxYear[0]);
+    } catch (err) {
+        console.error(err)
+    }
+}
+
 export async function wordFrequency(req, res) {
     res.setHeader('Content-Type', 'application/json')
 
