@@ -102,11 +102,17 @@ export default {
         y2020: "2020",
         all: "all",
       };
+      this.paramIsComplete = {
+        all: "all",
+        complete: "complete",
+        incomplete: "incomplete",
+      };
 
       this.beeswarmParams = {};
       this.beeswarmParams.gender = this.paramGender.all;
       this.beeswarmParams.artistType = this.paramArtistType.all;
       this.beeswarmParams.year = this.paramYear.all;
+      this.beeswarmParams.is_complete = this.paramIsComplete.all;
 
       this.svg
         .append("text")
@@ -190,9 +196,9 @@ export default {
         .on("mousemove", function (event, d) {
           self.tooltip
             .html(
-              "<strong>Nom: " +
+              "<strong>" +
                 d.name +
-                "</strong><br>Mot unique par musique: " +
+                "</strong><br>Nombre de mots uniques: " +
                 Helper.round(d.vocab_number_unique_word) +
                 "<br>Genre: " +
                 Helper.sexToFrench(d.gender) +
@@ -201,7 +207,9 @@ export default {
                 "<br>Année: " +
                 d.year +
                 "<br>Nombre de musique: " +
-                d.number_songs
+                d.number_songs +
+                "<br>Atteint le seuil de mot: " +
+                Helper.isCompleteToFrench(d.is_complete)
             )
             .style("top", event.layerY - 12 + "px")
             .style("left", event.layerX + 25 + "px")
@@ -247,7 +255,10 @@ export default {
           (x.artist_type.toLowerCase() == this.beeswarmParams.artistType ||
             this.beeswarmParams.artistType == this.paramArtistType.all) &&
           (Helper.ceilYear(x.year) == this.beeswarmParams.year ||
-            this.beeswarmParams.year == this.paramYear.all)
+            this.beeswarmParams.year == this.paramYear.all) &&
+          (Helper.criterionCompleteConversion(x.is_complete) ==
+            this.beeswarmParams.is_complete ||
+            this.beeswarmParams.is_complete == this.paramIsComplete.all)
         ) {
           this.focusArtist(x.name);
         } else {
@@ -283,12 +294,15 @@ export default {
         case "radio-year":
           this.beeswarmParams.year = e.value;
           break;
+        case "radio-is-complete":
+          this.beeswarmParams.is_complete = e.value;
+          break;
       }
       this.applyFilter();
     },
     search(propositions, radioButtonGroups) {
-        this.resetFilter(radioButtonGroups);
-        radioButtonGroups.forEach((x) => x.disable(true));
+      this.resetFilter(radioButtonGroups);
+      radioButtonGroups.forEach((x) => x.disable(true));
 
       if (propositions.length == 0) {
         radioButtonGroups.forEach((x) => x.disable(false));
@@ -311,6 +325,7 @@ export default {
       this.beeswarmParams.gender = "All";
       this.beeswarmParams.artistType = "All";
       this.beeswarmParams.year = "All";
+      this.beeswarmParams.is_complete = "All";
 
       this.applyFilter();
     },

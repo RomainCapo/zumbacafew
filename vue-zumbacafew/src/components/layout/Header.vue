@@ -8,13 +8,13 @@
           <li class="nav-item active">
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Beeswarm</a>
+            <a class="nav-link" href="#beeswarm">Nuage d'artistes</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Histogramme</a>
+            <a class="nav-link" href="#word-histogram">Histogramme</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Nuage de mot</a>
+            <a class="nav-link" href="#word-cloud">Nuage de mots</a>
           </li>
         </ul>
       </div>

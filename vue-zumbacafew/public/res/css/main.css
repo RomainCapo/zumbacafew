@@ -73,6 +73,10 @@ div.tooltip {
     cursor: none;
 }
 
+.tooltip strong{
+    font-size: 20px;
+}
+
 .radio-button-beeswarm {
     margin-top:50px;
 }

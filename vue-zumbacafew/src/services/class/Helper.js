@@ -52,6 +52,24 @@ export default class Helper {
     return french
   }
 
+  static criterionCompleteConversion(criterion){
+    if(criterion){
+      return "complete"
+    }else {
+      return "incomplete"
+    }
+  }
+
+  static isCompleteToFrench(isComplete){
+    let french = ""
+    if(isComplete){
+      french = "Oui"
+    }else{
+      french = "Non"
+    }
+    return french
+  }
+
   static ceilYear(year) {
     let yearStr = year.toString()
     yearStr = yearStr.slice(0, -1) + "0"
