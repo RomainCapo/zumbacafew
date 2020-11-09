@@ -27,7 +27,7 @@
         }}</strong>
       </p>
       <p>
-        Nombre d'années analysés :
+        Nombre d'années analysées :
         <strong v-if="minYear !== null && maxYear !== null">{{
           formatNumber(maxYear.max - minYear.min)
         }}</strong>
