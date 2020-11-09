@@ -120,6 +120,9 @@ export default {
           return d.text;
         });
     },
+    loadingAnimation() {
+      d3.select(this.$refs.svgwordcloud).select("svg").append("text").text("Loading");
+    },
   },
 };
 </script>
