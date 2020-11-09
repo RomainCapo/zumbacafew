@@ -52,34 +52,47 @@ with open(FILENAME, encoding='utf-8') as file:
         artist_dict = {}
         artist = genius.search_artist(artist_name, max_songs=MAX_SONGS, sort="popularity")
         
-        artist_dict["name"] = artist.name
+        artist_dict["name"] = unidecode.unidecode(artist.name)
         artist_dict["image_url"] = artist.image_url
         artist_dict["sexe"] = ("Woman" if artist_name in womans else "Men")
         artist_dict["type"] = ("Group" if artist_name in groups else "Individual")
 
-        vocab = {}
+        vocab_year = []
+        vocab = []
         years = []
+        songs_names = []
+        num_songs = 0
         year_value = "0"
+        i = 0
+        index_year = {}
         for song in artist.songs:
-            if song.lyrics: 
-                if song.year:
-                    year_value = int(song.year.split("-")[0])
-                    years.append(year_value)
-                    
-                    try :
-                        vocab[year_value].extend(process_lycrics(song.lyrics))
-                    except :
-                        vocab[year_value] = []
+            if song.lyrics and song.year: 
+                year_value = int(song.year.split("-")[0])
+                years.append(year_value)
+                lyrics_processed = process_lycrics(song.lyrics)
+                vocab.extend(lyrics_processed)
+                songs_names.append(unidecode.unidecode(song.title))
+                num_songs+=1
+                if year_value not in index_year:
+                    index_year[year_value] = i
+                    vocab_year.append({'year':year_value, 'words':lyrics_processed})
+                else:
+                    vocab_year[index_year[year_value]]['words'].extend(lyrics_processed)
+                i+=1
 
-        vocab_list = []
-        [vocab_list.extend(w) for w in vocab.values()]
+        for i,v in enumerate(vocab_year):
+            vocab_year[i]["words"] = [{'word': word, 'count': count} for word, count in Counter(v["words"]).items()]
 
-        artist_dict["vocab_length"] = (len(vocab_list) if len(vocab_list) < LYRICS_THRESHOLD else LYRICS_THRESHOLD)
-        artist_dict["vocab_number_unique_word"] = len(list(set(vocab_list[0:LYRICS_THRESHOLD])))
-        artist_dict["is_complete"] = (False if len(vocab_list) < LYRICS_THRESHOLD else True)
-        artist_dict["num_songs"] = artist.num_songs
+
+        artist_dict["vocab_length"] = (len(vocab) if len(vocab) < LYRICS_THRESHOLD else LYRICS_THRESHOLD)
+        artist_dict["vocab_number_unique_word"] = len(list(set(vocab[0:LYRICS_THRESHOLD])))
+        artist_dict["is_complete"] = (False if len(vocab) < LYRICS_THRESHOLD else True)
+        artist_dict["num_songs"] = num_songs
+        artist_dict["titles"] = songs_names
         years.sort()
         artist_dict["years"] = years
-        artist_dict["vocab"] = count_words_by_year(vocab)
+        artist_dict["vocab"] = vocab_year 
         
         mycol.insert_one(artist_dict)
+
+        #print(json.dumps(artist_dict))
