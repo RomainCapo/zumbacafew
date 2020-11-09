@@ -46,49 +46,18 @@
     <div id="beeswarm-container">
       <h1 class="title">Nombre de mots uniques par artistes</h1>
       <div class="container justify-content-center">
-        <Beeswarm
-          ref="beeswarm"
-          v-if="artistsStats !== null"
-          v-bind:artistsStats="artistsStats"
-          id="beeswarm"
-        />
+        <Beeswarm ref="beeswarm" v-if="artistsStats !== null" v-bind:artistsStats="artistsStats" id="beeswarm" />
         <div class="row radio-button-beeswarm">
-          <GroupRadio
-            v-bind:legend="'Sexe'"
-            v-bind:radioGroup="'sex'"
-            v-bind:filters="filtersSex"
-            v-on:radio-btn-clicked="filterBeeSwarm"
-            ref="radioSex"
-          />
-          <GroupRadio
-            v-bind:legend="'Type d\'artiste'"
-            v-bind:radioGroup="'artist-type'"
-            v-bind:filters="filtersArtistType"
-            v-on:radio-btn-clicked="filterBeeSwarm"
-            ref="radioArtistType"
-          />
-          <GroupRadio
-            v-bind:legend="'Decenie'"
-            v-bind:radioGroup="'year'"
-            v-bind:filters="filtersDecade"
-            v-on:radio-btn-clicked="filterBeeSwarm"
-            ref="radioYear"
-          />
-          <GroupRadio
-            v-bind:legend="'Seuil atteint'"
-            v-bind:radioGroup="'is-complete'"
-            v-bind:filters="filtersIsComplete"
-            v-on:radio-btn-clicked="filterBeeSwarm"
-            ref="radioIsComplete"
-          />
-          <SearchBar
-            v-if="artists !== null"
-            v-bind:values="artists"
-            v-bind:legend="'Recherche d\'artistes'"
-            v-bind:idName="'beeswarm'"
-            v-on:search-input="searchBeeSwarm"
-            ref="searchBeeswarm"
-          />
+          <GroupRadio v-bind:legend="'Sexe'" v-bind:radioGroup="'sex'" v-bind:filters="filtersSex"
+            v-on:radio-btn-clicked="filterBeeSwarm" ref="radioSex" />
+          <GroupRadio v-bind:legend="'Type d\'artiste'" v-bind:radioGroup="'artist-type'"
+            v-bind:filters="filtersArtistType" v-on:radio-btn-clicked="filterBeeSwarm" ref="radioArtistType" />
+          <GroupRadio v-bind:legend="'Decenie'" v-bind:radioGroup="'year'" v-bind:filters="filtersDecade"
+            v-on:radio-btn-clicked="filterBeeSwarm" ref="radioYear" />
+          <GroupRadio v-bind:legend="'Seuil atteint'" v-bind:radioGroup="'is-complete'"
+            v-bind:filters="filtersIsComplete" v-on:radio-btn-clicked="filterBeeSwarm" ref="radioIsComplete" />
+          <SearchBar v-if="artists !== null" v-bind:values="artists" v-bind:legend="'Recherche d\'artistes'"
+            v-bind:idName="'beeswarm'" v-on:search-input="searchBeeSwarm" ref="searchBeeswarm" />
         </div>
       </div>
     </div>
@@ -115,15 +84,10 @@
     <div id="word-histogram-container">
       <div class="container">
         <h1 class="title">Histogramme du nombre de mot uniques par artiste</h1>
-        <WordHistogram
-          v-if="artistsStats !== null"
-          v-bind:artistsStats="artistsStats"
-          v-bind:legend="this.$refs.legendContainer"
-          ref="wordHistogram"
-          id="word-histogram"
-        />
-                        <div id="xaxis-legend">Nombre de mot</div>
-                <div id="source">Source: <a href='https://genius.com'>Genius</a></div>
+        <WordHistogram v-if="artistsStats !== null" v-bind:artistsStats="artistsStats"
+          v-bind:legend="this.$refs.legendContainer" ref="wordHistogram" id="word-histogram" />
+        <div id="xaxis-legend">Nombre de mot</div>
+        <div id="source">Source: <a href='https://genius.com'>Genius</a></div>
         <div class="row">
           <div class="col-sm">
             <span ref="legendContainer" id="legend-container">
@@ -136,12 +100,8 @@
           </div>
           <div class="col-sm">
             <span id="criterion-container">
-              <GroupRadio
-                v-bind:legend="'Critère'"
-                v-bind:radioGroup="'criterions'"
-                v-bind:filters="filtersName"
-                v-on:radio-btn-clicked="filterWordHistogram"
-              />
+              <GroupRadio v-bind:legend="'Critère'" v-bind:radioGroup="'criterions'" v-bind:filters="filtersName"
+                v-on:radio-btn-clicked="filterWordHistogram" />
             </span>
           </div>
         </div>
@@ -167,25 +127,15 @@
     </div>
     <div id="word-cloud-container">
       <div class="container">
-        <div class="rows">
-          <div class="col-sm">
-            <h1>Nuage de mots</h1>
-            <WordCloud
-              v-if="termFrequency !== null"
-              v-bind:termFrequency="termFrequency"
-              ref="wordCloud"
-              id="word-cloud"
-            />
+        <h1>Nuage de mots</h1>
+        <div class="row">
+          <div class="col-sm-9">
+            <WordCloud v-if="termFrequency !== null" v-bind:termFrequency="termFrequency" ref="wordCloud"
+              id="word-cloud" />
           </div>
-          <div class="col-sm">
-            <SearchBar
-              v-if="artists !== null"
-              v-bind:values="artists"
-              v-bind:legend="'Recherche d\'artistes'"
-              v-bind:idName="'wordcloud'"
-              v-on:search-input-click="searchWordCloud"
-              ref="searchWordCloudBar"
-            />
+          <div class="col-sm-3">
+            <SearchBar v-if="artists !== null" v-bind:values="artists" v-bind:legend="'Recherche d\'artistes'"
+              v-bind:idName="'wordcloud'" v-on:search-input-click="searchWordCloud" ref="searchWordCloudBar" />
           </div>
         </div>
       </div>

@@ -50,11 +50,13 @@ export default {
 
       d3.select(this.$refs.svgwordcloud).select("svg").remove();
 
+      const MIN_FONT = 30;
+      const MAX_FONT = 150;
+      let fontSizeScale = d3.scaleLinear().domain([0, 1]).range([MIN_FONT, MAX_FONT]);
+
       this.svg = d3
         .select(this.$refs.svgwordcloud)
         .append("svg")
-        //.attr("width", this.width + this.marginLeft + this.marginRight)
-        //.attr("height", this.height + this.marginTop + this.marginBottom)
         .attr("viewBox", "0 0 " + (this.width + this.marginLeft + this.marginRight) + " " +  (this.height + this.marginTop + this.marginBottom))
         .append("g")
         .attr(
@@ -72,12 +74,12 @@ export default {
             };
           })
         )
-        .padding(5)
+        .padding(10)
         .rotate(function () {
           return ~~(Math.random() * 2) * 90;
         })
         .fontSize(function (d) {
-          return d.size * 150;
+          return fontSizeScale(d.size);
         })
         .on("end", this.drawWord);
       this.layout.start();
