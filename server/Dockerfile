@@ -17,6 +17,4 @@ RUN if [ "$USER_GID" != "1000" ] || [ "$USER_UID" != "1000" ]; then \
         && chown -R $USER_UID:root /usr/local/share/nvm /usr/local/share/npm-global; \
     fi
 
-RUN npm install nodemon -g
-
 

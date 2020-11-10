@@ -1,10 +1,17 @@
 version: '3'
 
 services:
-  app:
+  vue:
+    build:
+       context: vue-zumbacafew/
+    ports:
+          - "80:80"
+    depends_on:
+      - db
+      - node
+  node:
     build: 
-      context: .
-      dockerfile: Dockerfile
+      context: server/
       args:
         VARIANT: 14
         USER_UID: 1000
@@ -12,9 +19,9 @@ services:
     ports: 
       - "8080:8080"
     volumes:
-      - ../server:/workspace:cached
+      - ./server:/workspace:cached
     working_dir: /workspace
-    command: sh -c "npm install && nodemon start"
+    command: sh -c "npm install && npm start"
     depends_on: 
       - db
   db:
