@@ -131,7 +131,7 @@
         <div class="row">
           <div class="col-sm-9">
             <img v-if="isWordCloudLoading" src="res/svg/bars.svg" width="50" alt="">
-            <WordCloud v-if="termFrequency !== null && !isWordCloudLoading" v-bind:termFrequency="termFrequency" ref="wordCloud"
+            <WordCloud v-if="termFrequency !== null" v-show="!isWordCloudLoading" v-bind:termFrequency="termFrequency" ref="wordCloud"
               id="word-cloud" />
           </div>
           <div class="col-sm-3">

@@ -10,42 +10,43 @@ const artistSchema = new mongoose.Schema({
     is_complete: Boolean,
     num_songs: Number,
     years: Array,
-    vocab: {
-        type: Map,
-        of: {
-            type: Map,
-            of: Number
-        }
-    }
+    vocab: [{
+        year: Number,
+        words: [{
+            word: String,
+            count: Number
+        }]
+    }]
 }, {
     collection: 'artists'
 });
 
 artistSchema.statics.allArtists = () => {
-    return Artist.find({}, {_id: 0, name: 1}).lean().exec();
+    return Artist.find({}, {
+        _id: 0,
+        name: 1
+    }).lean().exec();
 };
 
 artistSchema.statics.artistsStats = () => {
-    return Artist.aggregate([
-        {
-            $project: {
-                _id: 0,
-                name: "$name",
-                image_url: "$image_url",
-                gender: "$sexe",
-                artist_type: "$type",
-                vocab_length: "$vocab_length",
-                vocab_number_unique_word: "$vocab_number_unique_word",
-                year: {
-                    $round: {
-                        $avg : "$years"
-                    }
-                    },
-                is_complete: "$is_complete",
-                number_songs: "$num_songs"
-            }
-        },
-    ])
+    return Artist.aggregate([{
+        $project: {
+            _id: 0,
+            name: "$name",
+            image_url: "$image_url",
+            gender: "$sexe",
+            artist_type: "$type",
+            vocab_length: "$vocab_length",
+            vocab_number_unique_word: "$vocab_number_unique_word",
+            year: {
+                $round: {
+                    $avg: "$years"
+                }
+            },
+            is_complete: "$is_complete",
+            number_songs: "$num_songs"
+        }
+    }, ])
 };
 
 artistSchema.statics.numberOfAnalyzedArtists = () => {
@@ -100,32 +101,6 @@ artistSchema.statics.numberOfSongs = () => {
     ]);
 }
 
-artistSchema.statics.minYear = () => {
-    return Artist.aggregate([{
-            $project: {
-                _id: 0,
-                year: '$years'
-            }
-        },
-        {
-            $group: {
-                _id: 0,
-                minByArtist: {
-                    $min: '$year'
-                }
-            }
-        },
-        {
-            $project: {
-                _id: 0,
-                min: {
-                    $min: '$minByArtist'
-                }
-            }
-        }
-    ]);
-}
-
 artistSchema.statics.maxYear = () => {
     return Artist.aggregate([{
             $project: {
@@ -152,7 +127,33 @@ artistSchema.statics.maxYear = () => {
     ]);
 }
 
-artistSchema.statics.vocabulary = (artistName) => {
+artistSchema.statics.minYear = () => {
+    return Artist.aggregate([{
+            $project: {
+                _id: 0,
+                year: '$years'
+            }
+        },
+        {
+            $group: {
+                _id: 0,
+                minByArtist: {
+                    $min: '$year'
+                }
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                min: {
+                    $min: '$minByArtist'
+                }
+            }
+        }
+    ]);
+}
+
+artistSchema.statics.termFrequency = (artistName) => {
     let matchStage = {
         $match: {}
     };
@@ -168,52 +169,59 @@ artistSchema.statics.vocabulary = (artistName) => {
         {
             $project: {
                 _id: 0,
-                allVocab: {
-                    $objectToArray: '$vocab'
-                }
+                vocab: "$vocab.words"
             }
         },
         {
-            $project: {
-                yearVocab: '$allVocab.v'
-            }
+            $unwind: "$vocab"
         },
         {
-            $unwind: '$yearVocab'
-        },
-        {
-            $project: {
-                matchWord: {
-                    $objectToArray: '$yearVocab'
-                }
-            }
-        },
-        {
-            $unwind: '$matchWord'
-        },
-        {
-            $project: {
-                _id: '$matchWord.k',
-                count: '$matchWord.v'
-            }
+            $unwind: "$vocab"
         },
         {
             $group: {
-                _id: '$_id',
+                _id: "$vocab.word",
                 count: {
-                    '$sum': '$count'
+                    $sum: "$vocab.count"
                 }
             }
         },
         {
             $sort: {
-                'count': -1
+                count: -1
             }
         },
         {
             $limit: 500
         }
-    ]);
+    ])
+}
+
+artistSchema.statics.termFrequencyByYear = () => {
+    return Artist.aggregate([{
+            $project: {
+                _id: 0,
+                vocab: "$vocab"
+            }
+        },
+        {
+            $unwind: "$vocab"
+        },
+        {
+            $unwind: "$vocab.words"
+        },
+        {
+            $group: {
+                _id: {
+                    year: "$vocab.year",
+                    word: "$vocab.words.word"
+                },
+                count: {
+                    $sum: "$vocab.words.count"
+                }
+            }
+        }
+    ])
 }
 
 const Artist = mongoose.model('artist', artistSchema);

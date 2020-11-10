@@ -3,7 +3,7 @@ import os
 import json
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-mydb = myclient["zumba_cafew3"]
+mydb = myclient["zumba_cafew"]
 mycol = mydb["artists"]
 
 
