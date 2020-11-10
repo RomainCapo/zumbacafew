@@ -9,7 +9,7 @@ import pymongo
 from collections import Counter, OrderedDict
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-mydb = myclient["zumba_cafew2"]
+mydb = myclient["zumba_cafew3"]
 mycol = mydb["artists"]
 
 FILENAME = "artists.txt"
@@ -41,7 +41,8 @@ groups = ["13 Organisé",
 "IAM", 
 "1995", 
 "Sniper",
-"Casseurs Flowters"]
+"Casseurs Flowters",
+"columbine"]
 
 
 MAX_SONGS = 50
@@ -67,18 +68,25 @@ with open(FILENAME, encoding='utf-8') as file:
         index_year = {}
         for song in artist.songs:
             if song.lyrics and song.year: 
+                if len(vocab) > LYRICS_THRESHOLD:
+                    break
+
                 year_value = int(song.year.split("-")[0])
                 years.append(year_value)
                 lyrics_processed = process_lycrics(song.lyrics)
                 vocab.extend(lyrics_processed)
                 songs_names.append(unidecode.unidecode(song.title))
                 num_songs+=1
+
+
+
                 if year_value not in index_year:
                     index_year[year_value] = i
                     vocab_year.append({'year':year_value, 'words':lyrics_processed})
+                    i+=1
+
                 else:
                     vocab_year[index_year[year_value]]['words'].extend(lyrics_processed)
-                i+=1
 
         for i,v in enumerate(vocab_year):
             vocab_year[i]["words"] = [{'word': word, 'count': count} for word, count in Counter(v["words"]).items()]
@@ -94,5 +102,3 @@ with open(FILENAME, encoding='utf-8') as file:
         artist_dict["vocab"] = vocab_year 
         
         mycol.insert_one(artist_dict)
-
-        #print(json.dumps(artist_dict))
