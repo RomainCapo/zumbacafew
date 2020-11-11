@@ -114,4 +114,15 @@ export async function termFrequencyByYear(req, res) {
     }
 }
 
+export async function wordByYear(req, res) {
+    res.setHeader('Content-Type', 'application/json');
+
+    try {
+        const wordByYear = await Artist.wordByYear();
+        res.json(wordByYear);
+    } catch (err) {
+        console.error(err)
+    }
+}
+
 
