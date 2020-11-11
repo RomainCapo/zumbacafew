@@ -10,27 +10,19 @@
     <div class="container stats">
       <p>
         Nombre d'artistes analysés:
-        <strong v-if="artistCount !== null">{{
-          formatNumber(artistCount.count)
-        }}</strong>
+        <strong v-if="artistCount !== null" v-html="formatNumber(artistCount.count)"></strong>
       </p>
       <p>
         Nombre de musiques analysées :
-        <strong v-if="songCount !== null">{{
-          formatNumber(songCount.count)
-        }}</strong>
+        <strong v-if="songCount !== null" v-html=" formatNumber(songCount.count)"></strong>
       </p>
       <p>
         Nombre de mots analysés :
-        <strong v-if="wordCount !== null">{{
-          formatNumber(wordCount.count)
-        }}</strong>
+        <strong v-if="wordCount !== null" v-html="formatNumber(wordCount.count)"></strong>
       </p>
       <p>
         Nombre d'années analysées :
-        <strong v-if="minYear !== null && maxYear !== null">{{
-          formatNumber(maxYear.max - minYear.min)
-        }}</strong>
+        <strong v-if="minYear !== null && maxYear !== null" v-html="formatNumber(maxYear.max - minYear.min)"></strong>
       </p>
     </div>
     <div class="container inter-text annotation">
