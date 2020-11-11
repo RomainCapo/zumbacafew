@@ -301,6 +301,7 @@ export default {
           break;
       }
       this.applyFilter();
+      console.log(this.beeswarmParams);
     },
     search(propositions, radioButtonGroups) {
       this.resetFilter(radioButtonGroups);
@@ -324,10 +325,10 @@ export default {
         x.reset();
       });
 
-      this.beeswarmParams.gender = "All";
-      this.beeswarmParams.artistType = "All";
-      this.beeswarmParams.year = "All";
-      this.beeswarmParams.is_complete = "All";
+      this.beeswarmParams.gender = "all";
+      this.beeswarmParams.artistType = "all";
+      this.beeswarmParams.year = "all";
+      this.beeswarmParams.is_complete = "all";
 
       this.applyFilter();
     },
