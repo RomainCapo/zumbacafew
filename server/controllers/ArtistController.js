@@ -58,17 +58,6 @@ export async function numberOfWords(req, res) {
     }
 }
 
-export async function minYear(req, res) {
-    res.setHeader('Content-Type', 'application/json');
-
-    try {
-        const minYear = await Artist.minYear();
-        res.json(minYear[0]);
-    } catch (err) {
-        console.error(err)
-    }
-}
-
 export async function maxYear(req, res) {
     res.setHeader('Content-Type', 'application/json');
 
@@ -80,13 +69,24 @@ export async function maxYear(req, res) {
     }
 }
 
-export async function wordFrequency(req, res) {
+export async function minYear(req, res) {
+    res.setHeader('Content-Type', 'application/json');
+
+    try {
+        const minYear = await Artist.minYear();
+        res.json(minYear[0]);
+    } catch (err) {
+        console.error(err)
+    }
+}
+
+export async function termFrequency(req, res) {
     res.setHeader('Content-Type', 'application/json')
 
     try {
-        const artistName = req.params.artistName;
+        const ARTIST_NAME = req.params.artistName;
 
-        let termFrequency = await Artist.vocabulary(artistName);
+        let termFrequency = await Artist.termFrequency(ARTIST_NAME);
         let stopWords = await StopWords.words();
 
         stopWords = stopWords[0]['words'];
@@ -97,3 +97,21 @@ export async function wordFrequency(req, res) {
         console.error(err)
     }
 }
+
+export async function termFrequencyByYear(req, res) {
+    res.setHeader('Content-Type', 'application/json')
+
+    try {
+        let termFrequencyByYear = await Artist.termFrequencyByYear();
+        /*let stopWords = await StopWords.words();
+
+        stopWords = stopWords[0]['words'];
+        termFrequency = termFrequency.filter(term => !stopWords.includes(term['_id']));*/
+
+        res.json(termFrequencyByYear);
+    } catch (err) {
+        console.error(err)
+    }
+}
+
+

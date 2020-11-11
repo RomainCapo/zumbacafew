@@ -4,24 +4,27 @@ import {
 import {
     allArtists,
     allArtistsVocabulary,
+    maxYear,
+    minYear,
     numberOfArtists,
     numberOfSongs,
-    wordFrequency,
     numberOfWords,
-    minYear,
-    maxYear
+    termFrequency,
+    termFrequencyByYear,
 } from '../../controllers/ArtistController.js';
 
 var router = Router();
 
 router.get('/', allArtists)
 router.get('/artistcount', numberOfArtists);
-router.get('/stats', allArtistsVocabulary);
-router.get('/soundcount', numberOfSongs);
-router.get('/wordcount', numberOfWords);
-router.get('/termfrequency', wordFrequency);
-router.get('/minyear', minYear)
 router.get('/maxyear', maxYear);
-router.get('/termfrequency/:artistName', wordFrequency);
+router.get('/minyear', minYear);
+router.get('/soundcount', numberOfSongs);
+router.get('/stats', allArtistsVocabulary);
+router.get('/termfrequency', termFrequency);
+router.get('/termfrequency/:artistName', termFrequency);
+router.get('/termfrequencyByYear', termFrequencyByYear);
+router.get('/wordcount', numberOfWords);
+
 
 export default router;

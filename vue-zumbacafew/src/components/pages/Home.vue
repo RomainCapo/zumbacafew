@@ -27,7 +27,7 @@
         }}</strong>
       </p>
       <p>
-        Nombre d'années analysés :
+        Nombre d'années analysées :
         <strong v-if="minYear !== null && maxYear !== null">{{
           formatNumber(maxYear.max - minYear.min)
         }}</strong>
@@ -127,15 +127,16 @@
     </div>
     <div id="word-cloud-container">
       <div class="container">
-        <h1>Nuage de mots</h1>
+        <h1 class="title">Nuage de mots de {{ selectedWordCloudArtist }}</h1>
         <div class="row">
           <div class="col-sm-9">
-            <WordCloud v-if="termFrequency !== null" v-bind:termFrequency="termFrequency" ref="wordCloud"
+            <img v-if="isWordCloudLoading" src="res/svg/bars.svg" width="50" alt="">
+            <WordCloud v-if="termFrequency !== null" v-show="!isWordCloudLoading" v-bind:termFrequency="termFrequency" ref="wordCloud"
               id="word-cloud" />
           </div>
           <div class="col-sm-3">
             <SearchBar v-if="artists !== null" v-bind:values="artists" v-bind:legend="'Recherche d\'artistes'"
-              v-bind:idName="'wordcloud'" v-on:search-input-click="searchWordCloud" ref="searchWordCloudBar" />
+              v-bind:idName="'wordcloud'" v-on:search-input="searchWordCloudKeyBoard" v-on:search-input-click="searchWordCloud" ref="searchWordCloudBar" />
           </div>
         </div>
       </div>
@@ -179,12 +180,13 @@ export default {
       artists: null,
       artistsStats: null,
       artistCount: null,
+      isWordCloudLoading: false,
+      selectedWordCloudArtist: "tous les artistes",
       songCount: null,
       wordCount: null,
       minYear: null,
       maxYear: null,
-      filtersArtistType: [
-        {
+      filtersArtistType: [{
           key: "all",
           value: "Les deux",
         },
@@ -197,8 +199,7 @@ export default {
           value: "Groupe",
         },
       ],
-      filtersDecade: [
-        {
+      filtersDecade: [{
           key: "all",
           value: "Toutes les années",
         },
@@ -219,8 +220,7 @@ export default {
           value: "2020",
         },
       ],
-      filtersSex: [
-        {
+      filtersSex: [{
           key: "all",
           value: "Les deux",
         },
@@ -233,8 +233,7 @@ export default {
           value: "Femme",
         },
       ],
-      filtersIsComplete: [
-        {
+      filtersIsComplete: [{
           key: "all",
           value: "Tous les artistes",
         },
@@ -247,8 +246,7 @@ export default {
           value: "Seuil non atteint",
         },
       ],
-      filtersName: [
-        {
+      filtersName: [{
           key: "year",
           value: "Année",
         },
@@ -290,10 +288,22 @@ export default {
       this.$refs.wordHistogram.applyFilter(e.value);
     },
     async searchWordCloud(proposition) {
+      this.isWordCloudLoading = true;
+      this.selectedWordCloudArtist = proposition;
       const termFrequency = await ArtistsApi.getTermFrequencyByArtist(
         proposition
       );
+      this.isWordCloudLoading = false;
       this.$refs.wordCloud.drawChart(termFrequency);
+    },
+    async searchWordCloudKeyBoard(propositions) {
+      if (propositions.length === 0 && this.selectedWordCloudArtist !== "tous les artistes") {
+        this.selectedWordCloudArtist = "tous les artistes";
+        this.isWordCloudLoading = true;
+        const termFrequency = await ArtistsApi.getTermFrequency();
+        this.isWordCloudLoading = false;
+        this.$refs.wordCloud.drawChart(termFrequency);
+      }
     },
     formatNumber(number, separator = "'") {
       return number.toLocaleString("en-US").replace(/,/g, separator);

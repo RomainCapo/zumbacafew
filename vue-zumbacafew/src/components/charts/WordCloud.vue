@@ -57,12 +57,20 @@ export default {
       this.svg = d3
         .select(this.$refs.svgwordcloud)
         .append("svg")
-        .attr("viewBox", "0 0 " + (this.width + this.marginLeft + this.marginRight) + " " +  (this.height + this.marginTop + this.marginBottom))
+        .attr("viewBox", "0 0 " + (this.width + this.marginLeft + this.marginRight) + " " + (this.height + this.marginTop + this.marginBottom))
         .append("g")
         .attr(
           "transform",
           "translate(" + this.marginLeft + "," + this.marginTop + ")"
         );
+
+      this.svg
+        .append("text")
+        .attr("x", 40)
+        .attr("y", this.height)
+        .style("font-size", "20px")
+        .style("text-anchor", "left")
+        .html("Source: <a href='https://genius.com'>Genius</a>");
 
       this.layout = cloud()
         .size([this.width, this.height])
@@ -92,9 +100,7 @@ export default {
 
       this.svg
         .append("g")
-        //.attr("width", this.width)
-        //.attr("height", this.height)
-        .attr("viewBox", "0 0 " + this.width  + " " +  this.height)
+        .attr("viewBox", "0 0 " + this.width + " " + this.height)
         .attr(
           "transform",
           "translate(" +
@@ -119,7 +125,7 @@ export default {
         .text(function (d) {
           return d.text;
         });
-    },
+    }
   },
 };
 </script>

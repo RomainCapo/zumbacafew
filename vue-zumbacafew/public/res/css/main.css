@@ -81,11 +81,15 @@ div.tooltip {
     margin-top:50px;
 }
 
-#word-histogram-container .title{
+#word-cloud-container .title{
     font-size: 50px;
     margin-bottom: 70px;
 }
 
+#word-histogram-container .title{
+    font-size: 50px;
+    margin-bottom: 70px;
+}
 
 #word-histogram-container{
     padding-bottom: 50px;
@@ -172,6 +176,10 @@ div.tooltip {
 
     #beeswarm-container .col-sm{
         margin-bottom: 20px;
+    }
+
+    #word-cloud-container{
+        padding: 20px 0px 20px 0px;
     }
 
     .container{
