@@ -132,6 +132,11 @@ div.tooltip {
     color: black;
 }
 
+#input-number-bin{
+    width: 50%;
+    margin: auto;
+}
+
 .annotation{
     padding: 50px;
     font-size: 28px;
@@ -157,7 +162,7 @@ div.tooltip {
 }
 
  .stacked-column{
-    width: 15%;
+    /*width: 10%;*/
 }
 
 @media (max-width: 1000px) { 

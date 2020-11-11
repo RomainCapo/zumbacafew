@@ -1,11 +1,11 @@
 <template>
-    <div class="stacked-column">
+    <div class="stacked-column" :style="'width: '+this.cssWidth+'%'">
         <div class="col-sm align-middle" v-for="value in values" v-bind:key="value">
             <span :id="'artist' + value" >{{ value }}</span><br>
         </div>
         <hr/>
         <span>
-            {{ start }} - {{ stop }}
+            {{ label }}
         </span>
     </div>
 </template>
@@ -18,8 +18,10 @@ export default {
   props:{
       values:Array,
       start: Number,
-      stop : Number
-  },
+      stop : Number,
+      label : String,
+      cssWidth : Number
+  }
 };
 </script>
 <style scoped>
