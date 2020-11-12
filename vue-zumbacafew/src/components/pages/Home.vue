@@ -3,8 +3,7 @@
     <Header />
     <div id="intro">
       <div class="container inter-text">
-        <p id="left">Découvrez les statistiques cachées</p>
-        <p id="right">de vos rappeurs préférés !</p>
+        <h1>Découvrez les statistiques cachées de vos rappeurs préférés !</h1> 
       </div>
     </div>
     <div class="container stats">
@@ -48,7 +47,7 @@
       <p>Le graphique suivant va vous donner la réponse !</p>
     </div>
     <div id="beeswarm-container">
-      <h1 class="title">Nombre de mots uniques par artistes</h1>
+      <h2 class="title">Nombre de mots uniques par artistes</h2>
       <div class="container justify-content-center">
         <Beeswarm
           ref="beeswarm"
@@ -118,7 +117,7 @@
     </div>
     <div id="word-histogram-container">
       <div class="container">
-        <h1 class="title">Histogramme du nombre de mot uniques par artiste</h1>
+        <h2 class="title">Histogramme du nombre de mot uniques par artiste</h2>
         <WordHistogram
           v-if="artistsStats !== null"
           v-bind:artistsStats="artistsStats"
@@ -184,14 +183,14 @@
     </div>
     <div id="word-cloud-container">
       <div class="container">
-        <h1 class="title">Nuage de mots de {{ selectedWordCloudArtist }}</h1>
+        <h2 class="title">Nuage de mots de {{ selectedWordCloudArtist }}</h2>
         <div class="row">
           <div class="col-sm-9">
             <img
               v-if="isWordCloudLoading"
               src="res/svg/bars.svg"
               width="50"
-              alt=""
+              alt="word-cloud-loader"
             />
             <WordCloud
               v-if="termFrequency !== null"

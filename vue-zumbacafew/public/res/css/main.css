@@ -22,12 +22,11 @@ a {
     border-top: 1px solid rgb(0, 178, 99);
 }
 
-#intro {
+#intro h1{
     text-align: center;
     font-size: 80px;
     font-weight: bold;
-    height: 250px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 #beeswarm-container .title{
@@ -40,13 +39,6 @@ a {
     margin-bottom: 0px ;
 }
 
-#intro #left{
-    float: left;
-}
-
-#intro #right{
-    float: right;
-}
 
 #beeswarm-container{
     background-color:  rgb(247, 247, 247);
@@ -157,7 +149,7 @@ div.tooltip {
     padding: 50px;
 }
 
-#word-cloud-container h1{
+#word-cloud-container h2{
     font-size: 50px;
 }
 
@@ -169,14 +161,6 @@ div.tooltip {
 
     p{
         font-size: 20px;
-    }
-
-    #intro p{
-        font-size: 40px;
-    }
-
-    .stats{
-        margin-top: -100px;
     }
 
     #beeswarm-container .col-sm{
