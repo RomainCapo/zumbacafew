@@ -165,12 +165,12 @@
       </p>
       <p>Vous êtes au bon endroit !</p>
     </div>
-    <div id="word-cloud-container">
+   <div id="word-cloud-container">
       <div class="container">
         <div class="rows">
           <div class="col-sm">
             <h1>Nuage de mots</h1>
-            <WordCloud
+           <WordCloud
               v-if="termFrequency !== null"
               v-bind:termFrequency="termFrequency"
               ref="wordCloud"
@@ -220,7 +220,7 @@ export default {
     Footer,
     GroupRadio,
     Header,
-    WordCloud,
+   WordCloud,
     WordHistogram,
     SearchBar,
   },
