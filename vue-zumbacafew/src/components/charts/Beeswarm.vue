@@ -155,6 +155,7 @@ export default {
         });
 
       this.artistsStats.forEach((d) => {
+        console.log(d.image_url);
         this.svg
           .append("svg:pattern")
           .attr("id", "artist_" + Helper.replaceStringSpace(d.name))
@@ -178,6 +179,7 @@ export default {
         .attr("cy", this.height / 2 - this.margin.bottom / 2)
         .attr("r", this.circle_focus_radius)
         .attr("id", function (d) {
+          console.log(Helper.replaceStringSpace(d.name));
           return "circle_" + Helper.replaceStringSpace(d.name);
         })
         .merge(circles)

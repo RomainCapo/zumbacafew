@@ -2,7 +2,7 @@
   <div>
     <Header />
     <div id="intro">
-      <div class="container inter-text">
+      <div class="container">
         <h1>Découvrez les statistiques cachées de vos rappeurs préférés !</h1> 
       </div>
     </div>
@@ -36,7 +36,7 @@
         ></strong>
       </p>
     </div>
-    <div class="container inter-text annotation">
+    <div class="container annotation">
       <p>
         Vous avez toujours voulu savoir si le vocabulaire d'un rappeur était
         plus riche que celui d'un autre ? Si le rap c'était mieux avant ? Si le
@@ -95,7 +95,7 @@
         </div>
       </div>
     </div>
-    <div class="container inter-text annotation">
+    <div class="container annotation">
       <p>
         Toutes les données de ce projet proviennent du site web
         <a href="https://genius.com/">Genius</a>. Pour chaque artiste, le nombre
@@ -163,7 +163,7 @@
         </div>
       </div>
     </div>
-    <div class="container inter-text annotation">
+    <div class="container annotation">
       <p>
         Ce graphique présente une autre vue du premier graphique. Chaque
         artistes est disposé dans une collonne en fonction de la richesse de son
@@ -171,7 +171,7 @@
       </p>
     </div>
     <hr class="annotation-separator" />
-    <div class="container inter-text annotation">
+    <div class="container annotation">
       <p>
         Vous voulez découvrir quels sont les mots les plus fréquents dans le rap
         français ? Quel termes sont les plus utilisés par un artiste ? Si le mot
@@ -215,7 +215,7 @@
       </div>
     </div>
 
-    <div class="container inter-text annotation">
+    <div class="container annotation">
       <p>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt natus,
         reprehenderit quibusdam dolorum aliquid error deleniti aut corporis

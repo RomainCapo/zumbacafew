@@ -99,7 +99,7 @@ div.tooltip {
 }
 
 #word-histogram-container #source{
-    font-size: 10px;
+    font-size: 12px;
     float: left;
     margin-left: 50px;
 }
@@ -132,7 +132,6 @@ div.tooltip {
 .annotation{
     padding: 50px;
     font-size: 28px;
-    width: 80%;
     text-align: left;
 }
 
@@ -153,14 +152,14 @@ div.tooltip {
     font-size: 50px;
 }
 
- .stacked-column{
-    /*width: 10%;*/
-}
-
 @media (max-width: 1000px) { 
 
     p{
         font-size: 20px;
+    }
+
+    #intro h1{
+        font-size: 50px;
     }
 
     #beeswarm-container .col-sm{
