@@ -3,7 +3,7 @@
 
 ## Public cible
 * **Public prioritaire :** Personnes écoutant de la musique française (Hip-hop).
-* **Public secondaire :** Personnes curieuses interessé par les statistiques diverse (Personnes tombant sur cet article sur les reéseaux sociaux par hasard).
+* **Public secondaire :** Personnes curieuses et interessé par les statistiques diverse (Personnes tombant sur cet article sur les réseaux sociaux par hasard).
 
 ## Intention/objectif
 * Présentation de la richesse du vocabulaire (nombre de mot unique) utilisé par chaque artiste de Hip-Hop français. 
@@ -22,7 +22,7 @@ Un second objectif est de présenter les mots les plus utilisés dans la musique
 
 Le dernier objectif est de pouvoir visualiser l'utilisation d'un mot au cours du temps dans les différentes musqiues de Hip-hop francophone.
 
-## Use in dev. mode
+## À utiliser en dev mode
 
 In /server remember to :
 
