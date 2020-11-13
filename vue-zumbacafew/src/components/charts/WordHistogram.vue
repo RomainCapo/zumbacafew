@@ -9,6 +9,8 @@
       v-bind:start="bin.start"
       v-bind:stop="bin.stop"
       v-bind:values="bin.values"
+      v-bind:cssWidth="this.binPercentage"
+      v-bind:label="bin.label"
     ></StackedColumn>
   </div>
 </template>
@@ -37,7 +39,7 @@ export default {
     },
   },
   mounted() {
-    this.bins = this._computeBin();
+    this.bins = this._computeBin(this.numberBin);
   },
   updated() {
     this.applyFilter("year");
@@ -54,19 +56,25 @@ export default {
         max: Math.ceil(Math.max.apply(null, Object.values(values))),
       };
     },
-    _computeBin() {
+    _computeBin(numberBin) {
       let minMax = this._getInterval();
 
-      let binWidth = Math.round((minMax.max - minMax.min) / this.numberBin);
+      let binWidth = Math.round((minMax.max - minMax.min) / numberBin);
 
-      let binvValues = [];
+      let binValues = [];
 
       this.binInterval = [];
 
       let binCounter = Math.floor(minMax.min);
-      for (let i = 0; i <= this.numberBin; i++) {
-        this.binInterval.push(Math.round(binCounter));
-        binCounter += binWidth;
+      for (let i = 0; i <= numberBin; i++) {
+          this.binInterval.push(Math.round(binCounter));
+
+        if (i == numberBin - 1) {
+          binCounter += binWidth+10; 
+        } else {
+         binCounter += binWidth;
+        }
+        
       }
 
       this.artistsStats.forEach((x) => {
@@ -75,23 +83,28 @@ export default {
             x.vocab_number_unique_word >= this.binInterval[i] &&
             x.vocab_number_unique_word <= this.binInterval[i + 1]
           ) {
-            if (typeof binvValues[i] == "undefined") {
-              binvValues[i] = [];
+            if (typeof binValues[i] == "undefined") {
+              binValues[i] = [];
             }
-            binvValues[i].push(x.name);
+            binValues[i].push(x.name);
           }
         }
       });
 
+      this.binPercentage = Math.floor(100 / numberBin);
+
       let histogramBin = [];
-      binvValues.forEach((x, k) => {
+      binValues.forEach((x, k) => {
         x.sort();
         histogramBin.push({
           start: this.binInterval[k],
           stop: this.binInterval[k + 1],
+          label: this.binInterval[k] + ' - ' + this.binInterval[k + 1],
           values: x,
         });
       });
+      histogramBin['0'].label = "- " + histogramBin['0'].stop
+      histogramBin[histogramBin.length-1].label = "+ " + histogramBin[histogramBin.length-1].start
       return histogramBin;
     },
 
@@ -103,6 +116,7 @@ export default {
 
         this.artistsStats.forEach((x) => {
           let artistSpan = document.getElementById("artist" + x.name);
+
           artistSpan.className =
             "align-bottom c" + criterionValues.indexOf(x[criterion]);
         });
@@ -114,7 +128,6 @@ export default {
         criterionValues.sort();
 
         this.artistsStats.forEach((x) => {
-
           let artistSpan = document.getElementById("artist" + x.name);
           artistSpan.className =
             "align-bottom c" +
@@ -125,7 +138,9 @@ export default {
     },
     updateLegend(criterion, criterionValues) {
       let strong = document.createElement("STRONG");
-      strong.appendChild(document.createTextNode(Helper.criterionToFrench(criterion)));
+      strong.appendChild(
+        document.createTextNode(Helper.criterionToFrench(criterion))
+      );
 
       while (this.legend.firstChild) {
         this.legend.firstChild.remove();
@@ -134,26 +149,31 @@ export default {
 
       criterionValues.forEach((value, index) => {
         if (criterion == "gender") {
-          
-            let div = document.createElement("DIV");
-            div.classList.add("c" + index)
-            div.appendChild(document.createTextNode(Helper.sexToFrench(value)))
+          let div = document.createElement("DIV");
+          div.classList.add("c" + index);
+          div.appendChild(document.createTextNode(Helper.sexToFrench(value)));
 
-            this.legend.appendChild(div)
+          this.legend.appendChild(div);
         } else if (criterion == "artist_type") {
-            let div = document.createElement("DIV");
-            div.classList.add("c" + index)
-            div.appendChild(document.createTextNode(Helper.artistTypeToFrench(value)))
+          let div = document.createElement("DIV");
+          div.classList.add("c" + index);
+          div.appendChild(
+            document.createTextNode(Helper.artistTypeToFrench(value))
+          );
 
-            this.legend.appendChild(div)
+          this.legend.appendChild(div);
         } else {
           let div = document.createElement("DIV");
-            div.classList.add("c" + index)
-            div.appendChild(document.createTextNode(value))
+          div.classList.add("c" + index);
+          div.appendChild(document.createTextNode(value));
 
-            this.legend.appendChild(div)
+          this.legend.appendChild(div);
         }
       });
+    },
+    numberInputEvent(value, criterion) {
+      this.bins = this._computeBin(value);
+      this.applyFilter(criterion);
     },
   },
 };
