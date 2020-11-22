@@ -1,7 +1,7 @@
 export default class Helper {
 
   static replaceStringSpace(str, symbol = "_") {
-    return str.replace(/\s+/g, symbol)
+    return str.replace(/\s+/g, symbol).replace("'",symbol);
   }
 
   static sexToFrench(sexLabel) {

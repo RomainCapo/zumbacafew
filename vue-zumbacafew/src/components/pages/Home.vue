@@ -2,38 +2,41 @@
   <div>
     <Header />
     <div id="intro">
-      <div class="container inter-text">
-        <p id="left">Découvrez les statistiques cachées</p>
-        <p id="right">de vos rappeurs préférés !</p>
+      <div class="container">
+        <h1>Découvrez les statistiques cachées de vos rappeurs préférés !</h1> 
       </div>
     </div>
     <div class="container stats">
       <p>
         Nombre d'artistes analysés:
-        <strong v-if="artistCount !== null">{{
-          formatNumber(artistCount.count)
-        }}</strong>
+        <strong
+          v-if="artistCount !== null"
+          v-html="formatNumber(artistCount.count)"
+        ></strong>
       </p>
       <p>
         Nombre de musiques analysées :
-        <strong v-if="songCount !== null">{{
-          formatNumber(songCount.count)
-        }}</strong>
+        <strong
+          v-if="songCount !== null"
+          v-html="formatNumber(songCount.count)"
+        ></strong>
       </p>
       <p>
         Nombre de mots analysés :
-        <strong v-if="wordCount !== null">{{
-          formatNumber(wordCount.count)
-        }}</strong>
+        <strong
+          v-if="wordCount !== null"
+          v-html="formatNumber(wordCount.count)"
+        ></strong>
       </p>
       <p>
         Nombre d'années analysées :
-        <strong v-if="minYear !== null && maxYear !== null">{{
-          formatNumber(maxYear.max - minYear.min)
-        }}</strong>
+        <strong
+          v-if="minYear !== null && maxYear !== null"
+          v-html="formatNumber(maxYear.max - minYear.min)"
+        ></strong>
       </p>
     </div>
-    <div class="container inter-text annotation">
+    <div class="container annotation">
       <p>
         Vous avez toujours voulu savoir si le vocabulaire d'un rappeur était
         plus riche que celui d'un autre ? Si le rap c'était mieux avant ? Si le
@@ -44,24 +47,55 @@
       <p>Le graphique suivant va vous donner la réponse !</p>
     </div>
     <div id="beeswarm-container">
-      <h1 class="title">Nombre de mots uniques par artistes</h1>
+      <h2 class="title">Nombre de mots uniques par artistes</h2>
       <div class="container justify-content-center">
-        <Beeswarm ref="beeswarm" v-if="artistsStats !== null" v-bind:artistsStats="artistsStats" id="beeswarm" />
+        <Beeswarm
+          ref="beeswarm"
+          v-if="artistsStats !== null"
+          v-bind:artistsStats="artistsStats"
+          id="beeswarm"
+        />
         <div class="row radio-button-beeswarm">
-          <GroupRadio v-bind:legend="'Sexe'" v-bind:radioGroup="'sex'" v-bind:filters="filtersSex"
-            v-on:radio-btn-clicked="filterBeeSwarm" ref="radioSex" />
-          <GroupRadio v-bind:legend="'Type d\'artiste'" v-bind:radioGroup="'artist-type'"
-            v-bind:filters="filtersArtistType" v-on:radio-btn-clicked="filterBeeSwarm" ref="radioArtistType" />
-          <GroupRadio v-bind:legend="'Decenie'" v-bind:radioGroup="'year'" v-bind:filters="filtersDecade"
-            v-on:radio-btn-clicked="filterBeeSwarm" ref="radioYear" />
-          <GroupRadio v-bind:legend="'Seuil atteint'" v-bind:radioGroup="'is-complete'"
-            v-bind:filters="filtersIsComplete" v-on:radio-btn-clicked="filterBeeSwarm" ref="radioIsComplete" />
-          <SearchBar v-if="artists !== null" v-bind:values="artists" v-bind:legend="'Recherche d\'artistes'"
-            v-bind:idName="'beeswarm'" v-on:search-input="searchBeeSwarm" ref="searchBeeswarm" />
+          <GroupRadio
+            v-bind:legend="'Sexe'"
+            v-bind:radioGroup="'sex'"
+            v-bind:filters="filtersSex"
+            v-on:radio-btn-clicked="filterBeeSwarm"
+            ref="radioSex"
+          />
+          <GroupRadio
+            v-bind:legend="'Type d\'artiste'"
+            v-bind:radioGroup="'artist-type'"
+            v-bind:filters="filtersArtistType"
+            v-on:radio-btn-clicked="filterBeeSwarm"
+            ref="radioArtistType"
+          />
+          <GroupRadio
+            v-bind:legend="'Decenie'"
+            v-bind:radioGroup="'year'"
+            v-bind:filters="filtersDecade"
+            v-on:radio-btn-clicked="filterBeeSwarm"
+            ref="radioYear"
+          />
+          <GroupRadio
+            v-bind:legend="'Seuil atteint'"
+            v-bind:radioGroup="'is-complete'"
+            v-bind:filters="filtersIsComplete"
+            v-on:radio-btn-clicked="filterBeeSwarm"
+            ref="radioIsComplete"
+          />
+          <SearchBar
+            v-if="artists !== null"
+            v-bind:values="artists"
+            v-bind:legend="'Recherche d\'artistes'"
+            v-bind:idName="'beeswarm'"
+            v-on:search-input="searchBeeSwarm"
+            ref="searchBeeswarm"
+          />
         </div>
       </div>
     </div>
-    <div class="container inter-text annotation">
+    <div class="container annotation">
       <p>
         Toutes les données de ce projet proviennent du site web
         <a href="https://genius.com/">Genius</a>. Pour chaque artiste, le nombre
@@ -83,11 +117,16 @@
     </div>
     <div id="word-histogram-container">
       <div class="container">
-        <h1 class="title">Histogramme du nombre de mot uniques par artiste</h1>
-        <WordHistogram v-if="artistsStats !== null" v-bind:artistsStats="artistsStats"
-          v-bind:legend="this.$refs.legendContainer" ref="wordHistogram" id="word-histogram" />
+        <h2 class="title">Histogramme du nombre de mot uniques par artiste</h2>
+        <WordHistogram
+          v-if="artistsStats !== null"
+          v-bind:artistsStats="artistsStats"
+          v-bind:legend="this.$refs.legendContainer"
+          ref="wordHistogram"
+          id="word-histogram"
+        />
         <div id="xaxis-legend">Nombre de mot</div>
-        <div id="source">Source: <a href='https://genius.com'>Genius</a></div>
+        <div id="source">Source: <a href="https://genius.com">Genius</a></div>
         <div class="row">
           <div class="col-sm">
             <span ref="legendContainer" id="legend-container">
@@ -99,15 +138,32 @@
             </span>
           </div>
           <div class="col-sm">
+              <label for="input-number-bin"><strong>Nombre de collones : </strong></label>
+              <input
+                type="number"
+                class="form-control"
+                id="input-number-bin"
+                min="3"
+                max="10"
+                value="6"
+                @input="inputNumberEvent"
+              />
+          </div>
+          <div class="col-sm">
             <span id="criterion-container">
-              <GroupRadio v-bind:legend="'Critère'" v-bind:radioGroup="'criterions'" v-bind:filters="filtersName"
-                v-on:radio-btn-clicked="filterWordHistogram" />
+              <GroupRadio
+                v-bind:legend="'Critère'"
+                v-bind:radioGroup="'criterions'"
+                v-bind:filters="filtersName"
+                v-on:radio-btn-clicked="filterWordHistogram"
+                ref="radioCriterions"
+              />
             </span>
           </div>
         </div>
       </div>
     </div>
-    <div class="container inter-text annotation">
+    <div class="container annotation">
       <p>
         Ce graphique présente une autre vue du premier graphique. Chaque
         artistes est disposé dans une collonne en fonction de la richesse de son
@@ -115,7 +171,7 @@
       </p>
     </div>
     <hr class="annotation-separator" />
-    <div class="container inter-text annotation">
+    <div class="container annotation">
       <p>
         Vous voulez découvrir quels sont les mots les plus fréquents dans le rap
         français ? Quel termes sont les plus utilisés par un artiste ? Si le mot
@@ -127,22 +183,39 @@
     </div>
     <div id="word-cloud-container">
       <div class="container">
-        <h1 class="title">Nuage de mots de {{ selectedWordCloudArtist }}</h1>
+        <h2 class="title">Nuage de mots de {{ selectedWordCloudArtist }}</h2>
         <div class="row">
           <div class="col-sm-9">
-            <img v-if="isWordCloudLoading" src="res/svg/bars.svg" width="50" alt="">
-            <WordCloud v-if="termFrequency !== null" v-show="!isWordCloudLoading" v-bind:termFrequency="termFrequency" ref="wordCloud"
-              id="word-cloud" />
+            <img
+              v-if="isWordCloudLoading"
+              src="res/svg/bars.svg"
+              width="50"
+              alt="word-cloud-loader"
+            />
+            <WordCloud
+              v-if="termFrequency !== null"
+              v-show="!isWordCloudLoading"
+              v-bind:termFrequency="termFrequency"
+              ref="wordCloud"
+              id="word-cloud"
+            />
           </div>
           <div class="col-sm-3">
-            <SearchBar v-if="artists !== null" v-bind:values="artists" v-bind:legend="'Recherche d\'artistes'"
-              v-bind:idName="'wordcloud'" v-on:search-input="searchWordCloudKeyBoard" v-on:search-input-click="searchWordCloud" ref="searchWordCloudBar" />
+            <SearchBar
+              v-if="artists !== null"
+              v-bind:values="artists"
+              v-bind:legend="'Recherche d\'artistes'"
+              v-bind:idName="'wordcloud'"
+              v-on:search-input="searchWordCloudKeyBoard"
+              v-on:search-input-click="searchWordCloud"
+              ref="searchWordCloudBar"
+            />
           </div>
         </div>
       </div>
     </div>
 
-    <div class="container inter-text annotation">
+    <div class="container annotation">
       <p>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt natus,
         reprehenderit quibusdam dolorum aliquid error deleniti aut corporis
@@ -186,7 +259,8 @@ export default {
       wordCount: null,
       minYear: null,
       maxYear: null,
-      filtersArtistType: [{
+      filtersArtistType: [
+        {
           key: "all",
           value: "Les deux",
         },
@@ -199,7 +273,8 @@ export default {
           value: "Groupe",
         },
       ],
-      filtersDecade: [{
+      filtersDecade: [
+        {
           key: "all",
           value: "Toutes les années",
         },
@@ -220,7 +295,8 @@ export default {
           value: "2020",
         },
       ],
-      filtersSex: [{
+      filtersSex: [
+        {
           key: "all",
           value: "Les deux",
         },
@@ -233,7 +309,8 @@ export default {
           value: "Femme",
         },
       ],
-      filtersIsComplete: [{
+      filtersIsComplete: [
+        {
           key: "all",
           value: "Tous les artistes",
         },
@@ -246,7 +323,8 @@ export default {
           value: "Seuil non atteint",
         },
       ],
-      filtersName: [{
+      filtersName: [
+        {
           key: "year",
           value: "Année",
         },
@@ -273,6 +351,10 @@ export default {
     this.maxYear = await ArtistsApi.getMaxYear();
   },
   methods: {
+    inputNumberEvent(e){
+      let criterion = this.$refs.radioCriterions.currentValue
+      this.$refs.wordHistogram.numberInputEvent(e.target.value, criterion)
+    },
     filterBeeSwarm(e) {
       this.$refs.beeswarm.filter(e);
     },
@@ -297,7 +379,10 @@ export default {
       this.$refs.wordCloud.drawChart(termFrequency);
     },
     async searchWordCloudKeyBoard(propositions) {
-      if (propositions.length === 0 && this.selectedWordCloudArtist !== "tous les artistes") {
+      if (
+        propositions.length === 0 &&
+        this.selectedWordCloudArtist !== "tous les artistes"
+      ) {
         this.selectedWordCloudArtist = "tous les artistes";
         this.isWordCloudLoading = true;
         const termFrequency = await ArtistsApi.getTermFrequency();

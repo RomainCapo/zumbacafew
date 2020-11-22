@@ -16,6 +16,11 @@
 <script>
 export default {
   name: "GroupRadio",
+  data(){
+    return {
+      currentValue:""
+    }
+  },
   props: {
     filters: Array,
     legend: String,
@@ -23,9 +28,11 @@ export default {
   },
   mounted(){
     this.$refs['radio-' + this.radioGroup + '-' + this.filters[0].key].checked = true
+    this.currentValue = this.filters[0].key
   },
   methods: {
     radioBtnClicked(e) {
+      this.currentValue = e.target.value
       this.$emit("radio-btn-clicked", e.target);
     },
     reset() {
@@ -35,7 +42,7 @@ export default {
       this.filters.forEach((x) => {
         this.$refs["radio-" + this.radioGroup + "-" + x.key].disabled = status;
       });
-    },
+    }
   },
 };
 </script>
