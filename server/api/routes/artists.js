@@ -11,7 +11,6 @@ import {
     numberOfWords,
     termFrequency,
     termFrequencyByYear,
-    wordByYear,
 } from '../../controllers/ArtistController.js';
 
 var router = Router();
@@ -26,7 +25,6 @@ router.get('/termfrequency', termFrequency);
 router.get('/termfrequency/:artistName', termFrequency);
 router.get('/termfrequencyByYear', termFrequencyByYear);
 router.get('/wordcount', numberOfWords);
-router.get('/wordByYear', wordByYear);
 
 
 export default router;
