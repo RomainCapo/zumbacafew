@@ -3,7 +3,7 @@
     <Header />
     <div id="intro">
       <div class="container">
-        <h1>Découvrez les statistiques cachées de vos rappeurs préférés !</h1> 
+        <h1>Découvrez les statistiques cachées de vos rappeurs préférés !</h1>
       </div>
     </div>
     <div class="container stats">
@@ -222,6 +222,19 @@
         iusto, accusamus sequi voluptatem eos quisquam aliquam! Atque sequi
         libero quod magni? Plus d'information <a href="">ici</a>
       </p>
+    </div>
+    <hr class="annotation-separator" />
+    <div class="container annotation">
+      <p>
+        Vous souhaitez connaître l'évolution de l'utilisation d'un mot dans les chansons au fur à mesure des années ?
+        C'est le graphique ci-dessous qui vous donnera la réponse.
+      </p>
+      <p>L'évolution d'un mot est représenté par le nombre de fois qu'il a été utilisé dans l'ensemble des chansons d'une année civile.</p>
+    </div>
+    <div id="word-cloud-container">
+      <div class="container">
+        <p>graphique...</p>
+      </div>
     </div>
     <Footer />
   </div>
