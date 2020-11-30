@@ -197,8 +197,19 @@ artistSchema.statics.termFrequency = (artistName) => {
     ])
 }
 
-artistSchema.statics.termFrequencyByYear = () => {
-    return Artist.aggregate([{
+artistSchema.statics.termFrequencyByYear = (word) => {
+
+    let matchStage = {
+        $match: {}
+    };
+
+    if (typeof word !== 'undefined')
+      matchStage.$match.name = {
+          $regex: new RegExp(word, 'i')
+      };
+
+    return Artist.aggregate([
+        {
             $project: {
                 _id: 0,
                 vocab: "$vocab"
@@ -221,8 +232,13 @@ artistSchema.statics.termFrequencyByYear = () => {
                 }
             }
         },
+        /*{
+            $match : {
+                word : "faire"
+            }
+        },*/
         {
-            $limit: 50
+            $limit: 5000
         }
     ])
 }

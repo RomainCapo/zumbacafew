@@ -102,7 +102,7 @@ export async function termFrequencyByYear(req, res) {
     res.setHeader('Content-Type', 'application/json')
 
     try {
-        let termFrequencyByYear = await Artist.termFrequencyByYear();
+        let termFrequencyByYear = await Artist.termFrequencyByYear("gamines");
         /*let stopWords = await StopWords.words();
 
         stopWords = stopWords[0]['words'];
@@ -113,6 +113,3 @@ export async function termFrequencyByYear(req, res) {
         console.error(err)
     }
 }
-
-
-
