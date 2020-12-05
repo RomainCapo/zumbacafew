@@ -15,7 +15,7 @@ export default {
           datasets: [
             {
               label: "Word",
-              data: [5, 4, 5, 12, 15],
+              data: [5, 200, 120, 12, 15],
               backgroundColor: "#00C663",
               borderColor: "#00C663",
               fill: false,

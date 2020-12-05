@@ -233,10 +233,22 @@
     </div>
     <div id="word-cloud-container">
       <div class="container">
+        <h2 class="title" style="margin-bottom:0px;">Évolution d'un mot dans au cours des années</h2>
+        <div class="container annotation" style="text-align:center;">
+          <p>Mot actuel : gamines</p>
+        </div>
         <LineChart
           ref="lineChart"
         />
       </div>
+    </div>
+    <div class="container annotation">
+      <p>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt natus,
+        reprehenderit quibusdam dolorum aliquid error deleniti aut corporis
+        iusto, accusamus sequi voluptatem eos quisquam aliquam! Atque sequi
+        libero quod magni? Plus d'information <a href="">ici</a>
+      </p>
     </div>
     <Footer />
   </div>
