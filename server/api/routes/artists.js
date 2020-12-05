@@ -23,7 +23,7 @@ router.get('/soundcount', numberOfSongs);
 router.get('/stats', allArtistsVocabulary);
 router.get('/termfrequency', termFrequency);
 router.get('/termfrequency/:artistName', termFrequency);
-router.get('/termfrequencyByYear', termFrequencyByYear);
+router.get('/termfrequencyByYear/:word', termFrequencyByYear);
 router.get('/wordcount', numberOfWords);
 
 
