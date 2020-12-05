@@ -377,7 +377,7 @@ export default {
     this.artists = await ArtistsApi.getArtists();
     this.artistsStats = await ArtistsApi.getStats();
     this.termFrequency = await ArtistsApi.getTermFrequency();
-    this.termFrequencyByYear = await ArtistsApi.getTermFrequencyByYear("moula");
+    this.termFrequencyByYear = await ArtistsApi.getTermFrequencyByYear("police");
     this.artistCount = await ArtistsApi.getArtistCount();
     this.songCount = await ArtistsApi.getSongCount();
     this.wordCount = await ArtistsApi.getWordCount();

@@ -15,23 +15,23 @@ export default {
     },
     methods: {
         drawLinechart(termFrequencyByYear) {
-            const words = termFrequencyByYear.map(function (d) {
-              return {
-                word: d._id.word,
-                year: d._id.year,
-                count: d.count
-              };
+            var labels_year = [];
+            var data_count = [];
+            var word = "";
+            termFrequencyByYear.map(function (d) {
+              labels_year.push(d._id.year);
+              data_count.push(d.count);
+              word = d._id.word;
             });
-            console.log(words);
 
             var chart = this.$refs.chart;
             var ctx = chart.getContext("2d");
             var data = {
-              labels: ["2012", "2013", "2014", "2015", "2016"],
+              labels: labels_year,
               datasets: [
                 {
-                  label: "Word",
-                  data: [5, 200, 120, 12, 15],
+                  label: word,
+                  data: data_count,
                   backgroundColor: "#00C663",
                   borderColor: "#00C663",
                   fill: false,
