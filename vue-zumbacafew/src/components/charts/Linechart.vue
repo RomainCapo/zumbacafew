@@ -7,6 +7,9 @@ import Chart from 'chart.js';
 
 export default {
     name: 'LineChart',
+    props: {
+      wordFrequencyByYear: Object,
+    },
     mounted() {
         var chart = this.$refs.chart;
         var ctx = chart.getContext("2d");
@@ -59,9 +62,6 @@ export default {
           data: data,
           options: options
         });
-    },
-    props: {
-
     },
     methods: {
 

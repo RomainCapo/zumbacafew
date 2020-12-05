@@ -231,15 +231,16 @@
       </p>
       <p>L'évolution d'un mot est représenté par le nombre de fois qu'il a été utilisé dans l'ensemble des chansons d'une année civile.</p>
     </div>
-    <div id="word-cloud-container">
+    <div id="line-chart-container">
       <div class="container">
-        <h2 class="title" style="margin-bottom:0px;">Évolution d'un mot dans au cours des années</h2>
-        <div class="container annotation" style="text-align:center;">
+        <h2 class="title">Évolution d'un mot dans au cours des années</h2>
+        <div class="container annotation">
           <p>Mot actuel : gamines</p>
         </div>
         <LineChart
           ref="lineChart"
         />
+        <div id="source">Source: <a href="https://genius.com">Genius</a></div>
       </div>
     </div>
     <div class="container annotation">

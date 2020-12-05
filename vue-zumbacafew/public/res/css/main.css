@@ -152,7 +152,31 @@ div.tooltip {
     font-size: 50px;
 }
 
-@media (max-width: 1000px) { 
+#line-chart-container .title {
+    font-size: 50px;
+    margin-bottom: 0px;
+}
+
+#line-chart-container {
+    background-color:  rgb(247, 247, 247);
+    padding: 50px;
+}
+
+#line-chart-container h2 {
+    font-size: 50px;
+}
+
+#line-chart-container .annotation {
+    text-align: center;
+}
+
+#line-chart-container #source{
+    font-size: 12px;
+    float: left;
+    margin-left: 50px;
+}
+
+@media (max-width: 1000px) {
 
     p{
         font-size: 20px;
