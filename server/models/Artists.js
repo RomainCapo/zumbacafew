@@ -228,6 +228,11 @@ artistSchema.statics.termFrequencyByYear = (word) => {
             }
         },
         {
+            $sort: {
+                "_id.year": 1
+            }
+        },
+        {
             $limit: 100
         }
     ])

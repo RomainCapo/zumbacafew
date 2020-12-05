@@ -239,6 +239,8 @@
         </div>
         <LineChart
           ref="lineChart"
+          v-if="termFrequencyByYear !== null"
+          v-bind:termFrequencyByYear="termFrequencyByYear"
         />
         <div id="source">Source: <a href="https://genius.com">Genius</a></div>
       </div>
@@ -375,12 +377,12 @@ export default {
     this.artists = await ArtistsApi.getArtists();
     this.artistsStats = await ArtistsApi.getStats();
     this.termFrequency = await ArtistsApi.getTermFrequency();
+    this.termFrequencyByYear = await ArtistsApi.getTermFrequencyByYear("moula");
     this.artistCount = await ArtistsApi.getArtistCount();
     this.songCount = await ArtistsApi.getSongCount();
     this.wordCount = await ArtistsApi.getWordCount();
     this.minYear = await ArtistsApi.getMinYear();
     this.maxYear = await ArtistsApi.getMaxYear();
-    this.termFrequencyByYear= await ArtistsApi.getTermFrequencyByYear("eiffel");
   },
   methods: {
     inputNumberEvent(e){
