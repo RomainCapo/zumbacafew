@@ -103,10 +103,6 @@ export async function termFrequencyByYear(req, res) {
 
     try {
         let termFrequencyByYear = await Artist.termFrequencyByYear("gamines");
-        /*let stopWords = await StopWords.words();
-
-        stopWords = stopWords[0]['words'];
-        termFrequency = termFrequency.filter(term => !stopWords.includes(term['_id']));*/
 
         res.json(termFrequencyByYear);
     } catch (err) {

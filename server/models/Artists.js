@@ -224,30 +224,11 @@ artistSchema.statics.termFrequencyByYear = (word) => {
         },
         {
             $match : {
-                /*_id : {
-                  "$_id.year":{ "$in": [2019,2018,2020] },
-                  "word":"eiffel"
-                }*/
-                //"_id.year":{ "$in": [2020] }
-                "_id.word":word
+                "_id.word": word
             }
         },
-        /*{
-            $match : {
-                _id : {
-                  word: {
-                    $regex: new RegExp("eiffel", 'i')
-                  }
-                }
-            }
-        },
-        /*{
-            $match : {
-                $and: [ { _id : { "year": { $gt: 1950, $lt: 2080 }, "word":"eiffel" } }, { _id : { "year": { $gt: 1950, $lt: 2080 }, "word":"eiffel" } ]
-            }
-        },*/
         {
-            $limit: 50
+            $limit: 100
         }
     ])
 }
