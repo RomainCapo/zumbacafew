@@ -235,8 +235,17 @@
       <div class="container">
         <h2 class="title">Évolution d'un mot dans au cours des années</h2>
         <div class="container annotation">
-          <p>Mot actuel : gamines</p>
+          <p>Mot actuel : {{ wordDisplayed }}</p>
         </div>
+        <SearchBar
+          v-if="termFrequencyByYear !== null"
+          v-bind:values="termFrequencyByYear"
+          v-bind:legend="'Recherche d\'artistes'"
+          v-bind:idName="'wordcloud'"
+          v-on:search-input="searchWordCloudKeyBoard"
+          v-on:search-input-click="searchWordCloud"
+          ref="searchWordCloudBar"
+        />
         <LineChart
           ref="lineChart"
           v-if="termFrequencyByYear !== null"
@@ -287,6 +296,7 @@ export default {
       artistCount: null,
       isWordCloudLoading: false,
       selectedWordCloudArtist: "tous les artistes",
+      wordDisplayed: "moula",
       songCount: null,
       wordCount: null,
       minYear: null,
@@ -377,7 +387,7 @@ export default {
     this.artists = await ArtistsApi.getArtists();
     this.artistsStats = await ArtistsApi.getStats();
     this.termFrequency = await ArtistsApi.getTermFrequency();
-    this.termFrequencyByYear = await ArtistsApi.getTermFrequencyByYear("police");
+    this.termFrequencyByYear = await ArtistsApi.getTermFrequencyByYear("moula");
     this.artistCount = await ArtistsApi.getArtistCount();
     this.songCount = await ArtistsApi.getSongCount();
     this.wordCount = await ArtistsApi.getWordCount();

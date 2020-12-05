@@ -238,5 +238,39 @@ artistSchema.statics.termFrequencyByYear = (word) => {
     ])
 }
 
+artistSchema.statics.terms = (word) => {
+    let regex = "/" + word + "*/"
+
+    return Artist.aggregate([
+        {
+            $project: {
+                _id: 0,
+                vocab: "$vocab"
+            }
+        },
+        {
+            $unwind: "$vocab"
+        },
+        {
+            $unwind: "$vocab.words"
+        },
+        {
+            $group: {
+                _id: {
+                    word: "$vocab.words.word"
+                }
+            }
+        },
+        {
+            $match : {
+                "_id.word": regex
+            }
+        },
+        {
+            $limit: 10
+        }
+    ])
+}
+
 const Artist = mongoose.model('artist', artistSchema);
 export default Artist;

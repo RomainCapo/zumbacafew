@@ -10,6 +10,7 @@ import {
     numberOfSongs,
     numberOfWords,
     termFrequency,
+    terms,
     termFrequencyByYear,
 } from '../../controllers/ArtistController.js';
 
@@ -24,6 +25,7 @@ router.get('/stats', allArtistsVocabulary);
 router.get('/termfrequency', termFrequency);
 router.get('/termfrequency/:artistName', termFrequency);
 router.get('/termfrequencyByYear/:word', termFrequencyByYear);
+router.get('/terms/:word', terms);
 router.get('/wordcount', numberOfWords);
 
 
