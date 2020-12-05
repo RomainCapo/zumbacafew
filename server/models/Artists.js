@@ -198,16 +198,6 @@ artistSchema.statics.termFrequency = (artistName) => {
 }
 
 artistSchema.statics.termFrequencyByYear = (word) => {
-
-    let matchStage = {
-        $match: {}
-    };
-
-    if (typeof word !== 'undefined')
-      matchStage.$match.name = {
-          $regex: new RegExp(word, 'i')
-      };
-
     return Artist.aggregate([
         {
             $project: {
@@ -232,13 +222,32 @@ artistSchema.statics.termFrequencyByYear = (word) => {
                 }
             }
         },
+        {
+            $match : {
+                /*_id : {
+                  "$_id.year":{ "$in": [2019,2018,2020] },
+                  "word":"eiffel"
+                }*/
+                //"_id.year":{ "$in": [2020] }
+                "_id.word":word
+            }
+        },
         /*{
             $match : {
-                word : "faire"
+                _id : {
+                  word: {
+                    $regex: new RegExp("eiffel", 'i')
+                  }
+                }
+            }
+        },
+        /*{
+            $match : {
+                $and: [ { _id : { "year": { $gt: 1950, $lt: 2080 }, "word":"eiffel" } }, { _id : { "year": { $gt: 1950, $lt: 2080 }, "word":"eiffel" } ]
             }
         },*/
         {
-            $limit: 5000
+            $limit: 50
         }
     ])
 }
