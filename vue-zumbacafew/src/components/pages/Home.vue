@@ -233,7 +233,9 @@
     </div>
     <div id="word-cloud-container">
       <div class="container">
-        <p>graphique...</p>
+        <LineChart
+          ref="lineChart"
+        />
       </div>
     </div>
     <Footer />
@@ -248,6 +250,7 @@ import GroupRadio from "@/components/ui/GroupRadio.vue";
 import WordHistogram from "@/components/charts/WordHistogram.vue";
 import SearchBar from "@/components/ui/SearchBar.vue";
 import WordCloud from "@/components/charts/WordCloud.vue";
+import LineChart from "@/components/charts/Linechart.vue";
 import Footer from "@/components/layout/Footer";
 
 export default {
@@ -260,6 +263,7 @@ export default {
     WordCloud,
     WordHistogram,
     SearchBar,
+    LineChart,
   },
   data() {
     return {
@@ -351,6 +355,7 @@ export default {
         },
       ],
       termFrequency: null,
+      termFrequencyByYear: null,
     };
   },
   async created() {
@@ -362,6 +367,7 @@ export default {
     this.wordCount = await ArtistsApi.getWordCount();
     this.minYear = await ArtistsApi.getMinYear();
     this.maxYear = await ArtistsApi.getMaxYear();
+    this.termFrequencyByYear= await ArtistsApi.getTermFrequencyByYear("eiffel");
   },
   methods: {
     inputNumberEvent(e){
