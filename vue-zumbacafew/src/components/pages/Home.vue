@@ -237,14 +237,20 @@
         <div class="container annotation">
           <p>Mot actuel : {{ wordDisplayed }}</p>
         </div>
-        <SearchBar
-          v-if="terms !== null"
-          v-bind:values="terms"
-          v.bind:idName="'wordsLinechart'"
-          v-bind:legend="'Recherche de mots'"
-          v-on:search-input-click="searchLinechart"
-          ref="searchLinechartBar"
-        />
+        <div class="row searchBarLinechart">
+          <div class="col-lg-4 col-sm"></div>
+          <div class="col-lg-4 col-sm-12">
+              <SearchBar
+                v-if="terms !== null"
+                v-bind:values="terms"
+                v.bind:idName="'wordsLinechart'"
+                v-bind:legend="'Recherche de mots'"
+                v-on:search-input-click="searchLinechart"
+                ref="searchLinechartBar"
+              />
+          </div>
+          <div class="col-lg-4 col-sm"></div>
+        </div>
         <LineChart
           ref="lineChart"
           v-if="termFrequencyByYear !== null"

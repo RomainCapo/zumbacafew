@@ -25,14 +25,16 @@ export default {
   methods: {
     filterValues() {
       const inputSearch = this.$refs.inputSearch.value.toLowerCase();
+      const pattern = new RegExp("^" + inputSearch);
       this.values.forEach(value => {
-        if (inputSearch !== "" && value.name.toLowerCase().includes(inputSearch))
+        if (inputSearch !== "" && pattern.test(value.name.toLowerCase()))
           this.propositions.push(value.name);
       })
     },
     searchInput() {
       this.removePropositions();
       this.filterValues();
+      this.propositions = this.propositions.slice(0, 6);
       this.$emit("search-input", this.propositions);
     },
     removePropositions() {
