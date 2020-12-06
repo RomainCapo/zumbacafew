@@ -3,7 +3,7 @@
     <Header />
     <div id="intro">
       <div class="container">
-        <h1>Découvrez les statistiques cachées de vos rappeurs préférés !</h1> 
+        <h1>Découvrez les statistiques cachées de vos rappeurs préférés !</h1>
       </div>
     </div>
     <div class="container stats">
@@ -223,6 +223,50 @@
         libero quod magni? Plus d'information <a href="">ici</a>
       </p>
     </div>
+    <hr class="annotation-separator" />
+    <div class="container annotation">
+      <p>
+        Vous souhaitez connaître l'évolution de l'utilisation d'un mot dans les chansons au fur à mesure des années ?
+        C'est le graphique ci-dessous qui vous donnera la réponse.
+      </p>
+      <p>L'évolution d'un mot est représenté par le nombre de fois qu'il a été utilisé dans l'ensemble des chansons d'une année civile.</p>
+    </div>
+    <div id="line-chart-container">
+      <div class="container">
+        <h2 class="title">Évolution d'un mot au cours des années</h2>
+        <div class="container annotation">
+          <p>Mot actuel : {{ wordDisplayed }}</p>
+        </div>
+        <div class="row searchBarLinechart">
+          <div class="col-lg-4 col-sm"></div>
+          <div class="col-lg-4 col-sm-12">
+              <SearchBar
+                v-if="terms !== null"
+                v-bind:values="terms"
+                v.bind:idName="'wordsLinechart'"
+                v-bind:legend="'Recherche de mots'"
+                v-on:search-input-click="searchLinechart"
+                ref="searchLinechartBar"
+              />
+          </div>
+          <div class="col-lg-4 col-sm"></div>
+        </div>
+        <LineChart
+          ref="lineChart"
+          v-if="termFrequencyByYear !== null"
+          v-bind:termFrequencyByYear="termFrequencyByYear"
+        />
+        <div id="source">Source: <a href="https://genius.com">Genius</a></div>
+      </div>
+    </div>
+    <div class="container annotation">
+      <p>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt natus,
+        reprehenderit quibusdam dolorum aliquid error deleniti aut corporis
+        iusto, accusamus sequi voluptatem eos quisquam aliquam! Atque sequi
+        libero quod magni? Plus d'information <a href="">ici</a>
+      </p>
+    </div>
     <Footer />
   </div>
 </template>
@@ -235,6 +279,7 @@ import GroupRadio from "@/components/ui/GroupRadio.vue";
 import WordHistogram from "@/components/charts/WordHistogram.vue";
 import SearchBar from "@/components/ui/SearchBar.vue";
 import WordCloud from "@/components/charts/WordCloud.vue";
+import LineChart from "@/components/charts/Linechart.vue";
 import Footer from "@/components/layout/Footer";
 
 export default {
@@ -247,14 +292,17 @@ export default {
     WordCloud,
     WordHistogram,
     SearchBar,
+    LineChart,
   },
   data() {
     return {
       artists: null,
+      terms: null,
       artistsStats: null,
       artistCount: null,
       isWordCloudLoading: false,
       selectedWordCloudArtist: "tous les artistes",
+      wordDisplayed: "moula",
       songCount: null,
       wordCount: null,
       minYear: null,
@@ -338,12 +386,15 @@ export default {
         },
       ],
       termFrequency: null,
+      termFrequencyByYear: null,
     };
   },
   async created() {
+    this.terms = await ArtistsApi.getTerms();
     this.artists = await ArtistsApi.getArtists();
     this.artistsStats = await ArtistsApi.getStats();
     this.termFrequency = await ArtistsApi.getTermFrequency();
+    this.termFrequencyByYear = await ArtistsApi.getTermFrequencyByYear("moula");
     this.artistCount = await ArtistsApi.getArtistCount();
     this.songCount = await ArtistsApi.getSongCount();
     this.wordCount = await ArtistsApi.getWordCount();
@@ -389,6 +440,12 @@ export default {
         this.isWordCloudLoading = false;
         this.$refs.wordCloud.drawChart(termFrequency);
       }
+    },
+    async searchLinechart(term) {
+        console.log(term);
+        const termFrequencyByYear = await ArtistsApi.getTermFrequencyByYear(term);
+        this.$refs.lineChart.drawLinechart(termFrequencyByYear);
+        this.wordDisplayed = term;
     },
     formatNumber(number, separator = "'") {
       return number.toLocaleString("en-US").replace(/,/g, separator);
