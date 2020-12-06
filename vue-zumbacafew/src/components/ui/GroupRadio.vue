@@ -42,6 +42,9 @@ export default {
       this.filters.forEach((x) => {
         this.$refs["radio-" + this.radioGroup + "-" + x.key].disabled = status;
       });
+    },
+    getRadios(){
+      return this.$refs;
     }
   },
 };

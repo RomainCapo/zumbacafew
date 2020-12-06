@@ -425,6 +425,7 @@ export default {
     inputNumberEvent(e){
       let criterion = this.$refs.radioCriterions.currentValue
       this.$refs.wordHistogram.numberInputEvent(e.target.value, criterion)
+      this.$refs.radioCriterions.getRadios()['radio-criterions-year'].checked = true;
     },
     filterBeeSwarm(e) {
       this.$refs.beeswarm.filter(e);
