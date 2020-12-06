@@ -168,6 +168,8 @@ div.tooltip {
 
 #line-chart-container .annotation {
     text-align: center;
+    margin: 5px;
+    padding: 0px;
 }
 
 #line-chart-container #source{
