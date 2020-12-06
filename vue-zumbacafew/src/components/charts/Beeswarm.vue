@@ -76,11 +76,6 @@ export default {
           "translate(0," + (this.height - this.margin.bottom) + ")"
         );
 
-      this.xLine = this.svg
-        .append("line")
-        .attr("stroke", "rgb(0,0,0)")
-        .attr("stroke-dasharray", "10,5");
-
       this.tooltip = d3
         .select(this.$refs.svganchor)
         .append("div")
@@ -155,7 +150,6 @@ export default {
         });
 
       this.artistsStats.forEach((d) => {
-        console.log(d.image_url);
         this.svg
           .append("svg:pattern")
           .attr("id", "artist_" + Helper.replaceStringSpace(d.name))
@@ -179,7 +173,6 @@ export default {
         .attr("cy", this.height / 2 - this.margin.bottom / 2)
         .attr("r", this.circle_focus_radius)
         .attr("id", function (d) {
-          console.log(Helper.replaceStringSpace(d.name));
           return "circle_" + Helper.replaceStringSpace(d.name);
         })
         .merge(circles)
@@ -215,20 +208,12 @@ export default {
                 "<br>Atteint le seuil de mot: " +
                 Helper.isCompleteToFrench(d.is_complete)
             )
-            .style("top", event.layerY - 12 + "px")
-            .style("left", event.layerX + 25 + "px")
+            .style("top", event.pageY - 12 + "px")
+            .style("left", event.pageX + 25 + "px")
             .style("opacity", 0.9);
-
-          self.xLine
-            .attr("x1", d3.select(this).attr("cx"))
-            .attr("y1", d3.select(this).attr("cy"))
-            .attr("y2", self.height - self.margin.bottom)
-            .attr("x2", d3.select(this).attr("cx"))
-            .attr("opacity", 1);
         })
         .on("mouseout", (x) => {
           self.tooltip.style("opacity", 0);
-          self.xLine.attr("opacity", 0);
           return x;
         });
     },
@@ -303,7 +288,6 @@ export default {
           break;
       }
       this.applyFilter();
-      console.log(this.beeswarmParams);
     },
     search(propositions, radioButtonGroups) {
       this.resetFilter(radioButtonGroups);

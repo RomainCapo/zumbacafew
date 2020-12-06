@@ -11,6 +11,8 @@ vue-zumbacafew/dist
 # local env files
 vue-zumbacafew/.env.local
 vue-zumbacafew/.env.*.local
+vue-zumbacafew/.env
+server/.env
 
 # Log files
 vue-zumbacafew/npm-debug.log*
