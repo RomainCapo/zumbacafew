@@ -239,7 +239,7 @@ artistSchema.statics.termFrequencyByYear = (word) => {
 }
 
 artistSchema.statics.terms = (word) => {
-    let regex = "/" + word + "*/"
+    let regex = "^" + word
 
     return Artist.aggregate([
         {
@@ -256,18 +256,37 @@ artistSchema.statics.terms = (word) => {
         },
         {
             $group: {
-                _id: {
-                    word: "$vocab.words.word"
-                }
+                _id: "$vocab.words.word"
             }
         },
         {
-            $match : {
-                "_id.word": regex
+          $addFields:{
+              result: {
+                $regexMatch: {
+                  input: "$_id",
+                  regex: regex
+                },
+              }
             }
         },
         {
-            $limit: 10
+            $match: {
+               "result": true
+            }
+        },
+        {
+            $sort: {
+                "_id": 1
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                name: "$_id"
+            }
+        },
+        {
+            $limit: 6
         }
     ])
 }

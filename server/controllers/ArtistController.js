@@ -118,9 +118,9 @@ export async function terms(req, res) {
     try {
         const WORD = req.params.word;
 
-        let termFrequencyByYear = await Artist.terms(WORD);
+        let terms = await Artist.terms(WORD);
 
-        res.json(termFrequencyByYear);
+        res.json(terms);
     } catch (err) {
         console.error(err)
     }

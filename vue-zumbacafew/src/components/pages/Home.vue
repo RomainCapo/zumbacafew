@@ -233,7 +233,7 @@
     </div>
     <div id="line-chart-container">
       <div class="container">
-        <h2 class="title">Évolution d'un mot dans au cours des années</h2>
+        <h2 class="title">Évolution d'un mot au cours des années</h2>
         <div class="container annotation">
           <p>Mot actuel : {{ wordDisplayed }}</p>
         </div>
