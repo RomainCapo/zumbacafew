@@ -234,12 +234,22 @@
     <div id="line-chart-container">
       <div class="container">
         <h2 class="title">Évolution d'un mot au cours des années</h2>
-        <div class="container annotation">
-          <p>Mot actuel : {{ wordDisplayed }}</p>
-        </div>
         <div class="row searchBarLinechart">
-          <div class="col-lg-4 col-sm"></div>
           <div class="col-lg-4 col-sm-12">
+            <div class="annotation">
+              <p>Mot actuel : {{ wordDisplayed }}</p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-sm-12 selectorGraph">
+            <GroupRadio
+              v-bind:legend="'Type de graphe'"
+              v-bind:radioGroup="'linechart'"
+              v-bind:filters="filtersGraph"
+              v-on:radio-btn-clicked="filterLinechart"
+              ref="radioLinechart"
+            />
+          </div>
+          <div class="col-lg-4 col-sm-12 selectorGraph">
               <SearchBar
                 v-if="terms !== null"
                 v-bind:values="terms"
@@ -248,15 +258,6 @@
                 v-on:search-input-click="searchLinechart"
                 ref="searchLinechartBar"
               />
-          </div>
-          <div class="col-lg-4 col-sm">
-            <GroupRadio
-              v-bind:legend="'Type de graphe'"
-              v-bind:radioGroup="'linechart'"
-              v-bind:filters="filtersGraph"
-              v-on:radio-btn-clicked="filterLinechart"
-              ref="radioLinechart"
-            />
           </div>
         </div>
         <LineChart
