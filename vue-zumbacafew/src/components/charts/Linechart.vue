@@ -10,6 +10,11 @@ export default {
     props: {
       termFrequencyByYear: Object,
     },
+    data() {
+      return {
+        drawingChart: null
+      };
+    },
     mounted() {
         this.drawLinechart(this.termFrequencyByYear, "line");
     },
@@ -70,11 +75,14 @@ export default {
               },
             };
 
-            new Chart(ctx, {
+            this.drawingChart = new Chart(ctx, {
               type: type,
               data: data,
               options: options
             });
+        },
+        destroyChart() {
+            this.drawingChart.destroy();
         }
     },
 }

@@ -242,6 +242,7 @@
           </div>
           <div class="col-lg-4 col-sm-12 selectorGraph">
             <GroupRadio
+              v-if="termFrequencyByYear !== null"
               v-bind:legend="'Type de graphe'"
               v-bind:radioGroup="'linechart'"
               v-bind:filters="filtersGraph"
@@ -251,7 +252,7 @@
           </div>
           <div class="col-lg-4 col-sm-12 selectorGraph">
               <SearchBar
-                v-if="terms !== null"
+                v-if="terms !== null && termFrequencyByYear !== null"
                 v-bind:values="terms"
                 v.bind:idName="'wordsLinechart'"
                 v-bind:legend="'Recherche de mots'"
@@ -462,11 +463,13 @@ export default {
       }
     },
     async searchLinechart(term) {
+        this.$refs.lineChart.destroyChart();
         const termFrequencyByYear = await ArtistsApi.getTermFrequencyByYear(term);
         this.$refs.lineChart.drawLinechart(termFrequencyByYear, this.graphType);
         this.wordDisplayed = term;
     },
     async filterLinechart(e) {
+      this.$refs.lineChart.destroyChart();
       this.graphType = e.value;
       const termFrequencyByYear = await ArtistsApi.getTermFrequencyByYear(this.wordDisplayed);
       this.$refs.lineChart.drawLinechart(termFrequencyByYear, this.graphType);
