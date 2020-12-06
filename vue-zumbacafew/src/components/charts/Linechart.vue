@@ -11,10 +11,10 @@ export default {
       termFrequencyByYear: Object,
     },
     mounted() {
-        this.drawLinechart(this.termFrequencyByYear);
+        this.drawLinechart(this.termFrequencyByYear, "line");
     },
     methods: {
-        drawLinechart(termFrequencyByYear) {
+        drawLinechart(termFrequencyByYear, type) {
             var labels_year = [];
             var data_count = [];
             var word = "";
@@ -71,7 +71,7 @@ export default {
             };
 
             new Chart(ctx, {
-              type: "line",
+              type: type,
               data: data,
               options: options
             });

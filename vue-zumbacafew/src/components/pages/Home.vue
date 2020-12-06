@@ -234,12 +234,22 @@
     <div id="line-chart-container">
       <div class="container">
         <h2 class="title">Évolution d'un mot au cours des années</h2>
-        <div class="container annotation">
-          <p>Mot actuel : {{ wordDisplayed }}</p>
-        </div>
         <div class="row searchBarLinechart">
-          <div class="col-lg-4 col-sm"></div>
           <div class="col-lg-4 col-sm-12">
+            <div class="annotation">
+              <p>Mot actuel : {{ wordDisplayed }}</p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-sm-12 selectorGraph">
+            <GroupRadio
+              v-bind:legend="'Type de graphe'"
+              v-bind:radioGroup="'linechart'"
+              v-bind:filters="filtersGraph"
+              v-on:radio-btn-clicked="filterLinechart"
+              ref="radioLinechart"
+            />
+          </div>
+          <div class="col-lg-4 col-sm-12 selectorGraph">
               <SearchBar
                 v-if="terms !== null"
                 v-bind:values="terms"
@@ -249,7 +259,6 @@
                 ref="searchLinechartBar"
               />
           </div>
-          <div class="col-lg-4 col-sm"></div>
         </div>
         <LineChart
           ref="lineChart"
@@ -307,6 +316,16 @@ export default {
       wordCount: null,
       minYear: null,
       maxYear: null,
+      filtersGraph: [
+        {
+          key: "line",
+          value: "Line chart",
+        },
+        {
+          key: "bar",
+          value: "Bar chart",
+        }
+      ],
       filtersArtistType: [
         {
           key: "all",
@@ -387,6 +406,7 @@ export default {
       ],
       termFrequency: null,
       termFrequencyByYear: null,
+      graphType: "line",
     };
   },
   async created() {
@@ -394,7 +414,7 @@ export default {
     this.artists = await ArtistsApi.getArtists();
     this.artistsStats = await ArtistsApi.getStats();
     this.termFrequency = await ArtistsApi.getTermFrequency();
-    this.termFrequencyByYear = await ArtistsApi.getTermFrequencyByYear("moula");
+    this.termFrequencyByYear = await ArtistsApi.getTermFrequencyByYear(this.wordDisplayed);
     this.artistCount = await ArtistsApi.getArtistCount();
     this.songCount = await ArtistsApi.getSongCount();
     this.wordCount = await ArtistsApi.getWordCount();
@@ -442,10 +462,14 @@ export default {
       }
     },
     async searchLinechart(term) {
-        console.log(term);
         const termFrequencyByYear = await ArtistsApi.getTermFrequencyByYear(term);
-        this.$refs.lineChart.drawLinechart(termFrequencyByYear);
+        this.$refs.lineChart.drawLinechart(termFrequencyByYear, this.graphType);
         this.wordDisplayed = term;
+    },
+    async filterLinechart(e) {
+      this.graphType = e.value;
+      const termFrequencyByYear = await ArtistsApi.getTermFrequencyByYear(this.wordDisplayed);
+      this.$refs.lineChart.drawLinechart(termFrequencyByYear, this.graphType);
     },
     formatNumber(number, separator = "'") {
       return number.toLocaleString("en-US").replace(/,/g, separator);

@@ -154,7 +154,7 @@ div.tooltip {
 
 #line-chart-container .title {
     font-size: 50px;
-    margin-bottom: 0px;
+    margin-bottom: 50px;
 }
 
 #line-chart-container {
@@ -164,6 +164,10 @@ div.tooltip {
 
 #line-chart-container h2 {
     font-size: 50px;
+}
+
+#line-chart-container .selectorGraph {
+    padding: 10px;
 }
 
 #line-chart-container .annotation {
