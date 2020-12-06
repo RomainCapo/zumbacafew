@@ -238,13 +238,12 @@
           <p>Mot actuel : {{ wordDisplayed }}</p>
         </div>
         <SearchBar
-          v-if="termFrequencyByYear !== null"
-          v-bind:values="termFrequencyByYear"
-          v-bind:legend="'Recherche d\'artistes'"
-          v-bind:idName="'wordcloud'"
-          v-on:search-input="searchWordCloudKeyBoard"
-          v-on:search-input-click="searchWordCloud"
-          ref="searchWordCloudBar"
+          v-if="terms !== null"
+          v-bind:values="terms"
+          v.bind:idName="'wordsLinechart'"
+          v-bind:legend="'Recherche de mots'"
+          v-on:search-input-click="searchLinechart"
+          ref="searchLinechartBar"
         />
         <LineChart
           ref="lineChart"
@@ -292,6 +291,7 @@ export default {
   data() {
     return {
       artists: null,
+      terms: null,
       artistsStats: null,
       artistCount: null,
       isWordCloudLoading: false,
@@ -384,6 +384,7 @@ export default {
     };
   },
   async created() {
+    this.terms = await ArtistsApi.getTerms();
     this.artists = await ArtistsApi.getArtists();
     this.artistsStats = await ArtistsApi.getStats();
     this.termFrequency = await ArtistsApi.getTermFrequency();
@@ -433,6 +434,12 @@ export default {
         this.isWordCloudLoading = false;
         this.$refs.wordCloud.drawChart(termFrequency);
       }
+    },
+    async searchLinechart(term) {
+        console.log(term);
+        const termFrequencyByYear = await ArtistsApi.getTermFrequencyByYear(term);
+        this.$refs.lineChart.drawLinechart(termFrequencyByYear);
+        this.wordDisplayed = term;
     },
     formatNumber(number, separator = "'") {
       return number.toLocaleString("en-US").replace(/,/g, separator);

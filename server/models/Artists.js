@@ -238,9 +238,7 @@ artistSchema.statics.termFrequencyByYear = (word) => {
     ])
 }
 
-artistSchema.statics.terms = (word) => {
-    let regex = "^" + word
-
+artistSchema.statics.terms = () => {
     return Artist.aggregate([
         {
             $project: {
@@ -260,21 +258,6 @@ artistSchema.statics.terms = (word) => {
             }
         },
         {
-          $addFields:{
-              result: {
-                $regexMatch: {
-                  input: "$_id",
-                  regex: regex
-                },
-              }
-            }
-        },
-        {
-            $match: {
-               "result": true
-            }
-        },
-        {
             $sort: {
                 "_id": 1
             }
@@ -284,9 +267,6 @@ artistSchema.statics.terms = (word) => {
                 _id: 0,
                 name: "$_id"
             }
-        },
-        {
-            $limit: 6
         }
     ])
 }

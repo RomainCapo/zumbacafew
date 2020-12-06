@@ -116,9 +116,7 @@ export async function terms(req, res) {
     res.setHeader('Content-Type', 'application/json')
 
     try {
-        const WORD = req.params.word;
-
-        let terms = await Artist.terms(WORD);
+        let terms = await Artist.terms();
 
         res.json(terms);
     } catch (err) {
