@@ -1,9 +1,11 @@
 <template>
   <div class="col-sm" style="text-align: center">
     <label :for="'search-input-' + idName"><strong>{{ legend }}</strong></label>
-    <input type="text" class="form-control" ref="inputSearch" :id="'search-input-' + idName" @input="searchInput" />
-    <div v-for="prop in propositions" v-bind:key="prop">
-      <div class="search-proposition" @click="propositionClick">{{ prop }}</div>
+    <input type="text" class="form-control" ref="inputSearch" :id="'search-input-' + idName" @input="searchInput"
+      @keydown="keyDown" />
+    <div v-for="(prop, index) in propositions" v-bind:key="prop">
+      <div :ref="'search-item-' + index" class="search-proposition"
+        :class="{ 'search-proposition--selected': index === 0}" @click="propositionClick">{{ prop }}</div>
     </div>
   </div>
 </template>
@@ -20,33 +22,70 @@ export default {
   data() {
     return {
       propositions: [],
+      previousSelectedItemIdx: 0,
+      selectedItemIdx: 0,
     };
   },
   methods: {
     filterValues() {
       const inputSearch = this.$refs.inputSearch.value.toLowerCase();
+      const pattern = new RegExp("^" + inputSearch);
       this.values.forEach(value => {
-        if (inputSearch !== "" && value.name.toLowerCase().includes(inputSearch))
+        if (inputSearch !== "" && pattern.test(value.name.toLowerCase()))
           this.propositions.push(value.name);
       })
+    },
+    keyDown(e) {
+      this.previousSelectedItemIdx = this.selectedItemIdx
+
+      switch(e.keyCode) {
+        case 13:
+          this.propositionEnter();
+          break;
+        case 38:
+          this.selectedItemIdx -= this.selectedItemIdx > 0  ? 1 : 0;
+          break;
+        case 40:
+          this.selectedItemIdx += this.selectedItemIdx < this.propositions.length - 1 ? 1 : 0;
+          break;
+        default:
+          break;
+      }
+
+      if(this.selectedItemIdx >= 0 && this.selectedItemIdx < this.propositions.length) {
+        this.$refs["search-item-" + this.previousSelectedItemIdx].classList.remove("search-proposition--selected");
+        this.$refs["search-item-" + this.selectedItemIdx].classList.add("search-proposition--selected");
+      }
     },
     searchInput() {
       this.removePropositions();
       this.filterValues();
+      this.propositions = this.propositions.slice(0, 6);
       this.$emit("search-input", this.propositions);
     },
     removePropositions() {
       this.propositions = [];
     },
     propositionClick(e) {
-      this.removePropositions();
-
-      this.$refs.inputSearch.value = e.target.textContent;
-      this.$refs.inputSearch.dispatchEvent(new Event("input"));
-      this.propositions = [];
-
-      this.$emit("search-input-click", this.$refs.inputSearch.value);
+      const query = e.target.textContent;
+      this.search(query);
     },
+    propositionEnter() {
+      const query = this.$refs["search-item-" + this.selectedItemIdx].textContent;
+      this.search(query);
+
+      this.selectedItemIdx = 0;
+      this.previousSelectedItemIdx = 0;
+    },
+    search(query) {
+      this.$refs.inputSearch.dispatchEvent(new Event("input"));
+      this.$refs.inputSearch.value = query;
+      this.removePropositions();
+      this.$emit("search-input-click", query);
+      this.propositions.push(query);
+      this.$emit("search-input", this.propositions);
+      this.removePropositions();
+    }
   },
 };
 </script>
@@ -65,6 +104,13 @@ export default {
   padding: 3px;
 }
 
+.search-proposition--selected {
+  background: rgb(237, 239, 238);
+}
+
+.search-proposition--not-selected {
+  background: rgb(247, 247, 247);
+}
 
 .search-proposition:hover {
   background: rgb(237, 239, 238);

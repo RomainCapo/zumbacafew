@@ -197,8 +197,9 @@ artistSchema.statics.termFrequency = (artistName) => {
     ])
 }
 
-artistSchema.statics.termFrequencyByYear = () => {
-    return Artist.aggregate([{
+artistSchema.statics.termFrequencyByYear = (word) => {
+    return Artist.aggregate([
+        {
             $project: {
                 _id: 0,
                 vocab: "$vocab"
@@ -219,6 +220,52 @@ artistSchema.statics.termFrequencyByYear = () => {
                 count: {
                     $sum: "$vocab.words.count"
                 }
+            }
+        },
+        {
+            $match : {
+                "_id.word": word
+            }
+        },
+        {
+            $sort: {
+                "_id.year": 1
+            }
+        },
+        {
+            $limit: 100
+        }
+    ])
+}
+
+artistSchema.statics.terms = () => {
+    return Artist.aggregate([
+        {
+            $project: {
+                _id: 0,
+                vocab: "$vocab"
+            }
+        },
+        {
+            $unwind: "$vocab"
+        },
+        {
+            $unwind: "$vocab.words"
+        },
+        {
+            $group: {
+                _id: "$vocab.words.word"
+            }
+        },
+        {
+            $sort: {
+                "_id": 1
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                name: "$_id"
             }
         }
     ])
