@@ -25,6 +25,9 @@
           <li class="nav-item">
             <a class="nav-link" href="#word-cloud">Nuage de mots</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#lineChart">Linechart</a>
+          </li>
         </ul>
       </div>
     </div>

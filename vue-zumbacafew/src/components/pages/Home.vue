@@ -293,6 +293,7 @@
         </div>
         <LineChart
           ref="lineChart"
+          id="lineChart"
           v-if="termFrequencyByYear !== null"
           v-bind:termFrequencyByYear="termFrequencyByYear"
         />
