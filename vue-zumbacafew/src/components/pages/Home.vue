@@ -286,6 +286,7 @@
         </div>
         <LineChart
           ref="lineChart"
+          id="lineChart"
           v-if="termFrequencyByYear !== null"
           v-bind:termFrequencyByYear="termFrequencyByYear"
         />
@@ -341,7 +342,7 @@ export default {
       artistCount: null,
       isWordCloudLoading: false,
       selectedWordCloudArtist: "tous les artistes",
-      wordDisplayed: "moula",
+      wordDisplayed: "police",
       songCount: null,
       wordCount: null,
       minYear: null,
