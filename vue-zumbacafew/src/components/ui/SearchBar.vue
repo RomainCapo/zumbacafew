@@ -105,7 +105,7 @@ export default {
 }
 
 .search-proposition--selected {
-  background: rgb(237, 239, 238);
+  background:rgb(0, 178, 99);
 }
 
 .search-proposition--not-selected {
