@@ -107,29 +107,12 @@ div.tooltip {
     color: black;
 }
 
-
-/*#word-histogram-container .c0 {
+#word-histogram-container .c0 {
     color: rgb(255, 176, 0);
 }
 
 #word-histogram-container .c1 {
     color: rgb(120, 94, 240);
-}
-
-#word-histogram-container .c2 {
-    color: rgb(0, 178, 99);
-}
-
-#word-histogram-container .c3 {
-    color: black;
-}*/
-
-#word-histogram-container .c0 {
-    color: rgb(142, 89, 171);
-}
-
-#word-histogram-container .c1 {
-    color: rgb(240, 71, 112);
 }
 
 #word-histogram-container .c2 {
@@ -207,7 +190,6 @@ div.tooltip {
 }
 
 #search-input-linechart {
-    width: 80%;
     margin: 0 auto;
 }
 

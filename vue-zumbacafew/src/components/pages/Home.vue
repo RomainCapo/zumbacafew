@@ -77,13 +77,6 @@
             v-on:radio-btn-clicked="filterBeeSwarm"
             ref="radioYear"
           />
-          <GroupRadio
-            v-bind:legend="'Seuil atteint'"
-            v-bind:radioGroup="'is-complete'"
-            v-bind:filters="filtersIsComplete"
-            v-on:radio-btn-clicked="filterBeeSwarm"
-            ref="radioIsComplete"
-          />
           <SearchBar
             v-if="artists !== null"
             v-bind:values="artists"
@@ -413,20 +406,6 @@ export default {
           value: "Femme",
         },
       ],
-      filtersIsComplete: [
-        {
-          key: "all",
-          value: "Tous les artistes",
-        },
-        {
-          key: "complete",
-          value: "Seuil atteint",
-        },
-        {
-          key: "incomplete",
-          value: "Seuil non atteint",
-        },
-      ],
       filtersName: [
         {
           key: "year",
@@ -476,7 +455,6 @@ export default {
         this.$refs.radioSex,
         this.$refs.radioArtistType,
         this.$refs.radioYear,
-        this.$refs.radioIsComplete,
       ]);
     },
     filterWordHistogram(e) {

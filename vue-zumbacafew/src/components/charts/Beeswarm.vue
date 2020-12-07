@@ -99,17 +99,11 @@ export default {
         y2020: "2020",
         all: "all",
       };
-      this.paramIsComplete = {
-        all: "all",
-        complete: "complete",
-        incomplete: "incomplete",
-      };
 
       this.beeswarmParams = {};
       this.beeswarmParams.gender = this.paramGender.all;
       this.beeswarmParams.artistType = this.paramArtistType.all;
       this.beeswarmParams.year = this.paramYear.all;
-      this.beeswarmParams.is_complete = this.paramIsComplete.all;
 
       this.svg
         .append("text")
@@ -244,10 +238,7 @@ export default {
           (x.artist_type.toLowerCase() == this.beeswarmParams.artistType ||
             this.beeswarmParams.artistType == this.paramArtistType.all) &&
           (Helper.ceilYear(x.year) == this.beeswarmParams.year ||
-            this.beeswarmParams.year == this.paramYear.all) &&
-          (Helper.criterionCompleteConversion(x.is_complete) ==
-            this.beeswarmParams.is_complete ||
-            this.beeswarmParams.is_complete == this.paramIsComplete.all)
+            this.beeswarmParams.year == this.paramYear.all) 
         ) {
           this.focusArtist(x.name);
         } else {
@@ -283,9 +274,6 @@ export default {
         case "radio-year":
           this.beeswarmParams.year = e.value;
           break;
-        case "radio-is-complete":
-          this.beeswarmParams.is_complete = e.value;
-          break;
       }
       this.applyFilter();
     },
@@ -314,7 +302,6 @@ export default {
       this.beeswarmParams.gender = "all";
       this.beeswarmParams.artistType = "all";
       this.beeswarmParams.year = "all";
-      this.beeswarmParams.is_complete = "all";
 
       this.applyFilter();
     },

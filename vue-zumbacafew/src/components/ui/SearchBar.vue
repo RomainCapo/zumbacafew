@@ -2,7 +2,7 @@
   <div class="col-sm" style="text-align: center">
     <label :for="'search-input-' + idName"><strong>{{ legend }}</strong></label>
     <input type="text" class="form-control" ref="inputSearch" :id="'search-input-' + idName" @input="searchInput"
-      @keydown="keyDown" />
+      @keydown="keyDown"/>
     <div v-for="(prop, index) in propositions" v-bind:key="prop">
       <div :ref="'search-item-' + index" class="search-proposition"
         :class="{ 'search-proposition--selected': index === 0}" @click="propositionClick">{{ prop }}</div>
@@ -93,13 +93,11 @@ export default {
 
 <style scoped>
 #input-search {
-  width: 80%;
-  margin: auto;
+  margin: 0 auto;
 }
 
 .search-proposition {
   margin: auto;
-  width: 80%;
   border-bottom: solid 1px rgb(0, 178, 99);
   padding: 3px;
 }
