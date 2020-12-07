@@ -312,7 +312,7 @@ export default {
       artistCount: null,
       isWordCloudLoading: false,
       selectedWordCloudArtist: "tous les artistes",
-      wordDisplayed: "moula",
+      wordDisplayed: "police",
       songCount: null,
       wordCount: null,
       minYear: null,
