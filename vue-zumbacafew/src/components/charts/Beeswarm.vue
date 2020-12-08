@@ -76,11 +76,6 @@ export default {
           "translate(0," + (this.height - this.margin.bottom) + ")"
         );
 
-      this.xLine = this.svg
-        .append("line")
-        .attr("stroke", "rgb(0,0,0)")
-        .attr("stroke-dasharray", "10,5");
-
       this.tooltip = d3
         .select(this.$refs.svganchor)
         .append("div")
@@ -104,17 +99,11 @@ export default {
         y2020: "2020",
         all: "all",
       };
-      this.paramIsComplete = {
-        all: "all",
-        complete: "complete",
-        incomplete: "incomplete",
-      };
 
       this.beeswarmParams = {};
       this.beeswarmParams.gender = this.paramGender.all;
       this.beeswarmParams.artistType = this.paramArtistType.all;
       this.beeswarmParams.year = this.paramYear.all;
-      this.beeswarmParams.is_complete = this.paramIsComplete.all;
 
       this.svg
         .append("text")
@@ -213,20 +202,12 @@ export default {
                 "<br>Atteint le seuil de mot: " +
                 Helper.isCompleteToFrench(d.is_complete)
             )
-            .style("top", event.layerY - 12 + "px")
-            .style("left", event.layerX + 25 + "px")
+            .style("top", event.pageY - 12 + "px")
+            .style("left", event.pageX + 25 + "px")
             .style("opacity", 0.9);
-
-          self.xLine
-            .attr("x1", d3.select(this).attr("cx"))
-            .attr("y1", d3.select(this).attr("cy"))
-            .attr("y2", self.height - self.margin.bottom)
-            .attr("x2", d3.select(this).attr("cx"))
-            .attr("opacity", 1);
         })
         .on("mouseout", (x) => {
           self.tooltip.style("opacity", 0);
-          self.xLine.attr("opacity", 0);
           return x;
         });
     },
@@ -257,10 +238,7 @@ export default {
           (x.artist_type.toLowerCase() == this.beeswarmParams.artistType ||
             this.beeswarmParams.artistType == this.paramArtistType.all) &&
           (Helper.ceilYear(x.year) == this.beeswarmParams.year ||
-            this.beeswarmParams.year == this.paramYear.all) &&
-          (Helper.criterionCompleteConversion(x.is_complete) ==
-            this.beeswarmParams.is_complete ||
-            this.beeswarmParams.is_complete == this.paramIsComplete.all)
+            this.beeswarmParams.year == this.paramYear.all) 
         ) {
           this.focusArtist(x.name);
         } else {
@@ -296,12 +274,8 @@ export default {
         case "radio-year":
           this.beeswarmParams.year = e.value;
           break;
-        case "radio-is-complete":
-          this.beeswarmParams.is_complete = e.value;
-          break;
       }
       this.applyFilter();
-      console.log(this.beeswarmParams);
     },
     search(propositions, radioButtonGroups) {
       this.resetFilter(radioButtonGroups);
@@ -328,7 +302,6 @@ export default {
       this.beeswarmParams.gender = "all";
       this.beeswarmParams.artistType = "all";
       this.beeswarmParams.year = "all";
-      this.beeswarmParams.is_complete = "all";
 
       this.applyFilter();
     },

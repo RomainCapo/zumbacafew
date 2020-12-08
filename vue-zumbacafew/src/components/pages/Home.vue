@@ -3,7 +3,7 @@
     <Header />
     <div id="intro">
       <div class="container">
-        <h1>Découvrez les statistiques cachées de vos rappeurs préférés !</h1> 
+        <h1>Découvrez les statistiques cachées de vos rappeurs préférés !</h1>
       </div>
     </div>
     <div class="container stats">
@@ -77,13 +77,6 @@
             v-on:radio-btn-clicked="filterBeeSwarm"
             ref="radioYear"
           />
-          <GroupRadio
-            v-bind:legend="'Seuil atteint'"
-            v-bind:radioGroup="'is-complete'"
-            v-bind:filters="filtersIsComplete"
-            v-on:radio-btn-clicked="filterBeeSwarm"
-            ref="radioIsComplete"
-          />
           <SearchBar
             v-if="artists !== null"
             v-bind:values="artists"
@@ -103,6 +96,10 @@
         <strong>20'000 mots</strong> récupérés sur ses musiques les plus
         populaires. Les artistes qui n'atteignent pas ce seuil sont précisés via
         une annotation.
+      </p>
+      <p>
+        Le graphique beeswarm permet de comparer efficacement le vocabulaire
+        entre deux artistes à partir de la distance qui les sépare sur l'axe x.
       </p>
       <p>
         Le graphique permet de filtrer les artistes selon leur
@@ -138,17 +135,25 @@
             </span>
           </div>
           <div class="col-sm">
-              <label for="input-number-bin"><strong>Nombre de collones : </strong></label>
-              <input
-                type="number"
-                class="form-control"
-                id="input-number-bin"
-                min="3"
-                max="10"
-                value="6"
-                @input="inputNumberEvent"
-              />
+            <label for="input-number-bin"
+              ><strong>Nombre de collones : </strong></label
+            >
+            <select
+              class="form-control"
+              id="input-number-bin"
+              @input="inputNumberEvent"
+            >
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6" selected="selected">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
           </div>
+
           <div class="col-sm">
             <span id="criterion-container">
               <GroupRadio
@@ -168,6 +173,13 @@
         Ce graphique présente une autre vue du premier graphique. Chaque
         artistes est disposé dans une collonne en fonction de la richesse de son
         vocabulaire
+      </p>
+      <p>
+        L'histogramme d'artiste permet de comparer efficacement la richesse du
+        vocabulaire entre deux artistes ou une catégorie d'artiste (genre,
+        année, etc). Cette représentation permet une comparaison du vocabulaire
+        des artistes en fonction de la catégorie de l'histogramme à laquel ils
+        appartiennent.
       </p>
     </div>
     <hr class="annotation-separator" />
@@ -217,10 +229,82 @@
 
     <div class="container annotation">
       <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt natus,
-        reprehenderit quibusdam dolorum aliquid error deleniti aut corporis
-        iusto, accusamus sequi voluptatem eos quisquam aliquam! Atque sequi
-        libero quod magni? Plus d'information <a href="">ici</a>
+        Le nuage de mot permet de répondre à la question de la fréquence des
+        mots en générale dans la musique francaise ou pour un artiste en
+        particulier. La représentation permet de comparer efficacement
+        l'utilisation d'un mot par rapport à un autre en fonction de la taille
+        qu'il occupe sur le graphique.
+      </p>
+      <p>
+        Initialement le graphique représente les mots de tous les artistes
+        confondu. Il est également possible d'afficher la fréquence de mot pour
+        un artiste en utilisant la barre de recherche à droite du graphique.
+      </p>
+    </div>
+    <hr class="annotation-separator" />
+    <div class="container annotation">
+      <p>
+        Vous souhaitez connaître l'évolution de l'utilisation d'un mot dans les
+        chansons au fur à mesure des années ? C'est le graphique ci-dessous qui
+        vous donnera la réponse.
+      </p>
+      <p>
+        L'évolution d'un mot est représenté par le nombre de fois qu'il a été
+        utilisé dans l'ensemble des chansons d'une année civile.
+      </p>
+    </div>
+    <div id="line-chart-container">
+      <div class="container">
+        <h2 class="title">Évolution d'un mot au cours des années</h2>
+        <div class="row searchBarLinechart">
+          <div class="col-lg-4 col-sm-12">
+            <div class="annotation">
+              <p>Mot actuel : {{ wordDisplayed }}</p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-sm-12 selectorGraph">
+            <GroupRadio
+              v-if="termFrequencyByYear !== null"
+              v-bind:legend="'Type de graphe'"
+              v-bind:radioGroup="'linechart'"
+              v-bind:filters="filtersGraph"
+              v-on:radio-btn-clicked="filterLinechart"
+              ref="radioLinechart"
+            />
+          </div>
+          <div class="col-lg-4 col-sm-12 selectorGraph">
+            <SearchBar
+              v-if="terms !== null && termFrequencyByYear !== null"
+              v-bind:values="terms"
+              v.bind:idName="'wordsLinechart'"
+              v-bind:legend="'Recherche de mots'"
+              v-bind:idName="'linechart'"
+              v-on:search-input-click="searchLinechart"
+              ref="searchLinechartBar"
+            />
+          </div>
+        </div>
+        <LineChart
+          ref="lineChart"
+          id="lineChart"
+          v-if="termFrequencyByYear !== null"
+          v-bind:termFrequencyByYear="termFrequencyByYear"
+        />
+        <div id="source">Source: <a href="https://genius.com">Genius</a></div>
+      </div>
+    </div>
+    <div class="container annotation">
+      <p>
+        Les deux derniers graphiques permettent de répondre à la question de
+        l'évolution de l'utilisation en fonction du temps. Le line chart ainsi
+        que l'histogramme permettent de suivre la variation de l'utilisation
+        d'un mot d'une année à l'autre.
+      </p>
+      <p>
+        Les boutons radio permettent de changer la représentation du graphe d'un
+        line chart à un histogramme. La barre de recherche permet quant à elle
+        de rechercher les mots pour lequel l'utilisateur souhaite visualisert
+        l'évolution au fil des années.
       </p>
     </div>
     <Footer />
@@ -235,6 +319,7 @@ import GroupRadio from "@/components/ui/GroupRadio.vue";
 import WordHistogram from "@/components/charts/WordHistogram.vue";
 import SearchBar from "@/components/ui/SearchBar.vue";
 import WordCloud from "@/components/charts/WordCloud.vue";
+import LineChart from "@/components/charts/Linechart.vue";
 import Footer from "@/components/layout/Footer";
 
 export default {
@@ -247,18 +332,31 @@ export default {
    WordCloud,
     WordHistogram,
     SearchBar,
+    LineChart,
   },
   data() {
     return {
       artists: null,
+      terms: null,
       artistsStats: null,
       artistCount: null,
       isWordCloudLoading: false,
       selectedWordCloudArtist: "tous les artistes",
+      wordDisplayed: "police",
       songCount: null,
       wordCount: null,
       minYear: null,
       maxYear: null,
+      filtersGraph: [
+        {
+          key: "line",
+          value: "Line chart",
+        },
+        {
+          key: "bar",
+          value: "Bar chart",
+        },
+      ],
       filtersArtistType: [
         {
           key: "all",
@@ -309,20 +407,6 @@ export default {
           value: "Femme",
         },
       ],
-      filtersIsComplete: [
-        {
-          key: "all",
-          value: "Tous les artistes",
-        },
-        {
-          key: "complete",
-          value: "Seuil atteint",
-        },
-        {
-          key: "incomplete",
-          value: "Seuil non atteint",
-        },
-      ],
       filtersName: [
         {
           key: "year",
@@ -338,12 +422,18 @@ export default {
         },
       ],
       termFrequency: null,
+      termFrequencyByYear: null,
+      graphType: "line",
     };
   },
   async created() {
+    this.terms = await ArtistsApi.getTerms();
     this.artists = await ArtistsApi.getArtists();
     this.artistsStats = await ArtistsApi.getStats();
     this.termFrequency = await ArtistsApi.getTermFrequency();
+    this.termFrequencyByYear = await ArtistsApi.getTermFrequencyByYear(
+      this.wordDisplayed
+    );
     this.artistCount = await ArtistsApi.getArtistCount();
     this.songCount = await ArtistsApi.getSongCount();
     this.wordCount = await ArtistsApi.getWordCount();
@@ -351,9 +441,12 @@ export default {
     this.maxYear = await ArtistsApi.getMaxYear();
   },
   methods: {
-    inputNumberEvent(e){
-      let criterion = this.$refs.radioCriterions.currentValue
-      this.$refs.wordHistogram.numberInputEvent(e.target.value, criterion)
+    inputNumberEvent(e) {
+      let criterion = this.$refs.radioCriterions.currentValue;
+      this.$refs.wordHistogram.numberInputEvent(e.target.value, criterion);
+      this.$refs.radioCriterions.getRadios()[
+        "radio-criterions-year"
+      ].checked = true;
     },
     filterBeeSwarm(e) {
       this.$refs.beeswarm.filter(e);
@@ -363,7 +456,6 @@ export default {
         this.$refs.radioSex,
         this.$refs.radioArtistType,
         this.$refs.radioYear,
-        this.$refs.radioIsComplete,
       ]);
     },
     filterWordHistogram(e) {
@@ -389,6 +481,20 @@ export default {
         this.isWordCloudLoading = false;
         this.$refs.wordCloud.drawChart(termFrequency);
       }
+    },
+    async searchLinechart(term) {
+      this.$refs.lineChart.destroyChart();
+      const termFrequencyByYear = await ArtistsApi.getTermFrequencyByYear(term);
+      this.$refs.lineChart.drawLinechart(termFrequencyByYear, this.graphType);
+      this.wordDisplayed = term;
+    },
+    async filterLinechart(e) {
+      this.$refs.lineChart.destroyChart();
+      this.graphType = e.value;
+      const termFrequencyByYear = await ArtistsApi.getTermFrequencyByYear(
+        this.wordDisplayed
+      );
+      this.$refs.lineChart.drawLinechart(termFrequencyByYear, this.graphType);
     },
     formatNumber(number, separator = "'") {
       return number.toLocaleString("en-US").replace(/,/g, separator);

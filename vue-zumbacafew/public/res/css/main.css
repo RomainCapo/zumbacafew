@@ -1,52 +1,51 @@
 body {
-    width:100%;
+    width: 100%;
     font-family: 'Kanit';
 }
 
-a:hover{
-    color:black;
+a:hover {
+    color: black;
 }
 
-.stats{
+.stats {
     font-size: 24px;
     color: gray;
     font-style: italic;
 }
 
 a {
-    color:  rgb(0, 178, 99);
+    color: rgb(0, 178, 99);
 }
 
-.annotation-separator{
+.annotation-separator {
     width: 40%;
     border-top: 1px solid rgb(0, 178, 99);
 }
 
-#intro h1{
+#intro h1 {
     text-align: center;
     font-size: 80px;
     font-weight: bold;
     margin-bottom: 20px;
 }
 
-#beeswarm-container .title{
+#beeswarm-container .title {
     padding-top: 20px;
     font-size: 50px;
 }
 
 #intro p {
-    margin-top: 0px ;
-    margin-bottom: 0px ;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
-
-#beeswarm-container{
-    background-color:  rgb(247, 247, 247);
+#beeswarm-container {
+    background-color: rgb(247, 247, 247);
     padding-bottom: 20px;
 }
 
 @media (min-width: 1400px) {
-    .container{
+    .container {
         max-width: 1400px;
     }
 }
@@ -65,112 +64,155 @@ div.tooltip {
     cursor: none;
 }
 
-.tooltip strong{
+.tooltip strong {
     font-size: 20px;
 }
 
 .radio-button-beeswarm {
-    margin-top:50px;
+    margin-top: 50px;
 }
 
-#word-cloud-container .title{
+#word-cloud-container .title {
     font-size: 50px;
     margin-bottom: 70px;
 }
 
-#word-histogram-container .title{
+#word-histogram-container .title {
     font-size: 50px;
     margin-bottom: 70px;
 }
 
-#word-histogram-container{
+#word-histogram-container {
     padding-bottom: 50px;
     padding-top: 50px;
-    background-color:  rgb(247, 247, 247);
+    background-color: rgb(247, 247, 247);
 }
 
-#word-histogram-container .col-sm{
+#word-histogram-container .col-sm {
     text-align: center;
 }
 
-#word-histogram-container hr{
-    width:80%;
+#word-histogram-container hr {
+    width: 80%;
     border-top: 1px solid black;
 }
 
-#word-histogram-container #source{
+#word-histogram-container #source {
     font-size: 12px;
     float: left;
     margin-left: 50px;
 }
 
-#word-histogram-container a{
+#word-histogram-container a {
     color: black;
 }
 
-#word-histogram-container .c0{
-    color:rgb(142, 89, 171);
+#word-histogram-container .c0 {
+    color: rgb(255, 176, 0);
 }
 
-#word-histogram-container .c1{
-    color:rgb(240, 71, 112);
+#word-histogram-container .c1 {
+    color: rgb(120, 94, 240);
 }
 
-#word-histogram-container .c2{
+#word-histogram-container .c2 {
     color: rgb(0, 178, 99);
 }
 
-#word-histogram-container .c3{
+#word-histogram-container .c3 {
     color: black;
 }
 
-#input-number-bin{
+#input-number-bin {
     width: 50%;
     margin: auto;
 }
 
-.annotation{
+.annotation {
     padding: 50px;
     font-size: 28px;
     text-align: left;
 }
 
-#word-histogram-container .row{
+#word-histogram-container .row {
     margin-top: 30px;
 }
 
-#word-histogram-container #xaxis-legend{
+#word-histogram-container #xaxis-legend {
     font-size: 16px;
 }
 
-#word-cloud-container{
-    background-color:  rgb(247, 247, 247);
+#word-cloud-container {
+    background-color: rgb(247, 247, 247);
     padding: 50px;
 }
 
-#word-cloud-container h2{
+#word-cloud-container h2 {
     font-size: 50px;
 }
 
-@media (max-width: 1000px) { 
+#line-chart-container .title {
+    font-size: 50px;
+    margin-bottom: 50px;
+}
 
-    p{
+#line-chart-container {
+    background-color: rgb(247, 247, 247);
+    padding: 50px;
+}
+
+#line-chart-container h2 {
+    font-size: 50px;
+}
+
+#line-chart-container .selectorGraph {
+    padding: 10px;
+}
+
+#line-chart-container .annotation {
+    text-align: center;
+    margin: 5px;
+    padding: 0px;
+}
+
+#line-chart-container #source {
+    font-size: 12px;
+    float: left;
+    margin-left: 50px;
+}
+
+#line-chart-container #source a {
+    color: black;
+}
+
+#line-chart-container .searchBarLinechart {
+    margin-bottom: 30px;
+}
+
+#search-input-linechart {
+    margin: 0 auto;
+}
+
+@media (max-width: 500px) {
+    #line-chart-container {
+        padding: 50px 0px 50px 0px;
+    }
+}
+
+@media (max-width: 1000px) {
+    p {
         font-size: 20px;
     }
-
-    #intro h1{
+    #intro h1 {
         font-size: 50px;
     }
-
-    #beeswarm-container .col-sm{
+    #beeswarm-container .col-sm {
         margin-bottom: 20px;
     }
-
-    #word-cloud-container{
+    #word-cloud-container {
         padding: 20px 0px 20px 0px;
     }
-
-    .container{
+    .container {
         max-width: 2000px;
     }
- }
+}

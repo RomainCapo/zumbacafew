@@ -102,11 +102,9 @@ export async function termFrequencyByYear(req, res) {
     res.setHeader('Content-Type', 'application/json')
 
     try {
-        let termFrequencyByYear = await Artist.termFrequencyByYear();
-        /*let stopWords = await StopWords.words();
+        const WORD = req.params.word;
 
-        stopWords = stopWords[0]['words'];
-        termFrequency = termFrequency.filter(term => !stopWords.includes(term['_id']));*/
+        let termFrequencyByYear = await Artist.termFrequencyByYear(WORD);
 
         res.json(termFrequencyByYear);
     } catch (err) {
@@ -114,4 +112,14 @@ export async function termFrequencyByYear(req, res) {
     }
 }
 
+export async function terms(req, res) {
+    res.setHeader('Content-Type', 'application/json')
 
+    try {
+        let terms = await Artist.terms();
+
+        res.json(terms);
+    } catch (err) {
+        console.error(err)
+    }
+}

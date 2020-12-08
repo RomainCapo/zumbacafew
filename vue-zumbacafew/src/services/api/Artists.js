@@ -10,6 +10,12 @@ export default {
   getTermFrequencyByArtist(artist) {
     return axios.get(`/artists/termfrequency/${artist}`).then(result => result.data);
   },
+  getTermFrequencyByYear(word) {
+    return axios.get(`/artists/termfrequencybyyear/${word}`).then(result => result.data);
+  },
+  getTerms() {
+    return axios.get("/artists/terms/").then(result => result.data);
+  },
   getTermFrequency() {
     return axios.get("/artists/termfrequency").then(result => result.data);
   },
