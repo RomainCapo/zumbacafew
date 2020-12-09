@@ -136,7 +136,7 @@
           </div>
           <div class="col-sm">
             <label for="input-number-bin"
-              ><strong>Nombre de collones : </strong></label
+              ><strong>Nombre de colonnes : </strong></label
             >
             <select
               class="form-control"
@@ -171,7 +171,7 @@
     <div class="container annotation">
       <p>
         Ce graphique présente une autre vue du premier graphique. Chaque
-        artistes est disposé dans une collonne en fonction de la richesse de son
+        artiste est disposé dans une colonne en fonction de la richesse de son
         vocabulaire
       </p>
       <p>
@@ -186,7 +186,7 @@
     <div class="container annotation">
       <p>
         Vous voulez découvrir quels sont les mots les plus fréquents dans le rap
-        français ? Quel termes sont les plus utilisés par un artiste ? Si le mot
+        français ? Quels termes sont les plus utilisés par un artiste ? Si le mot
         le plus utilisé par
         <a href="https://genius.com/artists/Wejdene">Wejdene</a>
         est Coco ?
@@ -230,14 +230,14 @@
     <div class="container annotation">
       <p>
         Le nuage de mot permet de répondre à la question de la fréquence des
-        mots en générale dans la musique francaise ou pour un artiste en
+        mots par rapport à l'ensemble des titres analysés ou pour un artiste en
         particulier. La représentation permet de comparer efficacement
         l'utilisation d'un mot par rapport à un autre en fonction de la taille
         qu'il occupe sur le graphique.
       </p>
       <p>
         Initialement le graphique représente les mots de tous les artistes
-        confondu. Il est également possible d'afficher la fréquence de mot pour
+        confondus. Il est également possible d'afficher la fréquence de mot pour
         un artiste en utilisant la barre de recherche à droite du graphique.
       </p>
     </div>
@@ -245,11 +245,10 @@
     <div class="container annotation">
       <p>
         Vous souhaitez connaître l'évolution de l'utilisation d'un mot dans les
-        chansons au fur à mesure des années ? C'est le graphique ci-dessous qui
-        vous donnera la réponse.
+        chansons au fur au cours du temps ? Le graphique ci-dessous vous donnera la réponse.
       </p>
       <p>
-        L'évolution d'un mot est représenté par le nombre de fois qu'il a été
+        L'évolution d'un mot est représentée par le nombre de fois qu'il a été
         utilisé dans l'ensemble des chansons d'une année civile.
       </p>
     </div>
@@ -303,7 +302,7 @@
       <p>
         Les boutons radio permettent de changer la représentation du graphe d'un
         line chart à un histogramme. La barre de recherche permet quant à elle
-        de rechercher les mots pour lequel l'utilisateur souhaite visualisert
+        de rechercher les mots pour lequel l'utilisateur souhaite visualiser
         l'évolution au fil des années.
       </p>
     </div>
