@@ -22,7 +22,14 @@ Un second objectif est de présenter les mots les plus utilisés dans la musique
 
 Le dernier objectif est de pouvoir visualiser l'utilisation d'un mot au cours du temps dans les différentes musqiues de Hip-hop francophone.
 
-## À utiliser en dev mode
+# Arboresence
+* **admin** : contient le rapport et la présentation.
+* **docker** : fichier Docker pour le developpement (pour la version de production voir le fichier docker-compose.yml de la branche __deploy__).
+* **scrapping** : fichier relatif au scrapping des données et au peuplement de la base de données.
+* **server** : fichier du backend NodeJS.
+* **vue-zumbacafew** : fichier du frontend VueJS.
+
+# À utiliser en dev mode
 
 In /server remember to :
 
