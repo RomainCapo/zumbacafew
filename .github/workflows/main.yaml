@@ -60,8 +60,29 @@ jobs:
           -t $FRONTEND_IMAGE \
           -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$FRONTEND_IMAGE ./vue-zumbacafew 
     
+    # Set image tag in kustomization
 
-    # Only push to registry on master
+    - name: Set image tag
+      run: |
+          cd deploy
+          kustomize edit set image $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$DATABASE_IMAGE
+          kustomize edit set image $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$BACKEND_IMAGE
+          kustomize edit set image $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$FRONTEND_IMAGE
+          cat kustomization.yaml
+    - name: Commit kustomization
+      run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -a -m "$CONTAINER_IMAGE"
+    - name: Push changes to master
+      uses: ad-m/github-push-action@master
+      with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: master
+          force: true       
+    
+
+    # Only push to registry on main
     - name: Push
       if: github.ref == 'refs/heads/main'
       run: |

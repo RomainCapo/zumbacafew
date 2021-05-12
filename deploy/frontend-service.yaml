@@ -3,6 +3,7 @@ kind: Service
 metadata:
   name: frontend-vue
 spec:
+  type: LoadBalancer
   selector:
     app: frontend-vue
   ports:

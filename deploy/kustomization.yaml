@@ -9,5 +9,9 @@ resources:
 - frontend-service.yaml
 
 images:
-- name: 457472006214.dkr.ecr.us-west-1.amazonaws.com/guestbook
-  newTag: d6cbdc0df33ef5f5dce803931e4d89031865223b
+- name: 677518839775.dkr.ecr.us-west-2.amazonaws.com/zumbacafew
+  newTag: database_259b3a2deef7e8b1bfa0d574a996acbfbc63a13a
+- name: 677518839775.dkr.ecr.us-west-2.amazonaws.com/zumbacafew
+  newTag: backend_259b3a2deef7e8b1bfa0d574a996acbfbc63a13a
+- name: 677518839775.dkr.ecr.us-west-2.amazonaws.com/zumbacafew
+  newTag: frontend_259b3a2deef7e8b1bfa0d574a996acbfbc63a13a
