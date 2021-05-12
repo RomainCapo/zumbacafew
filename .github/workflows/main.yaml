@@ -2,14 +2,14 @@
 on:
   pull_request:
     paths:
-    - server/
-    - vue-zumbacafew/
-    - database/
+    - server/**
+    - vue-zumbacafew/**
+    - database/**
   push:
     paths:
-    - server/
-    - vue-zumbacafew/
-    - database/
+    - server/**
+    - vue-zumbacafew/**
+    - database/**
     branches:        
     - main          
 
