@@ -193,7 +193,7 @@
       </p>
       <p>Vous êtes au bon endroit !</p>
     </div>
-    <div id="word-cloud-container">
+   <div id="word-cloud-container">
       <div class="container">
         <h2 class="title">Nuage de mots de {{ selectedWordCloudArtist }}</h2>
         <div class="row">
@@ -328,7 +328,7 @@ export default {
     Footer,
     GroupRadio,
     Header,
-    WordCloud,
+   WordCloud,
     WordHistogram,
     SearchBar,
     LineChart,

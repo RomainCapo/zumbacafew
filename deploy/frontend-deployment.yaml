@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-vue
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend-vue
+  template:
+    metadata:
+      labels:
+        app: frontend-vue
+    spec:
+      containers:
+        - name: frontend-vue
+          image: alpha03/vue-frontend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
