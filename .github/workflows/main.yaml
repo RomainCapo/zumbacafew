@@ -73,12 +73,12 @@ jobs:
       run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git commit -a -m "$CONTAINER_IMAGE"
-    - name: Push changes to master
+          git commit -a -m "${{ github.sha }}"
+    - name: Push changes to main
       uses: ad-m/github-push-action@master
       with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: master
+          branch: main
           force: true       
     
 
