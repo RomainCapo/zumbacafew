@@ -9,12 +9,12 @@ resources:
 - frontend-service.yaml
 
 images:
-- name: database
-  newName: 677518839775.dkr.ecr.us-west-2.amazonaws.com/zumbacafew
-  newTag: database_259b3a2deef7e8b1bfa0d574a996acbfbc63a13a
 - name: backend
   newName: 677518839775.dkr.ecr.us-west-2.amazonaws.com/zumbacafew
-  newTag: backend_259b3a2deef7e8b1bfa0d574a996acbfbc63a13a
+  newTag: backend_4389994b8de7463499a379d115a99553164d5286
+- name: database
+  newName: 677518839775.dkr.ecr.us-west-2.amazonaws.com/zumbacafew
+  newTag: database_4389994b8de7463499a379d115a99553164d5286
 - name: frontend
   newName: 677518839775.dkr.ecr.us-west-2.amazonaws.com/zumbacafew
-  newTag: frontend_259b3a2deef7e8b1bfa0d574a996acbfbc63a13a
+  newTag: frontend_4389994b8de7463499a379d115a99553164d5286
