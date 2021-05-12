@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: db-mango
-          image: 677518839775.dkr.ecr.us-west-2.amazonaws.com/zumbacafew:database_259b3a2deef7e8b1bfa0d574a996acbfbc63a13a
+          image: database
           imagePullPolicy: Always
           command:
           - "mongod"
