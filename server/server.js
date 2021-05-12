@@ -17,8 +17,8 @@ function setupServer() {
 
     app.use('/api/', apiRouter);
 
-    app.all('*', function (req, res) {
-        return notFoundResponse(res, 'Page not found');
+    app.all('*', function(req, res) {
+        return notFoundResponse(res, 'Page not founddd');
     });
 }
 
