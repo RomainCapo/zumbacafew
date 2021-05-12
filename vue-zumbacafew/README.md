@@ -1,6 +1,6 @@
 # vue-zumbacafew
 
-## Project setup
+## Project setuppp
 ```
 npm install
 ```
