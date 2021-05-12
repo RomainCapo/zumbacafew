@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- db-deployment.yaml
+- db-service.yaml
+- backend-deployment.yaml
+- backend-service.yaml
+- frontend-deployment.yaml
+- frontend-service.yaml
+
+images:
+- name: 457472006214.dkr.ecr.us-west-1.amazonaws.com/guestbook
+  newTag: d6cbdc0df33ef5f5dce803931e4d89031865223b
