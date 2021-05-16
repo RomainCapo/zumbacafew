@@ -3,7 +3,7 @@
     <Header />
     <div id="intro">
       <div class="container">
-        <h1>Découvrez les statistiques cachées de vos rappeurs préférés 1!</h1>
+        <h1>Découvrez les statistiques cachées de vos rappeurs préférés !!</h1>
       </div>
     </div>
     <div class="container stats">
