@@ -11,10 +11,10 @@ resources:
 images:
 - name: backend
   newName: 396229223364.dkr.ecr.us-west-2.amazonaws.com/zumbacafew
-  newTag: backend_037c8e36c5c696060b6547c80206b8a0e2eca9d9
+  newTag: backend_4500eb0548798e07ed4b2ca37a8b78858d7d4b14
 - name: database
   newName: 396229223364.dkr.ecr.us-west-2.amazonaws.com/zumbacafew
-  newTag: database_037c8e36c5c696060b6547c80206b8a0e2eca9d9
+  newTag: database_4500eb0548798e07ed4b2ca37a8b78858d7d4b14
 - name: frontend
   newName: 396229223364.dkr.ecr.us-west-2.amazonaws.com/zumbacafew
-  newTag: frontend_037c8e36c5c696060b6547c80206b8a0e2eca9d9
+  newTag: frontend_4500eb0548798e07ed4b2ca37a8b78858d7d4b14
