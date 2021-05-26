@@ -43,11 +43,11 @@ export default {
 <style scoped>
 nav {
   background-color: rgb(255, 255, 255) !important;
-  border-bottom: 1px solid rgb(41, 128, 185);
+  border-bottom: 1px solid rgb(0, 178, 99);
 }
 
 .nav-link {
-  color: rgb(41, 128, 185) !important;
+  color: rgb(0, 178, 99) !important;
 }
 
 .nav-link:hover {

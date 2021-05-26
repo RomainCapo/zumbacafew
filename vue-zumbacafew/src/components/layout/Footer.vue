@@ -21,7 +21,7 @@ export default {
     width: 100%;
     height: 100px;
     line-height: 60px;
-    background-color: rgb(41, 128, 185);
+    background-color: rgb(0, 178, 99);
 }
 
 .panel-footer {
