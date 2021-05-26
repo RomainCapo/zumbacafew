@@ -19,12 +19,12 @@ a:hover {
 }
 
 a {
-    color: rgb(41, 128, 185);
+    color: rgb(0, 178, 99);
 }
 
 .annotation-separator {
     width: 40%;
-    border-top: 1px solid rgb(41, 128, 185);
+    border-top: 1px solid rgb(0, 178, 99);
 }
 
 #intro h1 {
