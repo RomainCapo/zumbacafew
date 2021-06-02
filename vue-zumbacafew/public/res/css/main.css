@@ -19,12 +19,12 @@ a:hover {
 }
 
 a {
-    color: rgb(0, 178, 99);
+    color: rgb(41, 128, 185);
 }
 
 .annotation-separator {
     width: 40%;
-    border-top: 1px solid rgb(0, 178, 99);
+    border-top: 1px solid color: rgb(41, 128, 185);
 }
 
 #intro h1 {
@@ -121,7 +121,7 @@ div.tooltip {
 }
 
 #word-histogram-container .c2 {
-    color: rgb(0, 178, 99);
+    color: rgb(41, 128, 185);
 }
 
 #word-histogram-container .c3 {
