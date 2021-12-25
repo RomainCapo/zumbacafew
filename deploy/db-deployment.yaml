@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: db-mango
-          image: alpha03/mongo-database
+          image: mongo:latest
           imagePullPolicy: Always
           command:
           - "mongod"
