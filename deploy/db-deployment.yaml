@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: db-mango
-          image: database
+          image: alpha03/mongo-database
           imagePullPolicy: Always
           command:
           - "mongod"
@@ -24,7 +24,3 @@ spec:
           - "0.0.0.0"
           ports:
             - containerPort: 27017
-          lifecycle:
-              postStart:
-                exec:
-                  command: ["mongoimport", "--db", "zumba_cafew", "--collection", "artists", "--type", "json", "--file", "/init.json"]

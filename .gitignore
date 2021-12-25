@@ -7,6 +7,7 @@ vue-zumbacafew/.DS_Store
 vue-zumbacafew/node_modules
 vue-zumbacafew/dist
 
+scrapping/scrapping_env
 
 # local env files
 vue-zumbacafew/.env.local
