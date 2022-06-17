@@ -1,6 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: app-zumbacafew
   name: backend-node
 spec:
   replicas: 2
@@ -14,7 +15,7 @@ spec:
     spec:
       containers:
         - name: backend-node
-          image: alpha03/node-backend
+          image: alpha03/node-backend:latest-arm64
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

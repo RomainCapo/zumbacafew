@@ -1,3 +1,2 @@
-FROM mongo
-COPY init.json /init.json
-CMD mongoimport --db zumba_cafew --collection artists --type json --file /init.json
+FROM mongo:4.4.14
+COPY init.json stopwords.json ./
