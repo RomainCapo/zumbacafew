@@ -1,6 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: app-zumbacafew
   name: frontend-vue
 spec:
   replicas: 1
@@ -14,7 +15,7 @@ spec:
     spec:
       containers:
         - name: frontend-vue
-          image: 677518839775.dkr.ecr.us-west-2.amazonaws.com/zumbacafew:frontend_259b3a2deef7e8b1bfa0d574a996acbfbc63a13a
+          image: alpha03/vue-frontend:latest-arm64
           imagePullPolicy: Always
           ports:
             - containerPort: 80

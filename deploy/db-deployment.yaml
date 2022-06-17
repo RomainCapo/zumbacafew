@@ -1,6 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: app-zumbacafew
   name: db-mongo
   labels:
     app: db-mango
@@ -16,7 +17,7 @@ spec:
     spec:
       containers:
         - name: db-mango
-          image: 677518839775.dkr.ecr.us-west-2.amazonaws.com/zumbacafew:database_259b3a2deef7e8b1bfa0d574a996acbfbc63a13a
+          image: alpha03/mongo-database:latest-arm64
           imagePullPolicy: Always
           command:
           - "mongod"
@@ -25,6 +26,6 @@ spec:
           ports:
             - containerPort: 27017
           lifecycle:
-              postStart:
-                exec:
-                  command: ["mongoimport", "--db", "zumba_cafew", "--collection", "artists", "--type", "json", "--file", "/init.json"]
+            postStart:
+              exec:
+                command: ["/bin/sh", "-c", "mongoimport --db zumba_cafew --collection artists --type json --file /init.json --jsonArray && mongoimport --db zumba_cafew --collection stopwords --type json --file /stopwords.json --jsonArray"]

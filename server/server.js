@@ -11,7 +11,9 @@ dotenv.config();
 var app = express();
 
 function setupServer() {
-    app.use(cors());
+    app.use(cors({origin: '*', 
+                  methods: ['GET','POST'],
+                  allowedHeaders: ['Content-Type']}));
 
     app.listen(process.env.PORT || 8080);
 
